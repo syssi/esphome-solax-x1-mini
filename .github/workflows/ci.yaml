@@ -28,9 +28,12 @@ jobs:
       # Set up the pio project so that the cpp checks know how files are compiled
       # (build flags, libraries etc)
 
-      - name: Clone esphome project
+      - name: 💣 Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
-      - name: Copy component into the esphome project
+      - name: 💣 Remove git remote
+        run: git remote rm origin
+        working-directory: esphome/
+      - name: 💣 Copy component into the esphome project
         run: cp -r components/* esphome/esphome/components/
 
       - name: Set up platformio environment
@@ -50,9 +53,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Clone esphome project
+      - name: 💣 Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
-      - name: Copy component into the esphome project
+      - name: 💣 Remove git remote
+        run: git remote rm origin
+        working-directory: esphome/
+      - name: 💣 Copy component into the esphome project
         run: cp -r components/* esphome/esphome/components/
 
       # Set up the pio project so that the cpp checks know how files are compiled
@@ -88,9 +94,12 @@ jobs:
           restore-keys: |
             esphome-pip-3.7-
 
-      - name: Clone esphome project
+      - name: 💣Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
-      - name: Copy component into the esphome project
+      - name: 💣Remove git remote
+        run: git remote rm origin
+        working-directory: esphome/
+      - name: 💣Copy component into the esphome project
         run: cp -r components/* esphome/esphome/components/
 
       - name: Set up python environment
