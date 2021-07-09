@@ -33,6 +33,9 @@ jobs:
           pip install esphome
           pip list
           esphome version
+      - name: Write secrets.yaml
+        shell: bash
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
       - name: 🚀 Run esphome config on example configurations
         run: |
           esphome basic.yaml config
