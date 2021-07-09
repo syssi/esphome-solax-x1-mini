@@ -74,9 +74,12 @@ jobs:
           key: esphome-pip-3.7-${{ hashFiles('setup.py') }}
           restore-keys: |
             esphome-pip-3.7-
-      - name: Set up python environment
-        run: script/setup
-
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install esphome
+          pip list
+          esphome version
       - name: Register problem matchers
         run: |
           echo "::add-matcher::.github/workflows/matchers/ci-custom.json"
