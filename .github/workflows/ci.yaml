@@ -20,7 +20,7 @@ jobs:
 
   lint-clang-format:
     env:
-      ESPHOME_DIRECTORY=esphome
+      esphome_directory=esphome
     runs-on: ubuntu-latest
     # cpp lint job runs with esphome-lint docker image so that clang-format-*
     # doesn't have to be installed
@@ -37,19 +37,19 @@ jobs:
 
       - name: Set up platformio environment
         run: pio init --ide atom
-        working-directory: ${{ ESPHOME_DIRECTORY }}
+        working-directory: ${{ env.esphome_directory }}
 
       - name: Run clang-format
         run: script/clang-format -i
-        working-directory: ${{ ESPHOME_DIRECTORY }}
+        working-directory: ${{ env.esphome_directory }}
 
       - name: Suggest changes
         run: script/ci-suggest-changes
-        working-directory: ${{ ESPHOME_DIRECTORY }}
+        working-directory: ${{ env.esphome_directory }}
 
   lint-clang-tidy:
     env:
-      ESPHOME_DIRECTORY=esphome
+      esphome_directory=esphome
     runs-on: ubuntu-latest
     # cpp lint job runs with esphome-lint docker image so that clang-format-*
     # doesn't have to be installed
@@ -66,7 +66,7 @@ jobs:
       # (build flags, libraries etc)
       - name: Set up platformio environment
         run: pio init --ide atom
-        working-directory: ${{ ESPHOME_DIRECTORY }}
+        working-directory: ${{ env.esphome_directory }}
 
       - name: Register problem matchers
         run: |
@@ -74,14 +74,14 @@ jobs:
           echo "::add-matcher::.github/workflows/matchers/gcc.json"
       - name: Run lint-cpp
         run: script/lint-cpp -c
-        working-directory: ${{ ESPHOME_DIRECTORY }}
+        working-directory: ${{ env.esphome_directory }}
       - name: Suggest changes
         run: script/ci-suggest-changes
-        working-directory: ${{ ESPHOME_DIRECTORY }}
+        working-directory: ${{ env.esphome_directory }}
 
   lint-python:
     env:
-      ESPHOME_DIRECTORY=esphome
+      esphome_directory=esphome
     # Don't use the esphome-lint docker image because it may contain outdated requirements.
     # This way, all dependencies are cached via the cache action.
     runs-on: ubuntu-latest
@@ -106,7 +106,7 @@ jobs:
 
       - name: Set up python environment
         run: script/setup
-        working-directory: ${{ ESPHOME_DIRECTORY }}
+        working-directory: ${{ env.esphome_directory }}
 
       - name: Register problem matchers
         run: |
@@ -116,10 +116,10 @@ jobs:
 
       - name: Lint Custom
         run: script/ci-custom.py -c
-        working-directory: ${{ ESPHOME_DIRECTORY }}
+        working-directory: ${{ env.esphome_directory }}
       - name: Lint Python
         run: script/lint-python -c
-        working-directory: ${{ ESPHOME_DIRECTORY }}
+        working-directory: ${{ env.esphome_directory }}
 
   esphome-config:
     runs-on: ubuntu-latest
