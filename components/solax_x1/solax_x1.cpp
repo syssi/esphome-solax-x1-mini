@@ -8,7 +8,7 @@ static const char *const TAG = "solax_x1";
 
 // Hybrid.X1.X3-G3.ModbusTCP.RTU.V3.21-.English.pdf
 // May be some modes doesn't apply to the X1 mini
-static const char *const modeText[16] = {
+static const char *const MODE_TEXT[16] = {
     "Wait",             // 0
     "Check",            // 1
     "Normal",           // 2
@@ -22,7 +22,7 @@ static const char *const modeText[16] = {
     "Idle",       // 9
 };
 
-static const char *const errorText[32] = {
+static const char *const ERROR_TEXT[32] = {
     "Tz Protection Fault",   // Byte 0.0
     "Mains Lost Fault",      // Byte 0.1
     "Grid Voltage Fault",    // Byte 0.2
