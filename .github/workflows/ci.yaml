@@ -33,7 +33,13 @@ jobs:
       - name: 💣 Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
       - name: 💣 Copy component into the esphome project
-        run: cp -r components/* esphome/esphome/components/
+        run: |
+          cp -r ../components/* esphome/components/
+          git config user.name "ci"
+          git config user.email "ci@github.com"
+          git add .
+          git commit -a -m "Add modbus_solax and solax_x1"
+        working-directory: ${{ env.esphome_directory }}
 
       - name: Set up platformio environment
         run: pio init --ide atom
@@ -60,7 +66,13 @@ jobs:
       - name: 💣 Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
       - name: 💣 Copy component into the esphome project
-        run: cp -r components/* esphome/esphome/components/
+        run: |
+          cp -r ../components/* esphome/components/
+          git config user.name "ci"
+          git config user.email "ci@github.com"
+          git add .
+          git commit -a -m "Add modbus_solax and solax_x1"
+        working-directory: ${{ env.esphome_directory }}
 
       # Set up the pio project so that the cpp checks know how files are compiled
       # (build flags, libraries etc)
@@ -102,7 +114,13 @@ jobs:
       - name: 💣Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
       - name: 💣Copy component into the esphome project
-        run: cp -r components/* esphome/esphome/components/
+        run: |
+          cp -r ../components/* esphome/components/
+          git config user.name "ci"
+          git config user.email "ci@github.com"
+          git add .
+          git commit -a -m "Add modbus_solax and solax_x1"
+        working-directory: ${{ env.esphome_directory }}
 
       - name: Set up python environment
         run: script/setup
@@ -139,10 +157,8 @@ jobs:
       - name: Write secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
-      - name: 🚀 Run esphome config on example configurations
-        run: |
-          esphome basic.yaml config
-          esphome advanced-multiple-uarts.yaml config
+      - run: esphome basic.yaml config
+      - run: esphome advanced-multiple-uarts.yaml config
 
   esphome-compile:
     runs-on: ubuntu-latest
@@ -179,7 +195,5 @@ jobs:
       - name: Write secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
-      - name: 🚀 Run esphome compile on example configurations
-        run: |
-          esphome basic.yaml compile
-          esphome advanced-multiple-uarts.yaml compile
+      - run: esphome basic.yaml compile
+      - run: esphome advanced-multiple-uarts.yaml compile
