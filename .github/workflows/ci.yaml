@@ -199,5 +199,5 @@ jobs:
           sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' basic.yaml
           esphome basic.yaml compile
       - run: |
-          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' esphome advanced-multiple-uarts.yaml
+          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' advanced-multiple-uarts.yaml
           esphome advanced-multiple-uarts.yaml compile

@@ -7,7 +7,7 @@
 namespace esphome {
 namespace modbus_solax {
 
-static const char *TAG = "modbus_solax";
+static const char *const TAG = "modbus_solax";
 
 void ModbusSolax::loop() {
   const uint32_t now = millis();
