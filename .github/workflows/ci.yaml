@@ -29,7 +29,7 @@ jobs:
       # (build flags, libraries etc)
 
       - name: Clone esphome project
-        run: git clone git@github.com:esphome/esphome.git
+        run: git clone https://github.com/esphome/esphome.git
       - name: Copy component into the esphome project
         run: cp components/* esphome/esphome/components/
 
@@ -51,7 +51,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Clone esphome project
-        run: git clone git@github.com:esphome/esphome.git
+        run: git clone https://github.com/esphome/esphome.git
       - name: Copy component into the esphome project
         run: cp components/* esphome/esphome/components/
 
@@ -89,7 +89,7 @@ jobs:
             esphome-pip-3.7-
 
       - name: Clone esphome project
-        run: git clone git@github.com:esphome/esphome.git
+        run: git clone https://github.com/esphome/esphome.git
       - name: Copy component into the esphome project
         run: cp components/* esphome/esphome/components/
 
