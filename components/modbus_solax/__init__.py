@@ -4,6 +4,7 @@ from esphome.components import uart
 from esphome.const import CONF_ID, CONF_ADDRESS
 from esphome.core import coroutine
 
+CODEOWNERS = ["@syssi"]
 DEPENDENCIES = ["uart"]
 
 modbus_solax_ns = cg.esphome_ns.namespace("modbus_solax")

@@ -23,6 +23,9 @@ from esphome.const import (
     UNIT_EMPTY,
 )
 
+AUTO_LOAD = ["modbus_solax"]
+CODEOWNERS = ["@syssi"]
+
 CONF_ENERGY_TODAY = "energy_today"
 CONF_ENERGY_TOTAL = "energy_total"
 
@@ -40,8 +43,6 @@ CONF_AC_POWER = "ac_power"
 
 CONF_RUNTIME_TOTAL = "runtime_total"
 CONF_ERROR_BITS = "error_bits"
-
-AUTO_LOAD = ["modbus_solax"]
 
 UNIT_HOURS = "h"
 UNIT_KILO_WATT_HOURS = "kWh"
