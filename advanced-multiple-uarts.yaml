@@ -1,0 +1,159 @@
+substitutions:
+  name: attic_solar_powermeter
+  device0: firstfloor_solar_powermeter
+  device1: groundfloor_solar_powermeter
+  device2: community_solar_powermeter
+
+esphome:
+  name: ${name}
+  platform: ESP32
+  board: esp-wrover-kit
+
+ethernet:
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO17_OUT
+  phy_addr: 0
+
+api:
+ota:
+
+logger:
+  baud_rate: 0
+  level: INFO
+#  level: VERY_VERBOSE
+#  logs:
+#    uart_esp32: WARN
+#    api.service: WARN
+#    ota: WARN
+#    ethernet: WARN
+#    sensor: WARN
+#    solax_x1: VERY_VERBOSE
+#    modbux_solax: VERY_VERBOSE
+
+uart:
+  - id: uart0
+    baud_rate: 9600
+    tx_pin: GPIO1
+    rx_pin: GPIO3
+  - id: uart1
+    baud_rate: 9600
+    tx_pin: GPIO14
+    rx_pin: GPIO4
+  - id: uart2
+    baud_rate: 9600
+    tx_pin: GPIO32
+    rx_pin: GPIO33
+
+modbus_solax:
+  - id: modbus0
+    uart_id: uart0
+  - id: modbus1
+    uart_id: uart1
+  - id: modbus2
+    uart_id: uart2
+
+sensor:
+  - !include common/sensors/uptime.yaml
+  - platform: solax_x1
+    modbus_solax_id: modbus0
+    serial_number: "3132333435363737363534333231"
+    address: 0x0A
+    ac_power:
+      name: "${device0} ac power"
+    energy_today:
+      name: "${device0} energy today"
+    energy_total:
+      name: "${device0} energy total"
+    dc1_voltage:
+      name: "${device0} dc1 voltage"
+    dc2_voltage:
+      name: "${device0} dc2 voltage"
+    dc1_current:
+      name: "${device0} dc1 current"
+    dc2_current:
+      name: "${device0} dc2 current"
+    ac_current:
+      name: "${device0} ac current"
+    ac_voltage:
+      name: "${device0} ac voltage"
+    ac_frequency:
+      name: "${device0} ac frequency"
+    temperature:
+      name: "${device0} temperature"
+    runtime_total:
+      name: "${device0} runtime total"
+    mode:
+      name: "${device0} mode"
+    error_bits:
+      name: "${device0} error bits"
+    update_interval: 2s
+
+  - platform: solax_x1
+    modbus_solax_id: modbus1
+    serial_number: "3132333435363737363534333231"
+    address: 0x0A
+    ac_power:
+      name: "${device1} ac power"
+    energy_today:
+      name: "${device1} energy today"
+    energy_total:
+      name: "${device1} energy total"
+    dc1_voltage:
+      name: "${device1} dc1 voltage"
+    dc2_voltage:
+      name: "${device1} dc2 voltage"
+    dc1_current:
+      name: "${device1} dc1 current"
+    dc2_current:
+      name: "${device1} dc2 current"
+    ac_current:
+      name: "${device1} ac current"
+    ac_voltage:
+      name: "${device1} ac voltage"
+    ac_frequency:
+      name: "${device1} ac frequency"
+    temperature:
+      name: "${device1} temperature"
+    runtime_total:
+      name: "${device1} runtime total"
+    mode:
+      name: "${device1} mode"
+    error_bits:
+      name: "${device1} error bits"
+    update_interval: 2s
+
+  - platform: solax_x1
+    modbus_solax_id: modbus2
+    serial_number: "3132333435363737363534333231"
+    address: 0x0A
+    ac_power:
+      name: "${device2} ac power"
+    energy_today:
+      name: "${device2} energy today"
+    energy_total:
+      name: "${device2} energy total"
+    dc1_voltage:
+      name: "${device2} dc1 voltage"
+    dc2_voltage:
+      name: "${device2} dc2 voltage"
+    dc1_current:
+      name: "${device2} dc1 current"
+    dc2_current:
+      name: "${device2} dc2 current"
+    ac_current:
+      name: "${device2} ac current"
+    ac_voltage:
+      name: "${device2} ac voltage"
+    ac_frequency:
+      name: "${device2} ac frequency"
+    temperature:
+      name: "${device2} temperature"
+    runtime_total:
+      name: "${device2} runtime total"
+    mode:
+      name: "${device2} mode"
+    error_bits:
+      name: "${device2} error bits"
+    update_interval: 2s
