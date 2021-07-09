@@ -106,6 +106,10 @@ jobs:
         run: git remote -v
         working-directory: esphome/
 
+      - name: Check git merge-base
+        run: git merge-base refs/remotes/origin/dev HEAD
+        working-directory: esphome/
+
       - name: Lint Custom
         run: script/ci-custom.py -c
         working-directory: esphome/
