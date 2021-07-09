@@ -5,7 +5,6 @@ secret.yaml
 **/.piolibdeps/
 **/lib/
 **/src/
-**/platformio.ini
 **/partitions.csv
 
 __pycache__/
