@@ -8,6 +8,7 @@ esphome:
 
 external_components:
   - source: github://syssi/esphome-modbus-solax-x1@main
+    refresh: 0s
 
 wifi:
   ssid: !secret wifi_ssid
