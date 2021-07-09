@@ -195,5 +195,9 @@ jobs:
       - name: Write secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
-      - run: esphome basic.yaml compile
-      - run: esphome advanced-multiple-uarts.yaml compile
+      - run: |
+          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' basic.yaml
+          esphome basic.yaml compile
+      - run: |
+          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' esphome advanced-multiple-uarts.yaml
+          esphome advanced-multiple-uarts.yaml compile
