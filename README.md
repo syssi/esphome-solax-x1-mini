@@ -2,6 +2,97 @@
 
 ESPHome component to interface a Solax X1 mini via RS485
 
+## Requirements
+
+* [ESPHome 1.18.0 or higher](https://github.com/esphome/esphome/releases).
+
+## Installation
+
+You can install this component with [ESPHome external components feature](https://esphome.io/components/external_components.html) like this:
+```yaml
+external_components:
+  - source: github://syssi/esphome-modbus-solax-x1@main
+```
+
+## Configuration
+
+```yaml
+substitutions:
+  name: solar_powermeter
+
+esphome:
+  name: ${name}
+  platform: ESP32
+  board: esp-wrover-kit
+
+external_components:
+  - source: github://syssi/esphome-modbus-solax-x1@main
+    refresh: 0s
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+api:
+
+logger:
+  baud_rate: 0
+
+uart:
+  baud_rate: 9600
+  tx_pin: GPIO1
+  rx_pin: GPIO3
+
+sensor:
+  - platform: solax_x1
+    serial_number: "3132333435363737363534333231"
+    address: 0x0A
+    ac_power:
+      name: "${name} ac power"
+    energy_today:
+      name: "${name} energy today"
+    energy_total:
+      name: "${name} energy total"
+    dc1_voltage:
+      name: "${name} dc1 voltage"
+    dc2_voltage:
+      name: "${name} dc2 voltage"
+    dc1_current:
+      name: "${name} dc1 current"
+    dc2_current:
+      name: "${name} dc2 current"
+    ac_current:
+      name: "${name} ac current"
+    ac_voltage:
+      name: "${name} ac voltage"
+    ac_frequency:
+      name: "${name} ac frequency"
+    temperature:
+      name: "${name} temperature"
+    runtime_total:
+      name: "${name} runtime total"
+    mode:
+      name: "${name} mode"
+    error_bits:
+      name: "${name} error bits"
+    update_interval: 1s
+```
+
+For a more advanced setup take a look at the [advanced-multiple-uarts.yaml](advanced-multiple-uarts.yaml).
+
+## Known issues
+
+All known firmware versions (`V1.00`) responds with the same serial number (`3132333435363737363534333231`) to the discovery 
+broadcast (`AA.55.01.00.00.00.10.00.00.01.10`). For this reason it's challenging to use multiple devices on the same bus and 
+assign an individual address per device.
+
+Affected firmware versions:
+
+* 618.00207.00_X1_BOOST3.0_MINI2.0_AIR2.0_ARM_V1.32_20210625.usb, 618.00381.00_X1_BOOST3.0_MINI2.0_AIR2.0_DSP_V2.12_20210622.usb
+
+Workaround: Use one UART per device to handle multiple devices.
+
 
 ## Protocol details
 
@@ -10,12 +101,8 @@ ESPHome component to interface a Solax X1 mini via RS485
 ```
 # Send discovery to broadcast address (0x10 0x00)
 [VV][modbus_solax:200]: TX -> AA.55.01.00.00.00.10.00.00.01.10 (11)
-
-# Each inverter should respond with a **unique** serial number (0x10 0x80)
-# In my case every inverter responds with the same serial number.
-
-[modbus_solax:084]: RX <- AA.55.00.FF.01.00.10.80.0E.31.32.33.34.35.36.37.37.36.35.34.33.32.31.05.75 (25)
-                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[VV][modbus_solax:084]: RX <- AA.55.00.FF.01.00.10.80.0E.31.32.33.34.35.36.37.37.36.35.34.33.32.31.05.75 (25)
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [I][modbus_solax:105]: Inverter discovered. Serial number: 3132333435363737363534333231
 
 # Assign address (0x0A) to the inverter via serial number (0x10, 0x01)
@@ -84,3 +171,10 @@ Data 46...49 (error message):      0x00 0x00 0x00 0x00
 Data 50...52 (unknown):            0x02 0xD0
 
 ```
+
+## References
+
+* https://github.com/JensJordan/solaXd/
+* https://github.com/arendst/Tasmota/blob/development/tasmota/xnrg_12_solaxX1.ino
+* https://github.com/esphome/esphome/blob/dev/esphome/components/modbus/modbus.cpp
+* https://github.com/syssi/esphome-modbus-solax-x1/blob/main/docs/SolaxPower_Single_Phase_External_Communication_Protocol_-_X1_Series_V1.2.pdf
