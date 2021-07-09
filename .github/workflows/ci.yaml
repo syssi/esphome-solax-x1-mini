@@ -19,6 +19,9 @@ jobs:
           config_file: .yamllint
 
   lint-clang-format:
+    defaults:
+      run:
+        working-directory: esphome
     runs-on: ubuntu-latest
     # cpp lint job runs with esphome-lint docker image so that clang-format-*
     # doesn't have to be installed
@@ -29,18 +32,21 @@ jobs:
       # (build flags, libraries etc)
 
       - name: 💣 Clone esphome project
-        run: git clone https://github.com/esphome/esphome.git
+        run: git clone https://github.com/esphome/esphome.git .
       - name: 💣 Copy component into the esphome project
-        run: cp -r components/* esphome/esphome/components/
+        run: cp -r ../components/* esphome/components/
 
       - name: Set up platformio environment
         run: pio init --ide atom
         working-directory: esphome/
 
       - name: Run clang-format
-        run: esphome/script/clang-format -i
+        run: script/clang-format -i
+        working-directory: esphome/
+
       - name: Suggest changes
-        run: esphome/script/ci-suggest-changes
+        run: script/ci-suggest-changes
+        working-directory: esphome/
 
   lint-clang-tidy:
     runs-on: ubuntu-latest
@@ -66,9 +72,11 @@ jobs:
           echo "::add-matcher::.github/workflows/matchers/clang-tidy.json"
           echo "::add-matcher::.github/workflows/matchers/gcc.json"
       - name: Run lint-cpp
-        run: esphome/script/lint-cpp -c
+        run: script/lint-cpp -c
+        working-directory: esphome/
       - name: Suggest changes
-        run: esphome/script/ci-suggest-changes
+        run: script/ci-suggest-changes
+        working-directory: esphome/
 
   lint-python:
     # Don't use the esphome-lint docker image because it may contain outdated requirements.
@@ -94,7 +102,8 @@ jobs:
         run: cp -r components/* esphome/esphome/components/
 
       - name: Set up python environment
-        run: esphome/script/setup
+        run: script/setup
+        working-directory: esphome/
 
       - name: Register problem matchers
         run: |
@@ -102,19 +111,12 @@ jobs:
           echo "::add-matcher::.github/workflows/matchers/lint-python.json"
           echo "::add-matcher::.github/workflows/matchers/python.json"
 
-      - name: Check git remote
-        run: git remote -v
-        working-directory: esphome/
-
-      - name: Check git merge-base
-        run: git merge-base refs/remotes/origin/dev HEAD
-        working-directory: esphome/
-
       - name: Lint Custom
         run: script/ci-custom.py -c
         working-directory: esphome/
       - name: Lint Python
-        run: esphome/script/lint-python -c
+        run: script/lint-python -c
+        working-directory: esphome/
 
   esphome-config:
     runs-on: ubuntu-latest
