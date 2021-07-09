@@ -87,6 +87,12 @@ jobs:
           key: esphome-pip-3.7-${{ hashFiles('setup.py') }}
           restore-keys: |
             esphome-pip-3.7-
+
+      - name: Clone esphome project
+        run: git clone git@github.com:esphome/esphome.git
+      - name: Copy component into the esphome project
+        run: cp components/* esphome/esphome/components/
+
       - name: Set up python environment
         run: esphome/script/setup
 
