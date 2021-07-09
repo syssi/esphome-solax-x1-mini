@@ -31,7 +31,7 @@ jobs:
       - name: Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
       - name: Copy component into the esphome project
-        run: cp components/* esphome/esphome/components/
+        run: cp -r components/* esphome/esphome/components/
 
       - name: Set up platformio environment
         run: pio init --ide atom
@@ -53,7 +53,7 @@ jobs:
       - name: Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
       - name: Copy component into the esphome project
-        run: cp components/* esphome/esphome/components/
+        run: cp -r components/* esphome/esphome/components/
 
       # Set up the pio project so that the cpp checks know how files are compiled
       # (build flags, libraries etc)
@@ -91,7 +91,7 @@ jobs:
       - name: Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
       - name: Copy component into the esphome project
-        run: cp components/* esphome/esphome/components/
+        run: cp -r components/* esphome/esphome/components/
 
       - name: Set up python environment
         run: esphome/script/setup
