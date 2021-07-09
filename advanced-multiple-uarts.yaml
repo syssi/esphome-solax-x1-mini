@@ -55,7 +55,6 @@ modbus_solax:
     uart_id: uart2
 
 sensor:
-  - !include common/sensors/uptime.yaml
   - platform: solax_x1
     modbus_solax_id: modbus0
     serial_number: "3132333435363737363534333231"
