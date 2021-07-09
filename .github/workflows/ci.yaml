@@ -97,7 +97,7 @@ jobs:
       - name: 💣Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
       - name: 💣Remove git remote
-        run: git remote rm origin
+        run: git remote rm origin && git remote -v
         working-directory: esphome/
       - name: 💣Copy component into the esphome project
         run: cp -r components/* esphome/esphome/components/
