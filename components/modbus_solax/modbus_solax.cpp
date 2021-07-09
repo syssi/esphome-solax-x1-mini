@@ -98,26 +98,6 @@ bool ModbusSolax::parse_modbus_solax_byte_(uint8_t byte) {
   // data only
   std::vector<uint8_t> data(this->rx_buffer_.begin() + 9, this->rx_buffer_.begin() + 9 + data_len);
 
-  // Send discovery to broadcast address (0x10 0x00)
-  // [VV][modbus_solax:200]: TX -> AA.55.01.00.00.00.10.00.00.01.10 (11)
-  //
-  // Each inverter should respond with a **unique** serial number (0x10 0x80)
-  // In my case every inverter responds with the same serial number.
-  //
-  // [modbus_solax:084]: RX <- AA.55.00.FF.01.00.10.80.0E.31.32.33.34.35.36.37.37.36.35.34.33.32.31.05.75 (25)
-  //                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  // [I][modbus_solax:105]: Inverter discovered. Serial number: 3132333435363737363534333231
-  //
-  // Assign address (0x0A) to the inverter via serial number (0x10, 0x01)
-  // [VV][modbus_solax:200]: TX -> AA.55.00.00.00.00.10.01.0F.31.32.33.34.35.36.37.37.36.35.34.33.32.31.0A.04.01 (26)
-  //                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  //                                                    Byte   0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
-  //
-  // Register address confirmation (0x10, 0x81)
-  // [VV][modbus_solax:084]: RX <- AA.55.00.0A.00.00.10.81.01.06.01.A1 (12)
-  //                                                     ^
-  //                                                     ACK
-
   if (address == BROADCAST_ADDRESS) {
     // check control code && function code
     if (frame[6] == 0x10 && frame[7] == 0x80 && data.size() == 14) {
