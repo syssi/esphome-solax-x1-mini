@@ -6,6 +6,9 @@ esphome:
   platform: ESP32
   board: esp-wrover-kit
 
+external_components:
+  - source: github://syssi/esphome-modbus-solax-x1@main
+
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password

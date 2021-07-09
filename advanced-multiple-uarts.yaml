@@ -9,6 +9,9 @@ esphome:
   platform: ESP32
   board: esp-wrover-kit
 
+external_components:
+  - source: github://syssi/esphome-modbus-solax-x1@main
+
 ethernet:
   type: LAN8720
   mdc_pin: GPIO23
