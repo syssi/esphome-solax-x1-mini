@@ -30,9 +30,6 @@ jobs:
 
       - name: 💣 Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
-      - name: 💣 Remove git remote
-        run: git remote rm origin
-        working-directory: esphome/
       - name: 💣 Copy component into the esphome project
         run: cp -r components/* esphome/esphome/components/
 
@@ -55,9 +52,6 @@ jobs:
 
       - name: 💣 Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
-      - name: 💣 Remove git remote
-        run: git remote rm origin
-        working-directory: esphome/
       - name: 💣 Copy component into the esphome project
         run: cp -r components/* esphome/esphome/components/
 
@@ -96,9 +90,6 @@ jobs:
 
       - name: 💣Clone esphome project
         run: git clone https://github.com/esphome/esphome.git
-      - name: 💣Remove git remote
-        run: git remote rm origin && git remote -v
-        working-directory: esphome/
       - name: 💣Copy component into the esphome project
         run: cp -r components/* esphome/esphome/components/
 
@@ -110,6 +101,11 @@ jobs:
           echo "::add-matcher::.github/workflows/matchers/ci-custom.json"
           echo "::add-matcher::.github/workflows/matchers/lint-python.json"
           echo "::add-matcher::.github/workflows/matchers/python.json"
+
+      - name: Check git remote
+        run: git remote -v
+        working-directory: esphome/
+
       - name: Lint Custom
         run: script/ci-custom.py -c
         working-directory: esphome/
