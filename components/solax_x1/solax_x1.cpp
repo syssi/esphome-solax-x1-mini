@@ -233,7 +233,7 @@ std::string SolaxX1::error_bits_to_string_(const uint32_t mask) {
           errors = ERRORS[i];
           first = false;
         } else {
-          errors = errors + ";" + ERRORS[i];
+          errors.append(";" + ERRORS[i]);
         }
       }
     }
