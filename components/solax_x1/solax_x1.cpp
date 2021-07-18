@@ -166,10 +166,10 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
     this->error_bits_sensor_->publish_state(error_bits);
 
   if (this->mode_name_text_sensor_ != nullptr) {
-    if (mode > 9) {
-      this->mode_name_text_sensor_->publish_state("Mode unknown");
-    } else {
+    if (mode <= 9) {
       this->mode_name_text_sensor_->publish_state(MODE_NAMES[mode]);
+    } else {
+      this->mode_name_text_sensor_->publish_state("Unknown");
     }
   }
 
@@ -178,6 +178,7 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
 
 void SolaxX1::update() {
   if (this->no_response_count_ >= REDISCOVERY_THRESHOLD) {
+    this->publish_device_offline_();
     ESP_LOGD(TAG, "The device is or was offline. Broadcasting discovery for address configuration...");
     this->discover_devices();
     //    this->query_info(this->address_);
@@ -208,6 +209,13 @@ void SolaxX1::dump_config() {
   LOG_SENSOR("", "Mode", this->mode_sensor_);
   LOG_SENSOR("", "Error Bits", this->error_bits_sensor_);
   LOG_TEXT_SENSOR("  ", "Mode Name", this->mode_name_text_sensor_);
+}
+
+void SolaxX1::publish_device_offline_() {
+  if (this->mode_sensor_ != nullptr)
+    this->mode_sensor_->publish_state(-1);
+  if (this->mode_name_text_sensor_ != nullptr)
+    this->mode_name_text_sensor_->publish_state("Offline");
 }
 
 }  // namespace solax_x1
