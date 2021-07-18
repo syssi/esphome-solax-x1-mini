@@ -20,8 +20,8 @@ CONFIG_SCHEMA = (
             cv.GenerateID(): cv.declare_id(SolaxX1),
         }
     )
-       .extend(cv.polling_component_schema("30s"))
-       .extend(modbus_solax.modbus_solax_device_schema())
+        .extend(cv.polling_component_schema("30s"))
+        .extend(modbus_solax.modbus_solax_device_schema())
 )
 
 

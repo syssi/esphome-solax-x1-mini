@@ -1,8 +1,7 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import sensor, modbus_solax
+from esphome.components import sensor
 from esphome.const import (
-    CONF_ID,
     CONF_MODE,
     CONF_TEMPERATURE,
     DEVICE_CLASS_EMPTY,
