@@ -49,6 +49,11 @@ solax_x1:
   address: 0x0A
   update_interval: 1s
 
+text_sensor:
+  - platform: solax_x1
+    mode_name:
+      name: "${device0} mode name"
+
 sensor:
   - platform: solax_x1
     ac_power:

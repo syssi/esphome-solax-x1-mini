@@ -21,11 +21,7 @@ from esphome.const import (
     UNIT_WATT,
     UNIT_EMPTY,
 )
-from . import (
-    SolaxX1,
-    CONF_SOLAX_X1_ID,
-)
-
+from . import SolaxX1, CONF_SOLAX_X1_ID
 
 DEPENDENCIES = ["solax_x1"]
 

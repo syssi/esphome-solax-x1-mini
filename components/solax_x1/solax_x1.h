@@ -2,6 +2,7 @@
 
 #include "esphome/core/component.h"
 #include "esphome/components/sensor/sensor.h"
+#include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/components/modbus_solax/modbus_solax.h"
 
 namespace esphome {
@@ -33,6 +34,7 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   void set_ac_voltage_sensor(sensor::Sensor *ac_voltage_sensor) { ac_voltage_sensor_ = ac_voltage_sensor; }
   void set_temperature_sensor(sensor::Sensor *temperature_sensor) { temperature_sensor_ = temperature_sensor; }
   void set_mode_sensor(sensor::Sensor *mode_sensor) { mode_sensor_ = mode_sensor; }
+  void set_mode_name_text_sensor(text_sensor::TextSensor *sensor) { this->mode_name_text_sensor_ = sensor; }
   void set_error_bits_sensor(sensor::Sensor *error_bits_sensor) { error_bits_sensor_ = error_bits_sensor; }
   void set_runtime_total_sensor(sensor::Sensor *runtime_total_sensor) { runtime_total_sensor_ = runtime_total_sensor; }
   uint8_t get_no_response_count() { return no_response_count_; }
@@ -59,6 +61,7 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   sensor::Sensor *mode_sensor_;
   sensor::Sensor *error_bits_sensor_;
   sensor::Sensor *runtime_total_sensor_;
+  text_sensor::TextSensor *mode_name_text_sensor_;
   uint8_t no_response_count_ = REDISCOVERY_THRESHOLD;
 };
 

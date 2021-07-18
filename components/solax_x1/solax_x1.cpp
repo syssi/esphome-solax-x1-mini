@@ -8,7 +8,7 @@ static const char *const TAG = "solax_x1";
 
 // Hybrid.X1.X3-G3.ModbusTCP.RTU.V3.21-.English.pdf
 // May be some modes doesn't apply to the X1 mini
-static const char *const MODE_TEXT[16] = {
+static const std::string MODE_NAMES[10] = {
     "Wait",             // 0
     "Check",            // 1
     "Normal",           // 2
@@ -165,6 +165,14 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
   if (this->error_bits_sensor_ != nullptr)
     this->error_bits_sensor_->publish_state(error_bits);
 
+  if (this->mode_name_text_sensor_ != nullptr) {
+    if (mode > 9) {
+      this->mode_name_text_sensor_->publish_state("Mode unknown");
+    } else {
+      this->mode_name_text_sensor_->publish_state(MODE_NAMES[mode]);
+    }
+  }
+
   this->no_response_count_ = 0;
 }
 
@@ -199,6 +207,7 @@ void SolaxX1::dump_config() {
   LOG_SENSOR("", "Runtime Total", this->runtime_total_sensor_);
   LOG_SENSOR("", "Mode", this->mode_sensor_);
   LOG_SENSOR("", "Error Bits", this->error_bits_sensor_);
+  LOG_TEXT_SENSOR("  ", "Mode Name", this->mode_name_text_sensor_);
 }
 
 }  // namespace solax_x1
