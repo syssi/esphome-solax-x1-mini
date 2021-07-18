@@ -49,7 +49,7 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
 
  protected:
   void publish_device_offline_();
-  std::string error_bits_to_string_(const uint32_t bitmask);
+  std::string error_bits_to_string_(uint32_t bitmask);
 
   sensor::Sensor *energy_today_sensor_;
   sensor::Sensor *energy_total_sensor_;
