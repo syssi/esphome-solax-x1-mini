@@ -224,22 +224,22 @@ void SolaxX1::publish_device_offline_() {
 
 std::string SolaxX1::error_bits_to_string_(uint32_t mask) {
   bool first = true;
-  std::string errors = "";
+  std::string errors_list = "";
 
   if (mask) {
     for (int i = 0; i < 32; i++) {
       if (mask & (1 << i)) {
         if (first) {
-          errors = ERRORS[i];
           first = false;
         } else {
-          errors.append(";" + ERRORS[i]);
+          errors_list.append(";");
         }
+        errors_list.append(ERRORS[i]);
       }
     }
   }
 
-  return errors;
+  return errors_list;
 }
 
 }  // namespace solax_x1
