@@ -222,7 +222,7 @@ void SolaxX1::publish_device_offline_() {
     this->mode_name_text_sensor_->publish_state("Offline");
 }
 
-std::string SolaxX1::error_bits_to_string_(const uint32_t mask) {
+std::string SolaxX1::error_bits_to_string_(uint32_t mask) {
   bool first = true;
   std::string errors = "";
 
