@@ -7,8 +7,10 @@ from . import SolaxX1, CONF_SOLAX_X1_ID
 DEPENDENCIES = ["solax_x1"]
 
 CONF_MODE_NAME = "mode_name"
+CONF_ERRORS = "errors"
 
 ICON_MODE_NAME = "mdi:heart-pulse"
+ICON_ERRORS = "mdi:alert-circle-outline"
 
 CONFIG_SCHEMA = cv.Schema(
     {
@@ -19,13 +21,19 @@ CONFIG_SCHEMA = cv.Schema(
                 cv.Optional(CONF_ICON, default=ICON_MODE_NAME): cv.icon,
             }
         ),
+        cv.Optional(CONF_ERRORS): text_sensor.TEXT_SENSOR_SCHEMA.extend(
+            {
+                cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
+                cv.Optional(CONF_ICON, default=ICON_ERRORS): cv.icon,
+            }
+        ),
     }
 )
 
 
 def to_code(config):
     hub = yield cg.get_variable(config[CONF_SOLAX_X1_ID])
-    for key in [CONF_MODE_NAME]:
+    for key in [CONF_MODE_NAME, CONF_ERRORS]:
         if key in config:
             conf = config[key]
             sens = cg.new_Pvariable(conf[CONF_ID])

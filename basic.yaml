@@ -33,7 +33,9 @@ solax_x1:
 text_sensor:
   - platform: solax_x1
     mode_name:
-      name: "${device0} mode name"
+      name: "${name} mode name"
+    errors:
+      name: "${name} errors"
 
 sensor:
   - platform: solax_x1

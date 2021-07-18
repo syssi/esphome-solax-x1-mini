@@ -80,16 +80,22 @@ text_sensor:
     solax_x1_id: solax0
     mode_name:
       name: "${device0} mode name"
+    errors:
+      name: "${device0} errors"
 
   - platform: solax_x1
     solax_x1_id: solax1
     mode_name:
       name: "${device1} mode name"
+    errors:
+      name: "${device1} errors"
 
   - platform: solax_x1
     solax_x1_id: solax2
     mode_name:
       name: "${device2} mode name"
+    errors:
+      name: "${device2} errors"
 
 sensor:
   - platform: solax_x1

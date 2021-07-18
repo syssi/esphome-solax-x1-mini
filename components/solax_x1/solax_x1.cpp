@@ -22,7 +22,7 @@ static const std::string MODE_NAMES[10] = {
     "Idle",       // 9
 };
 
-static const char *const ERROR_TEXT[32] = {
+static const char *const ERRORS[32] = {
     "Tz Protection Fault",   // Byte 0.0
     "Mains Lost Fault",      // Byte 0.1
     "Grid Voltage Fault",    // Byte 0.2
@@ -165,6 +165,9 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
   if (this->error_bits_sensor_ != nullptr)
     this->error_bits_sensor_->publish_state(error_bits);
 
+  if (this->errors_text_sensor_ != nullptr) {
+    this->errors_text_sensor_->publish_state(this->error_bits_to_string_(error_bits));
+  }
   if (this->mode_name_text_sensor_ != nullptr) {
     if (mode <= 9) {
       this->mode_name_text_sensor_->publish_state(MODE_NAMES[mode]);
@@ -209,6 +212,7 @@ void SolaxX1::dump_config() {
   LOG_SENSOR("", "Mode", this->mode_sensor_);
   LOG_SENSOR("", "Error Bits", this->error_bits_sensor_);
   LOG_TEXT_SENSOR("  ", "Mode Name", this->mode_name_text_sensor_);
+  LOG_TEXT_SENSOR("  ", "Errors", this->errors_text_sensor_);
 }
 
 void SolaxX1::publish_device_offline_() {
@@ -216,6 +220,26 @@ void SolaxX1::publish_device_offline_() {
     this->mode_sensor_->publish_state(-1);
   if (this->mode_name_text_sensor_ != nullptr)
     this->mode_name_text_sensor_->publish_state("Offline");
+}
+
+std::string SolaxX1::error_bits_to_string_(const uint32_t mask) {
+  bool first = true;
+  std::string errors_list = "";
+
+  if (mask) {
+    for (int i = 0; i < 32; i++) {
+      if (mask & (1 << i)) {
+        if (first) {
+          first = false;
+        } else {
+          errors_list.append(";");
+        }
+        errors_list.append(ERRORS[i]);
+      }
+    }
+  }
+
+  return errors_list;
 }
 
 }  // namespace solax_x1
