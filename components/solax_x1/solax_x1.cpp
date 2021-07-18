@@ -178,7 +178,7 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
 
 void SolaxX1::update() {
   if (this->no_response_count_ >= REDISCOVERY_THRESHOLD) {
-    this->publish_device_offline();
+    this->publish_device_offline_();
     ESP_LOGD(TAG, "The device is or was offline. Broadcasting discovery for address configuration...");
     this->discover_devices();
     //    this->query_info(this->address_);
