@@ -70,7 +70,7 @@ solax_x1:
     address: 0x0A
     update_interval: 2s
   - id: solax2
-    modbus_solax_id: modbus0
+    modbus_solax_id: modbus2
     serial_number: "3132333435363737363534333231"
     address: 0x0A
     update_interval: 2s
