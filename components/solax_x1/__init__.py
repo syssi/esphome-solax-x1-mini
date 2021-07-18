@@ -15,13 +15,9 @@ SolaxX1 = solax_x1_ns.class_(
 )
 
 CONFIG_SCHEMA = (
-    cv.Schema(
-        {
-            cv.GenerateID(): cv.declare_id(SolaxX1),
-        }
-    )
-        .extend(cv.polling_component_schema("30s"))
-        .extend(modbus_solax.modbus_solax_device_schema())
+    cv.Schema({cv.GenerateID(): cv.declare_id(SolaxX1),})
+    .extend(cv.polling_component_schema("30s"))
+    .extend(modbus_solax.modbus_solax_device_schema())
 )
 
 

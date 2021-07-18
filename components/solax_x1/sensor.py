@@ -65,54 +65,52 @@ SENSORS = [
     CONF_TEMPERATURE,
 ]
 
-CONFIG_SCHEMA = (
-    cv.Schema(
-        {
-            cv.GenerateID(CONF_SOLAX_X1_ID): cv.use_id(SolaxX1),
-            cv.Optional(CONF_ENERGY_TODAY): sensor.sensor_schema(
-                UNIT_KILO_WATT_HOURS, ICON_COUNTER, 3, DEVICE_CLASS_ENERGY
-            ),
-            cv.Optional(CONF_ENERGY_TOTAL): sensor.sensor_schema(
-                UNIT_KILO_WATT_HOURS, ICON_COUNTER, 3, DEVICE_CLASS_ENERGY
-            ),
-            cv.Optional(CONF_DC1_CURRENT): sensor.sensor_schema(
-                UNIT_AMPERE, ICON_EMPTY, 1, DEVICE_CLASS_CURRENT
-            ),
-            cv.Optional(CONF_DC1_VOLTAGE): sensor.sensor_schema(
-                UNIT_VOLT, ICON_EMPTY, 1, DEVICE_CLASS_VOLTAGE
-            ),
-            cv.Optional(CONF_DC2_CURRENT): sensor.sensor_schema(
-                UNIT_AMPERE, ICON_EMPTY, 1, DEVICE_CLASS_CURRENT
-            ),
-            cv.Optional(CONF_DC2_VOLTAGE): sensor.sensor_schema(
-                UNIT_VOLT, ICON_EMPTY, 1, DEVICE_CLASS_VOLTAGE
-            ),
-            cv.Optional(CONF_AC_CURRENT): sensor.sensor_schema(
-                UNIT_AMPERE, ICON_EMPTY, 2, DEVICE_CLASS_CURRENT
-            ),
-            cv.Optional(CONF_AC_VOLTAGE): sensor.sensor_schema(
-                UNIT_VOLT, ICON_EMPTY, 1, DEVICE_CLASS_VOLTAGE
-            ),
-            cv.Optional(CONF_AC_FREQUENCY): sensor.sensor_schema(
-                UNIT_HERTZ, ICON_CURRENT_AC, 1, DEVICE_CLASS_EMPTY
-            ),
-            cv.Optional(CONF_AC_POWER): sensor.sensor_schema(
-                UNIT_WATT, ICON_EMPTY, 0, DEVICE_CLASS_POWER
-            ),
-            cv.Optional(CONF_RUNTIME_TOTAL): sensor.sensor_schema(
-                UNIT_HOURS, ICON_TIMER, 0, DEVICE_CLASS_EMPTY
-            ),
-            cv.Optional(CONF_ERROR_BITS): sensor.sensor_schema(
-                UNIT_EMPTY, ICON_ERROR_BITS, 0, DEVICE_CLASS_EMPTY
-            ),
-            cv.Optional(CONF_MODE): sensor.sensor_schema(
-                UNIT_EMPTY, ICON_MODE, 0, DEVICE_CLASS_EMPTY
-            ),
-            cv.Optional(CONF_TEMPERATURE): sensor.sensor_schema(
-                UNIT_CELSIUS, ICON_EMPTY, 1, DEVICE_CLASS_TEMPERATURE
-            ),
-        }
-    )
+CONFIG_SCHEMA = cv.Schema(
+    {
+        cv.GenerateID(CONF_SOLAX_X1_ID): cv.use_id(SolaxX1),
+        cv.Optional(CONF_ENERGY_TODAY): sensor.sensor_schema(
+            UNIT_KILO_WATT_HOURS, ICON_COUNTER, 3, DEVICE_CLASS_ENERGY
+        ),
+        cv.Optional(CONF_ENERGY_TOTAL): sensor.sensor_schema(
+            UNIT_KILO_WATT_HOURS, ICON_COUNTER, 3, DEVICE_CLASS_ENERGY
+        ),
+        cv.Optional(CONF_DC1_CURRENT): sensor.sensor_schema(
+            UNIT_AMPERE, ICON_EMPTY, 1, DEVICE_CLASS_CURRENT
+        ),
+        cv.Optional(CONF_DC1_VOLTAGE): sensor.sensor_schema(
+            UNIT_VOLT, ICON_EMPTY, 1, DEVICE_CLASS_VOLTAGE
+        ),
+        cv.Optional(CONF_DC2_CURRENT): sensor.sensor_schema(
+            UNIT_AMPERE, ICON_EMPTY, 1, DEVICE_CLASS_CURRENT
+        ),
+        cv.Optional(CONF_DC2_VOLTAGE): sensor.sensor_schema(
+            UNIT_VOLT, ICON_EMPTY, 1, DEVICE_CLASS_VOLTAGE
+        ),
+        cv.Optional(CONF_AC_CURRENT): sensor.sensor_schema(
+            UNIT_AMPERE, ICON_EMPTY, 2, DEVICE_CLASS_CURRENT
+        ),
+        cv.Optional(CONF_AC_VOLTAGE): sensor.sensor_schema(
+            UNIT_VOLT, ICON_EMPTY, 1, DEVICE_CLASS_VOLTAGE
+        ),
+        cv.Optional(CONF_AC_FREQUENCY): sensor.sensor_schema(
+            UNIT_HERTZ, ICON_CURRENT_AC, 1, DEVICE_CLASS_EMPTY
+        ),
+        cv.Optional(CONF_AC_POWER): sensor.sensor_schema(
+            UNIT_WATT, ICON_EMPTY, 0, DEVICE_CLASS_POWER
+        ),
+        cv.Optional(CONF_RUNTIME_TOTAL): sensor.sensor_schema(
+            UNIT_HOURS, ICON_TIMER, 0, DEVICE_CLASS_EMPTY
+        ),
+        cv.Optional(CONF_ERROR_BITS): sensor.sensor_schema(
+            UNIT_EMPTY, ICON_ERROR_BITS, 0, DEVICE_CLASS_EMPTY
+        ),
+        cv.Optional(CONF_MODE): sensor.sensor_schema(
+            UNIT_EMPTY, ICON_MODE, 0, DEVICE_CLASS_EMPTY
+        ),
+        cv.Optional(CONF_TEMPERATURE): sensor.sensor_schema(
+            UNIT_CELSIUS, ICON_EMPTY, 1, DEVICE_CLASS_TEMPERATURE
+        ),
+    }
 )
 
 
