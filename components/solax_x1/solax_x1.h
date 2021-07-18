@@ -36,6 +36,7 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   void set_mode_sensor(sensor::Sensor *mode_sensor) { mode_sensor_ = mode_sensor; }
   void set_mode_name_text_sensor(text_sensor::TextSensor *sensor) { this->mode_name_text_sensor_ = sensor; }
   void set_error_bits_sensor(sensor::Sensor *error_bits_sensor) { error_bits_sensor_ = error_bits_sensor; }
+  void set_errors_text_sensor(text_sensor::TextSensor *sensor) { this->errors_text_sensor_ = sensor; }
   void set_runtime_total_sensor(sensor::Sensor *runtime_total_sensor) { runtime_total_sensor_ = runtime_total_sensor; }
   uint8_t get_no_response_count() { return no_response_count_; }
 
@@ -48,6 +49,7 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
 
  protected:
   void publish_device_offline_();
+  std::string error_bits_to_string_(const uint32_t bitmask);
 
   sensor::Sensor *energy_today_sensor_;
   sensor::Sensor *energy_total_sensor_;
@@ -64,6 +66,7 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   sensor::Sensor *error_bits_sensor_;
   sensor::Sensor *runtime_total_sensor_;
   text_sensor::TextSensor *mode_name_text_sensor_;
+  text_sensor::TextSensor *errors_text_sensor_;
   uint8_t no_response_count_ = REDISCOVERY_THRESHOLD;
 };
 
