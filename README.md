@@ -44,10 +44,13 @@ uart:
   tx_pin: GPIO1
   rx_pin: GPIO3
 
+solax_x1:
+  serial_number: "3132333435363737363534333231"
+  address: 0x0A
+  update_interval: 1s
+
 sensor:
   - platform: solax_x1
-    serial_number: "3132333435363737363534333231"
-    address: 0x0A
     ac_power:
       name: "${name} ac power"
     energy_today:
@@ -76,7 +79,6 @@ sensor:
       name: "${name} mode"
     error_bits:
       name: "${name} error bits"
-    update_interval: 1s
 ```
 
 For a more advanced setup take a look at the [advanced-multiple-uarts.yaml](advanced-multiple-uarts.yaml).
