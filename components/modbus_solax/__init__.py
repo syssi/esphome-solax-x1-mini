@@ -15,7 +15,7 @@ MULTI_CONF = True
 CONF_MODBUS_SOLAX_ID = "modbus_solax_id"
 CONF_SERIAL_NUMBER = "serial_number"
 CONFIG_SCHEMA = (
-    cv.Schema({cv.GenerateID(): cv.declare_id(ModbusSolax),})
+    cv.Schema({cv.GenerateID(): cv.declare_id(ModbusSolax)})
     .extend(cv.COMPONENT_SCHEMA)
     .extend(uart.UART_DEVICE_SCHEMA)
 )
