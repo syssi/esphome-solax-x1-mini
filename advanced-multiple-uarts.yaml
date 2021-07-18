@@ -58,11 +58,26 @@ modbus_solax:
   - id: modbus2
     uart_id: uart2
 
-sensor:
-  - platform: solax_x1
+solax_x1:
+  - id: solax0
     modbus_solax_id: modbus0
     serial_number: "3132333435363737363534333231"
     address: 0x0A
+    update_interval: 2s
+  - id: solax1
+    modbus_solax_id: modbus1
+    serial_number: "3132333435363737363534333231"
+    address: 0x0A
+    update_interval: 2s
+  - id: solax2
+    modbus_solax_id: modbus0
+    serial_number: "3132333435363737363534333231"
+    address: 0x0A
+    update_interval: 2s
+
+sensor:
+  - platform: solax_x1
+    solax_x1_id: solax0
     ac_power:
       name: "${device0} ac power"
     energy_today:
@@ -71,12 +86,8 @@ sensor:
       name: "${device0} energy total"
     dc1_voltage:
       name: "${device0} dc1 voltage"
-    dc2_voltage:
-      name: "${device0} dc2 voltage"
     dc1_current:
       name: "${device0} dc1 current"
-    dc2_current:
-      name: "${device0} dc2 current"
     ac_current:
       name: "${device0} ac current"
     ac_voltage:
@@ -91,12 +102,9 @@ sensor:
       name: "${device0} mode"
     error_bits:
       name: "${device0} error bits"
-    update_interval: 2s
 
   - platform: solax_x1
-    modbus_solax_id: modbus1
-    serial_number: "3132333435363737363534333231"
-    address: 0x0A
+    solax_x1_id: solax1
     ac_power:
       name: "${device1} ac power"
     energy_today:
@@ -105,12 +113,8 @@ sensor:
       name: "${device1} energy total"
     dc1_voltage:
       name: "${device1} dc1 voltage"
-    dc2_voltage:
-      name: "${device1} dc2 voltage"
     dc1_current:
       name: "${device1} dc1 current"
-    dc2_current:
-      name: "${device1} dc2 current"
     ac_current:
       name: "${device1} ac current"
     ac_voltage:
@@ -125,12 +129,9 @@ sensor:
       name: "${device1} mode"
     error_bits:
       name: "${device1} error bits"
-    update_interval: 2s
 
   - platform: solax_x1
-    modbus_solax_id: modbus2
-    serial_number: "3132333435363737363534333231"
-    address: 0x0A
+    solax_x1_id: solax2
     ac_power:
       name: "${device2} ac power"
     energy_today:
@@ -139,12 +140,8 @@ sensor:
       name: "${device2} energy total"
     dc1_voltage:
       name: "${device2} dc1 voltage"
-    dc2_voltage:
-      name: "${device2} dc2 voltage"
     dc1_current:
       name: "${device2} dc1 current"
-    dc2_current:
-      name: "${device2} dc2 current"
     ac_current:
       name: "${device2} ac current"
     ac_voltage:
@@ -159,4 +156,3 @@ sensor:
       name: "${device2} mode"
     error_bits:
       name: "${device2} error bits"
-    update_interval: 2s

@@ -22,9 +22,13 @@ from esphome.const import (
     UNIT_WATT,
     UNIT_EMPTY,
 )
+from . import (
+    SolaxX1,
+    CONF_SOLAX_X1_ID,
+)
 
-AUTO_LOAD = ["modbus_solax"]
-CODEOWNERS = ["@syssi"]
+
+DEPENDENCIES = ["solax_x1"]
 
 CONF_ENERGY_TODAY = "energy_today"
 CONF_ENERGY_TOTAL = "energy_total"
@@ -62,15 +66,10 @@ SENSORS = [
     CONF_TEMPERATURE,
 ]
 
-solax_x1_ns = cg.esphome_ns.namespace("solax_x1")
-SolaxX1 = solax_x1_ns.class_(
-    "SolaxX1", cg.PollingComponent, modbus_solax.ModbusSolaxDevice
-)
-
 CONFIG_SCHEMA = (
     cv.Schema(
         {
-            cv.GenerateID(): cv.declare_id(SolaxX1),
+            cv.GenerateID(CONF_SOLAX_X1_ID): cv.use_id(SolaxX1),
             cv.Optional(CONF_ENERGY_TODAY): sensor.sensor_schema(
                 UNIT_KILO_WATT_HOURS, ICON_COUNTER, 3, DEVICE_CLASS_ENERGY
             ),
@@ -115,36 +114,13 @@ CONFIG_SCHEMA = (
             ),
         }
     )
-    .extend(cv.polling_component_schema("30s"))
-    .extend(modbus_solax.modbus_solax_device_schema())
 )
 
 
-def validate_serial_number(value):
-    value = cv.string_strict(value)
-    parts = [value[i : i + 2] for i in range(0, len(value), 2)]
-    if len(parts) != 14:
-        raise cv.Invalid("Serial number must consist of 14 hexadecimal numbers")
-    parts_int = []
-    if any(len(part) != 2 for part in parts):
-        raise cv.Invalid("Serial number must be format XX")
-    for part in parts:
-        try:
-            parts_int.append(int(part, 16))
-        except ValueError:
-            # pylint: disable=raise-missing-from
-            raise cv.Invalid("Serial number must be hex values from 00 to FF")
-
-    return "".join(f"{part:02X}" for part in parts_int)
-
-
 def to_code(config):
-    var = cg.new_Pvariable(config[CONF_ID])
-    yield cg.register_component(var, config)
-    yield modbus_solax.register_modbus_solax_device(var, config)
-
+    hub = yield cg.get_variable(config[CONF_SOLAX_X1_ID])
     for key in SENSORS:
         if key in config:
             conf = config[key]
             sens = yield sensor.new_sensor(conf)
-            cg.add(getattr(var, f"set_{key}_sensor")(sens))
+            cg.add(getattr(hub, f"set_{key}_sensor")(sens))
