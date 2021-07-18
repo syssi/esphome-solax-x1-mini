@@ -226,7 +226,7 @@ std::string SolaxX1::error_bits_to_string_(uint32_t mask) {
   bool first = true;
   std::string errors = "";
 
-  if (mask > 0) {
+  if (mask) {
     for (int i = 0; i < 32; i++) {
       if (mask & (1 << i)) {
         if (first) {
