@@ -191,13 +191,6 @@ void SolaxX1::update() {
   }
 }
 
-void SolaxX1::publish_device_offline() {
-  if (this->mode_sensor_ != nullptr)
-    this->mode_sensor_->publish_state(-1);
-  if (this->mode_name_text_sensor_ != nullptr)
-    this->mode_name_text_sensor_->publish_state("Offline");
-}
-
 void SolaxX1::dump_config() {
   ESP_LOGCONFIG(TAG, "SolaxX1:");
   ESP_LOGCONFIG(TAG, "  Address: 0x%02X", this->address_);
@@ -216,6 +209,13 @@ void SolaxX1::dump_config() {
   LOG_SENSOR("", "Mode", this->mode_sensor_);
   LOG_SENSOR("", "Error Bits", this->error_bits_sensor_);
   LOG_TEXT_SENSOR("  ", "Mode Name", this->mode_name_text_sensor_);
+}
+
+void SolaxX1::publish_device_offline_() {
+  if (this->mode_sensor_ != nullptr)
+    this->mode_sensor_->publish_state(-1);
+  if (this->mode_name_text_sensor_ != nullptr)
+    this->mode_name_text_sensor_->publish_state("Offline");
 }
 
 }  // namespace solax_x1

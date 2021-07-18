@@ -47,7 +47,7 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   void dump_config() override;
 
  protected:
-  void publish_device_offline();
+  void publish_device_offline_();
 
   sensor::Sensor *energy_today_sensor_;
   sensor::Sensor *energy_total_sensor_;
