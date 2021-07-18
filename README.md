@@ -2,6 +2,8 @@
 
 ESPHome component to interface a Solax X1 mini via RS485
 
+![Lovelace entities card](lovelace-entities-card.png "lovelace entities card")
+
 ## Requirements
 
 * [ESPHome 1.18.0 or higher](https://github.com/esphome/esphome/releases).
