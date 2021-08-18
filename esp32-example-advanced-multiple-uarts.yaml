@@ -1,8 +1,8 @@
 substitutions:
-  name: solar_powermeter
-  device0: firstfloor_solar_powermeter
-  device1: groundfloor_solar_powermeter
-  device2: community_solar_powermeter
+  name: solar-powermeter
+  device0: firstfloor-solar-powermeter
+  device1: groundfloor-solar-powermeter
+  device2: community-solar-powermeter
 
 esphome:
   name: ${name}
@@ -20,7 +20,7 @@ ethernet:
   clk_mode: GPIO17_OUT
   phy_addr: 0
 
-api:
+# api:
 ota:
 
 logger:
@@ -35,6 +35,12 @@ logger:
 #    sensor: WARN
 #    solax_x1: VERY_VERBOSE
 #    modbux_solax: VERY_VERBOSE
+
+mqtt:
+  broker: !secret mqtt_host
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  id: mqtt_client
 
 uart:
   - id: uart0

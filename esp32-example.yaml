@@ -1,5 +1,5 @@
 substitutions:
-  name: solar_powermeter
+  name: solar-powermeter
 
 esphome:
   name: ${name}
@@ -15,10 +15,16 @@ wifi:
   password: !secret wifi_password
 
 ota:
-api:
+# api:
 
 logger:
   baud_rate: 0
+
+mqtt:
+  broker: !secret mqtt_host
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  id: mqtt_client
 
 uart:
   baud_rate: 9600

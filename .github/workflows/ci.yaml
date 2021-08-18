@@ -156,13 +156,13 @@ jobs:
           esphome version
       - name: Write secrets.yaml
         shell: bash
-        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml'
       - run: |
-          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' basic.yaml
-          esphome basic.yaml config
+          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' esp32-example.yaml
+          esphome esp32-example.yaml config
       - run: |
-          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' advanced-multiple-uarts.yaml
-          esphome advanced-multiple-uarts.yaml config
+          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' esp32-example-advanced-multiple-uarts.yaml
+          esphome esp32-example-advanced-multiple-uarts.yaml config
 
   esphome-compile:
     runs-on: ubuntu-latest
@@ -198,10 +198,10 @@ jobs:
           echo "::add-matcher::.github/workflows/matchers/python.json"
       - name: Write secrets.yaml
         shell: bash
-        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml'
       - run: |
-          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' basic.yaml
-          esphome basic.yaml compile
+          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' esp32-example.yaml
+          esphome esp32-example.yaml compile
       - run: |
-          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' advanced-multiple-uarts.yaml
-          esphome advanced-multiple-uarts.yaml compile
+          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' esp32-example-advanced-multiple-uarts.yaml
+          esphome esp32-example-advanced-multiple-uarts.yaml compile

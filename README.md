@@ -7,6 +7,35 @@ ESPHome component to interface a Solax X1 mini via RS485
 ## Requirements
 
 * [ESPHome 1.18.0 or higher](https://github.com/esphome/esphome/releases).
+* One half of an ethernet cable with rj45 connector
+* RS485-to-TTL module (`HW-0519` f.e.)
+* Generic ESP32 or ESP8266 board
+
+## Schematics
+
+```
+               RS485                      UART
+┌─────────┐              ┌──────────┐                ┌─────────┐
+│         │              │          │<----- RX ----->│         │
+│  Solax  │<-----B- ---->│  RS485   │<----- TX ----->│ ESP32/  │
+│ X1 Mini │<---- A+ ---->│  to TTL  │<----- GND ---->│ ESP8266 │
+│         │<--- GND ---->│  module  │<--- 5V VCC --->│         │<-- 5V VCC
+│         │              │          │                │         │<-- GND
+└─────────┘              └──────────┘                └─────────┘
+```
+
+### X1 Min RJ45 jack
+
+| Pin     | Purpose      | RS485-to-TTL pin  | Color T-568B |
+| :-----: | :----------- | :---------------- | ------------ |
+|    1    | RefGen       |                   |              |
+|    2    | Com/DRM0     |                   |              |
+|    3    | GND_COM      |                   |              |
+|    4    | **A+**       | **A+**            | Blue         |
+|    5    | **B-**       | **B-**            | Blue-White   |
+|    6    | E_Stop       |                   |              |
+|    7    | **GND_COM**  | **GND**           | Brown-White  |
+|    8    | --           |                   |              |
 
 ## Installation
 
@@ -16,11 +45,37 @@ external_components:
   - source: github://syssi/esphome-modbus-solax-x1@main
 ```
 
+or just use the `esp32-example.yaml` / `esp8266-example.yaml` as proof of concept:
+
+```bash
+# Install esphome
+pip3 install esphome
+
+# Clone this external component
+git clone https://github.com/syssi/esphome-modbus-solax-x1.git
+cd esphome-modbus-solax-x1
+
+# Create a secret.yaml containing some setup specific secrets
+cat > secret.yaml <<EOF
+wifi_ssid: MY_WIFI_SSID
+wifi_password: MY_WIFI_PASSWORD
+
+mqtt_host: MY_MQTT_HOST
+mqtt_username: MY_MQTT_USERNAME
+mqtt_password: MY_MQTT_PASSWORD
+EOF
+
+# Validate the configuration, create a binary, upload it, and start logs
+# If you use a esp8266 run the esp8266-examle.yaml
+esphome run esp32-example.yaml
+
+```
+
 ## Configuration
 
 ```yaml
 substitutions:
-  name: solar_powermeter
+  name: solar-powermeter
 
 esphome:
   name: ${name}
@@ -36,10 +91,16 @@ wifi:
   password: !secret wifi_password
 
 ota:
-api:
+# api:
 
 logger:
   baud_rate: 0
+
+mqtt:
+  broker: !secret mqtt_host
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  id: mqtt_client
 
 uart:
   baud_rate: 9600
@@ -90,7 +151,7 @@ sensor:
       name: "${name} error bits"
 ```
 
-For a more advanced setup take a look at the [advanced-multiple-uarts.yaml](advanced-multiple-uarts.yaml).
+For a more advanced setup take a look at the [esp32-example-advanced-multiple-uarts.yaml](esp32-example-advanced-multiple-uarts.yaml).
 
 ## Known issues
 
