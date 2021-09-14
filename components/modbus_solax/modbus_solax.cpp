@@ -144,61 +144,61 @@ float ModbusSolax::get_setup_priority() const {
 }
 
 void ModbusSolax::query_live_data(uint8_t address) {
-  static SolaxMessageT TX_MESSAGE;
+  static SolaxMessageT tx_message;
 
-  TX_MESSAGE.Source[0] = 0x01;
-  TX_MESSAGE.Source[1] = 0x00;
-  TX_MESSAGE.Destination[0] = 0x00;
-  TX_MESSAGE.Destination[1] = address;
-  TX_MESSAGE.ControlCode = 0x11;
-  TX_MESSAGE.FunctionCode = 0x02;
-  TX_MESSAGE.DataLength = 0x00;
+  tx_message.Source[0] = 0x01;
+  tx_message.Source[1] = 0x00;
+  tx_message.Destination[0] = 0x00;
+  tx_message.Destination[1] = address;
+  tx_message.ControlCode = 0x11;
+  tx_message.FunctionCode = 0x02;
+  tx_message.DataLength = 0x00;
 
-  this->send(&TX_MESSAGE);
+  this->send(&tx_message);
 }
 
 void ModbusSolax::query_info(uint8_t address) {
-  static SolaxMessageT TX_MESSAGE;
+  static SolaxMessageT tx_message;
 
-  TX_MESSAGE.Source[0] = 0x01;
-  TX_MESSAGE.Source[1] = 0x00;
-  TX_MESSAGE.Destination[0] = 0x00;
-  TX_MESSAGE.Destination[1] = address;
-  TX_MESSAGE.ControlCode = 0x11;
-  TX_MESSAGE.FunctionCode = 0x03;
-  TX_MESSAGE.DataLength = 0x00;
+  tx_message.Source[0] = 0x01;
+  tx_message.Source[1] = 0x00;
+  tx_message.Destination[0] = 0x00;
+  tx_message.Destination[1] = address;
+  tx_message.ControlCode = 0x11;
+  tx_message.FunctionCode = 0x03;
+  tx_message.DataLength = 0x00;
 
-  this->send(&TX_MESSAGE);
+  this->send(&tx_message);
 }
 
 void ModbusSolax::register_address(uint8_t serial_number[14], uint8_t address) {
-  static SolaxMessageT TX_MESSAGE;
+  static SolaxMessageT tx_message;
 
-  TX_MESSAGE.Source[0] = 0x00;
-  TX_MESSAGE.Source[1] = 0x00;
-  TX_MESSAGE.Destination[0] = 0x00;
-  TX_MESSAGE.Destination[1] = 0x00;
-  TX_MESSAGE.ControlCode = 0x10;
-  TX_MESSAGE.FunctionCode = 0x01;
-  TX_MESSAGE.DataLength = 0x0F;
-  memcpy(TX_MESSAGE.Data, serial_number, 14);
-  TX_MESSAGE.Data[14] = address;
+  tx_message.Source[0] = 0x00;
+  tx_message.Source[1] = 0x00;
+  tx_message.Destination[0] = 0x00;
+  tx_message.Destination[1] = 0x00;
+  tx_message.ControlCode = 0x10;
+  tx_message.FunctionCode = 0x01;
+  tx_message.DataLength = 0x0F;
+  memcpy(tx_message.Data, serial_number, 14);
+  tx_message.Data[14] = address;
 
-  this->send(&TX_MESSAGE);
+  this->send(&tx_message);
 }
 
 void ModbusSolax::discover_devices() {
-  static SolaxMessageT TX_MESSAGE;
+  static SolaxMessageT tx_message;
 
-  TX_MESSAGE.Source[0] = 0x01;
-  TX_MESSAGE.Source[1] = 0x00;
-  TX_MESSAGE.Destination[0] = 0x00;
-  TX_MESSAGE.Destination[1] = 0x00;
-  TX_MESSAGE.ControlCode = 0x10;
-  TX_MESSAGE.FunctionCode = 0x00;
-  TX_MESSAGE.DataLength = 0x00;
+  tx_message.Source[0] = 0x01;
+  tx_message.Source[1] = 0x00;
+  tx_message.Destination[0] = 0x00;
+  tx_message.Destination[1] = 0x00;
+  tx_message.ControlCode = 0x10;
+  tx_message.FunctionCode = 0x00;
+  tx_message.DataLength = 0x00;
 
-  this->send(&TX_MESSAGE);
+  this->send(&tx_message);
 }
 
 void ModbusSolax::send(SolaxMessageT *tx_message) {
