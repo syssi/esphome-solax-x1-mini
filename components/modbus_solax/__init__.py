@@ -43,9 +43,7 @@ def as_hex_array(value):
     cpp_array = [
         f"0x{part}" for part in [value[i : i + 2] for i in range(0, len(value), 2)]
     ]
-    return cg.RawExpression(
-        "(uint8_t*)(const uint8_t[14]){{{}}}".format(",".join(reversed(cpp_array)))
-    )
+    return cg.RawExpression(f"(uint8_t*)(const uint8_t[16]){{{','.join(cpp_array)}}}")
 
 
 def to_code(config):
