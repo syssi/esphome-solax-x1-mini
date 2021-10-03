@@ -14,6 +14,8 @@ from esphome.const import (
     ICON_CURRENT_AC,
     ICON_EMPTY,
     ICON_TIMER,
+    STATE_CLASS_MEASUREMENT,
+    STATE_CLASS_TOTAL_INCREASING,
     UNIT_AMPERE,
     UNIT_CELSIUS,
     UNIT_EMPTY,
@@ -66,37 +68,81 @@ CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(CONF_SOLAX_X1_ID): cv.use_id(SolaxX1),
         cv.Optional(CONF_ENERGY_TODAY): sensor.sensor_schema(
-            UNIT_KILO_WATT_HOURS, ICON_COUNTER, 3, DEVICE_CLASS_ENERGY
+            UNIT_KILO_WATT_HOURS,
+            ICON_COUNTER,
+            3,
+            DEVICE_CLASS_ENERGY,
+            STATE_CLASS_TOTAL_INCREASING,
         ),
         cv.Optional(CONF_ENERGY_TOTAL): sensor.sensor_schema(
-            UNIT_KILO_WATT_HOURS, ICON_COUNTER, 3, DEVICE_CLASS_ENERGY
+            UNIT_KILO_WATT_HOURS,
+            ICON_COUNTER,
+            3,
+            DEVICE_CLASS_ENERGY,
+            STATE_CLASS_TOTAL_INCREASING,
         ),
         cv.Optional(CONF_DC1_CURRENT): sensor.sensor_schema(
-            UNIT_AMPERE, ICON_EMPTY, 1, DEVICE_CLASS_CURRENT
+            UNIT_AMPERE,
+            ICON_EMPTY,
+            1,
+            DEVICE_CLASS_CURRENT,
+            STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_DC1_VOLTAGE): sensor.sensor_schema(
-            UNIT_VOLT, ICON_EMPTY, 1, DEVICE_CLASS_VOLTAGE
+            UNIT_VOLT,
+            ICON_EMPTY,
+            1,
+            DEVICE_CLASS_VOLTAGE,
+            STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_DC2_CURRENT): sensor.sensor_schema(
-            UNIT_AMPERE, ICON_EMPTY, 1, DEVICE_CLASS_CURRENT
+            UNIT_AMPERE,
+            ICON_EMPTY,
+            1,
+            DEVICE_CLASS_CURRENT,
+            STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_DC2_VOLTAGE): sensor.sensor_schema(
-            UNIT_VOLT, ICON_EMPTY, 1, DEVICE_CLASS_VOLTAGE
+            UNIT_VOLT,
+            ICON_EMPTY,
+            1,
+            DEVICE_CLASS_VOLTAGE,
+            STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_AC_CURRENT): sensor.sensor_schema(
-            UNIT_AMPERE, ICON_EMPTY, 2, DEVICE_CLASS_CURRENT
+            UNIT_AMPERE,
+            ICON_EMPTY,
+            2,
+            DEVICE_CLASS_CURRENT,
+            STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_AC_VOLTAGE): sensor.sensor_schema(
-            UNIT_VOLT, ICON_EMPTY, 1, DEVICE_CLASS_VOLTAGE
+            UNIT_VOLT,
+            ICON_EMPTY,
+            1,
+            DEVICE_CLASS_VOLTAGE,
+            STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_AC_FREQUENCY): sensor.sensor_schema(
-            UNIT_HERTZ, ICON_CURRENT_AC, 1, DEVICE_CLASS_EMPTY
+            UNIT_HERTZ,
+            ICON_CURRENT_AC,
+            1,
+            DEVICE_CLASS_EMPTY,
+            STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_AC_POWER): sensor.sensor_schema(
-            UNIT_WATT, ICON_EMPTY, 0, DEVICE_CLASS_POWER
+            UNIT_WATT,
+            ICON_EMPTY,
+            0,
+            DEVICE_CLASS_POWER,
+            STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_RUNTIME_TOTAL): sensor.sensor_schema(
-            UNIT_HOURS, ICON_TIMER, 0, DEVICE_CLASS_EMPTY
+            UNIT_HOURS,
+            ICON_TIMER,
+            0,
+            DEVICE_CLASS_EMPTY,
+            STATE_CLASS_TOTAL_INCREASING,
         ),
         cv.Optional(CONF_ERROR_BITS): sensor.sensor_schema(
             UNIT_EMPTY, ICON_ERROR_BITS, 0, DEVICE_CLASS_EMPTY
@@ -105,7 +151,11 @@ CONFIG_SCHEMA = cv.Schema(
             UNIT_EMPTY, ICON_MODE, 0, DEVICE_CLASS_EMPTY
         ),
         cv.Optional(CONF_TEMPERATURE): sensor.sensor_schema(
-            UNIT_CELSIUS, ICON_EMPTY, 1, DEVICE_CLASS_TEMPERATURE
+            UNIT_CELSIUS,
+            ICON_EMPTY,
+            1,
+            DEVICE_CLASS_TEMPERATURE,
+            STATE_CLASS_MEASUREMENT,
         ),
     }
 )
