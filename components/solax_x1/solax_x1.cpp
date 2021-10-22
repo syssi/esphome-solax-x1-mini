@@ -170,7 +170,6 @@ void SolaxX1::publish_device_offline_() {
   this->publish_state_(this->ac_frequency_sensor_, NAN);
   this->publish_state_(this->ac_power_sensor_, NAN);
   this->publish_state_(this->error_bits_sensor_, NAN);
-  this->publish_state_(this->errors_text_sensor_, NAN);
 }
 
 void SolaxX1::update() {
