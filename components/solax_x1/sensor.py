@@ -161,10 +161,10 @@ CONFIG_SCHEMA = cv.Schema(
 )
 
 
-def to_code(config):
-    hub = yield cg.get_variable(config[CONF_SOLAX_X1_ID])
+async def to_code(config):
+    hub = await cg.get_variable(config[CONF_SOLAX_X1_ID])
     for key in SENSORS:
         if key in config:
             conf = config[key]
-            sens = yield sensor.new_sensor(conf)
+            sens = await sensor.new_sensor(conf)
             cg.add(getattr(hub, f"set_{key}_sensor")(sens))
