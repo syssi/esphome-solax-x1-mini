@@ -48,9 +48,6 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   void dump_config() override;
 
  protected:
-  void publish_device_offline_();
-  std::string error_bits_to_string_(uint32_t bitmask);
-
   sensor::Sensor *energy_today_sensor_;
   sensor::Sensor *energy_total_sensor_;
   sensor::Sensor *dc1_current_sensor_;
@@ -68,6 +65,11 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   text_sensor::TextSensor *mode_name_text_sensor_;
   text_sensor::TextSensor *errors_text_sensor_;
   uint8_t no_response_count_ = REDISCOVERY_THRESHOLD;
+
+  void publish_state_(sensor::Sensor *sensor, float value);
+  void publish_state_(text_sensor::TextSensor *text_sensor, const std::string &state);
+  void publish_device_offline_();
+  std::string error_bits_to_string_(uint32_t bitmask);
 };
 
 }  // namespace solax_x1
