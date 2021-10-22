@@ -136,47 +136,41 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
 
   uint32_t error_bits = solax_get_error_bitmask(46);
 
-  if (this->temperature_sensor_ != nullptr)
-    this->temperature_sensor_->publish_state(temperature);
-  if (this->energy_today_sensor_ != nullptr)
-    this->energy_today_sensor_->publish_state(energy_today);
-  if (this->dc1_voltage_sensor_ != nullptr)
-    this->dc1_voltage_sensor_->publish_state(dc1_voltage);
-  if (this->dc2_voltage_sensor_ != nullptr)
-    this->dc2_voltage_sensor_->publish_state(dc2_voltage);
-  if (this->dc1_current_sensor_ != nullptr)
-    this->dc1_current_sensor_->publish_state(dc1_current);
-  if (this->dc2_current_sensor_ != nullptr)
-    this->dc2_current_sensor_->publish_state(dc2_current);
-  if (this->ac_current_sensor_ != nullptr)
-    this->ac_current_sensor_->publish_state(ac_current);
-  if (this->ac_voltage_sensor_ != nullptr)
-    this->ac_voltage_sensor_->publish_state(ac_voltage);
-  if (this->ac_frequency_sensor_ != nullptr)
-    this->ac_frequency_sensor_->publish_state(ac_frequency);
-  if (this->ac_power_sensor_ != nullptr)
-    this->ac_power_sensor_->publish_state(ac_power);
-  if (this->energy_total_sensor_ != nullptr)
-    this->energy_total_sensor_->publish_state(energy_total);
-  if (this->runtime_total_sensor_ != nullptr)
-    this->runtime_total_sensor_->publish_state(runtime_total);
-  if (this->mode_sensor_ != nullptr)
-    this->mode_sensor_->publish_state(mode);
-  if (this->error_bits_sensor_ != nullptr)
-    this->error_bits_sensor_->publish_state(error_bits);
-
-  if (this->errors_text_sensor_ != nullptr) {
-    this->errors_text_sensor_->publish_state(this->error_bits_to_string_(error_bits));
-  }
-  if (this->mode_name_text_sensor_ != nullptr) {
-    if (mode <= 9) {
-      this->mode_name_text_sensor_->publish_state(MODE_NAMES[mode]);
-    } else {
-      this->mode_name_text_sensor_->publish_state("Unknown");
-    }
-  }
+  this->publish_state_(this->temperature_sensor_, temperature);
+  this->publish_state_(this->energy_today_sensor_, energy_today);
+  this->publish_state_(this->dc1_voltage_sensor_, dc1_voltage);
+  this->publish_state_(this->dc2_voltage_sensor_, dc2_voltage);
+  this->publish_state_(this->dc1_current_sensor_, dc1_current);
+  this->publish_state_(this->dc2_current_sensor_, dc2_current);
+  this->publish_state_(this->ac_current_sensor_, ac_current);
+  this->publish_state_(this->ac_voltage_sensor_, ac_voltage);
+  this->publish_state_(this->ac_frequency_sensor_, ac_frequency);
+  this->publish_state_(this->ac_power_sensor_, ac_power);
+  this->publish_state_(this->energy_total_sensor_, energy_total);
+  this->publish_state_(this->runtime_total_sensor_, runtime_total);
+  this->publish_state_(this->mode_sensor_, mode);
+  this->publish_state_(this->error_bits_sensor_, error_bits);
+  this->publish_state_(this->errors_text_sensor_, this->error_bits_to_string_(error_bits));
+  this->publish_state_(this->mode_name_text_sensor_, (mode <= 9) ? MODE_NAMES[mode] : "Unknown");
 
   this->no_response_count_ = 0;
+}
+
+void SolaxX1::publish_device_offline_() {
+  this->publish_state_(this->mode_sensor_, -1);
+  this->publish_state_(this->mode_name_text_sensor_, "Offline");
+
+  this->publish_state_(this->temperature_sensor_, NAN);
+  this->publish_state_(this->dc1_voltage_sensor_, NAN);
+  this->publish_state_(this->dc2_voltage_sensor_, NAN);
+  this->publish_state_(this->dc1_current_sensor_, NAN);
+  this->publish_state_(this->dc2_current_sensor_, NAN);
+  this->publish_state_(this->ac_current_sensor_, NAN);
+  this->publish_state_(this->ac_voltage_sensor_, NAN);
+  this->publish_state_(this->ac_frequency_sensor_, NAN);
+  this->publish_state_(this->ac_power_sensor_, NAN);
+  this->publish_state_(this->error_bits_sensor_, NAN);
+  this->publish_state_(this->errors_text_sensor_, NAN);
 }
 
 void SolaxX1::update() {
@@ -192,6 +186,20 @@ void SolaxX1::update() {
     no_response_count_++;
     this->query_live_data(this->address_);
   }
+}
+
+void SolaxX1::publish_state_(sensor::Sensor *sensor, float value) {
+  if (sensor == nullptr)
+    return;
+
+  sensor->publish_state(value);
+}
+
+void SolaxX1::publish_state_(text_sensor::TextSensor *text_sensor, const std::string &state) {
+  if (text_sensor == nullptr)
+    return;
+
+  text_sensor->publish_state(state);
 }
 
 void SolaxX1::dump_config() {
@@ -213,13 +221,6 @@ void SolaxX1::dump_config() {
   LOG_SENSOR("", "Error Bits", this->error_bits_sensor_);
   LOG_TEXT_SENSOR("  ", "Mode Name", this->mode_name_text_sensor_);
   LOG_TEXT_SENSOR("  ", "Errors", this->errors_text_sensor_);
-}
-
-void SolaxX1::publish_device_offline_() {
-  if (this->mode_sensor_ != nullptr)
-    this->mode_sensor_->publish_state(-1);
-  if (this->mode_name_text_sensor_ != nullptr)
-    this->mode_name_text_sensor_->publish_state("Offline");
 }
 
 std::string SolaxX1::error_bits_to_string_(const uint32_t mask) {
