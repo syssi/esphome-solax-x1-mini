@@ -6,7 +6,7 @@
 ![GitHub watchers](https://img.shields.io/github/watchers/syssi/esphome-modbus-solax-x1)
 [!["Buy Me A Coffee"](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/syssi)
 
-ESPHome component to interface a Solax X1 mini via RS485
+ESPHome component to monitor a Solax X1 mini via RS485.
 
 ![Lovelace entities card](lovelace-entities-card.png "lovelace entities card")
 
