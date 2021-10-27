@@ -165,7 +165,7 @@ void SolaxX1::publish_device_offline_() {
   this->publish_state_(this->dc2_voltage_sensor_, 0);
   this->publish_state_(this->dc1_current_sensor_, 0);
   this->publish_state_(this->dc2_current_sensor_, 0);
-  this->publish_state_(this->ac_current_sensor_, NAN);
+  this->publish_state_(this->ac_current_sensor_, 0);
   this->publish_state_(this->ac_voltage_sensor_, NAN);
   this->publish_state_(this->ac_frequency_sensor_, NAN);
   this->publish_state_(this->ac_power_sensor_, 0);
