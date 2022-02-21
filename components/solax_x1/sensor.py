@@ -64,6 +64,7 @@ SENSORS = [
     CONF_TEMPERATURE,
 ]
 
+# pylint: disable=too-many-function-args
 CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(CONF_SOLAX_X1_ID): cv.use_id(SolaxX1),
