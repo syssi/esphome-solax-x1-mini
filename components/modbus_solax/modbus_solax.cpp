@@ -80,7 +80,7 @@ bool ModbusSolax::parse_modbus_solax_byte_(uint8_t byte) {
   if (at == 9 + data_len)
     return true;
 
-  ESP_LOGVV(TAG, "RX <- %s", hexencode(frame, at + 1).c_str());
+  ESP_LOGVV(TAG, "RX <- %s", format_hex_pretty(frame, at + 1).c_str());
 
   if (frame[0] != 0xAA || frame[1] != 0x55) {
     ESP_LOGW(TAG, "Invalid header.");
@@ -104,7 +104,7 @@ bool ModbusSolax::parse_modbus_solax_byte_(uint8_t byte) {
       ESP_LOGI(TAG, "Inverter discovered. Serial number: %s", hexencode_plain(&data.front(), data.size()).c_str());
       this->register_address(data.data(), 0x0A);
     } else {
-      ESP_LOGW(TAG, "Unknown broadcast data: %s", hexencode(&data.front(), data.size()).c_str());
+      ESP_LOGW(TAG, "Unknown broadcast data: %s", format_hex_pretty(&data.front(), data.size()).c_str());
     }
 
     // early return false to reset buffer
@@ -122,7 +122,7 @@ bool ModbusSolax::parse_modbus_solax_byte_(uint8_t byte) {
           // query device info response
           device->on_modbus_solax_data(data);
         } else {
-          ESP_LOGW(TAG, "Unhandled solax frame for address 0x%02X: %s", address, hexencode(frame, at + 1).c_str());
+          ESP_LOGW(TAG, "Unhandled solax frame for address 0x%02X: %s", address, format_hex_pretty(frame, at + 1).c_str());
         }
       }
       found = true;
@@ -214,7 +214,7 @@ void ModbusSolax::send(SolaxMessageT *tx_message) {
   tx_message->Data[tx_message->DataLength + 1] = checksum >> 0;
   msg_len += 2;
 
-  ESP_LOGVV(TAG, "TX -> %s", hexencode((const uint8_t *) tx_message, msg_len).c_str());
+  ESP_LOGVV(TAG, "TX -> %s", format_hex_pretty((const uint8_t *) tx_message, msg_len).c_str());
 
   this->write_array((const uint8_t *) tx_message, msg_len);
   this->flush();

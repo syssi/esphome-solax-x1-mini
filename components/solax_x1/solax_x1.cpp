@@ -66,7 +66,7 @@ void SolaxX1::on_modbus_solax_info(const std::vector<uint8_t> &data) {
     return;
   }
 
-  ESP_LOGW(TAG, "Info: %s", hexencode(&data.front(), data.size()).c_str());
+  ESP_LOGW(TAG, "Info: %s", format_hex_pretty(&data.front(), data.size()).c_str());
   // @TODO: Output Solax_Info_t
   this->no_response_count_ = 0;
 }
