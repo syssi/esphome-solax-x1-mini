@@ -122,7 +122,8 @@ bool ModbusSolax::parse_modbus_solax_byte_(uint8_t byte) {
           // query device info response
           device->on_modbus_solax_data(data);
         } else {
-          ESP_LOGW(TAG, "Unhandled solax frame for address 0x%02X: %s", address, format_hex_pretty(frame, at + 1).c_str());
+          ESP_LOGW(TAG, "Unhandled solax frame for address 0x%02X: %s", address,
+                   format_hex_pretty(frame, at + 1).c_str());
         }
       }
       found = true;
