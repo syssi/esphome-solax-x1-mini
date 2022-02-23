@@ -10,6 +10,11 @@ ESPHome component to monitor a Solax X1 mini via RS485.
 
 ![Lovelace entities card](lovelace-entities-card.png "lovelace entities card")
 
+## Supported devices
+
+* Solax X1 Mini
+* Solax X1 Mini G2
+
 ## Requirements
 
 * [ESPHome 1.18.0 or higher](https://github.com/esphome/esphome/releases).
