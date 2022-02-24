@@ -81,6 +81,10 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
     // AA.55.00.0A.01.00.11.82.32.00.21.00.02.07.EC.00.00.00.1D.00.00.00.18.09.55.13.80.02.2B.FF.FF.
     // 00.00.5D.AF.00.00.10.50.00.02.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.07.A4
     ESP_LOGW(TAG, "Invalid response size: %zu", data.size());
+    ESP_LOGW(TAG, "Your device is probably not supported. Please create an issue here: "
+                  "https://github.com/syssi/esphome-modbus-solax-x1/issues");
+    ESP_LOGW(TAG, "Please provide the following status response data: %s",
+             format_hex_pretty(&data.front(), data.size()).c_str());
     return;
   }
 
