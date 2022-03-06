@@ -32,10 +32,12 @@ ESPHome component to monitor a Solax X1 mini via RS485.
 │         │              │          │<----- RX ----->│         │
 │  Solax  │<-----B- ---->│  RS485   │<----- TX ----->│ ESP32/  │
 │ X1 Mini │<---- A+ ---->│  to TTL  │<----- GND ---->│ ESP8266 │
-│         │<--- GND ---->│  module  │<--- 5V VCC --->│         │<-- 5V VCC
+│         │<--- GND ---->│  module  │<-- 3.3 VCC --->│         │<-- VCC
 │         │              │          │                │         │<-- GND
 └─────────┘              └──────────┘                └─────────┘
 ```
+
+Please make sure to power the RS485 module with 3.3V because it affects the TTL (transistor-transistor logic) voltage between RS485 module and ESP.
 
 ### X1 Min RJ45 jack
 
