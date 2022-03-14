@@ -27,11 +27,18 @@ mqtt:
   id: mqtt_client
 
 uart:
+  id: uart0
   baud_rate: 9600
   tx_pin: GPIO1
   rx_pin: GPIO3
 
+modbus_solax:
+  - id: modbus0
+    uart_id: uart0
+    flow_control_pin: GPIO0
+
 solax_x1:
+  modbus_solax_id: modbus0
   serial_number: "3132333435363737363534333231"
   address: 0x0A
   update_interval: 1s

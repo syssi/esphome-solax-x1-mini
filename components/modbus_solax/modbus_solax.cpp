@@ -9,6 +9,12 @@ namespace modbus_solax {
 
 static const char *const TAG = "modbus_solax";
 
+void ModbusSolax::setup() {
+  if (this->flow_control_pin_ != nullptr) {
+    this->flow_control_pin_->setup();
+  }
+}
+
 void ModbusSolax::loop() {
   const uint32_t now = millis();
   if (now - this->last_modbus_solax_byte_ > 50) {
@@ -138,7 +144,10 @@ bool ModbusSolax::parse_modbus_solax_byte_(uint8_t byte) {
   return false;
 }
 
-void ModbusSolax::dump_config() { ESP_LOGCONFIG(TAG, "ModbusSolax:"); }
+void ModbusSolax::dump_config() {
+  ESP_LOGCONFIG(TAG, "ModbusSolax:");
+  LOG_PIN("  Flow Control Pin: ", this->flow_control_pin_);
+}
 float ModbusSolax::get_setup_priority() const {
   // After UART bus
   return setup_priority::BUS - 1.0f;
@@ -217,8 +226,14 @@ void ModbusSolax::send(SolaxMessageT *tx_message) {
 
   ESP_LOGVV(TAG, "TX -> %s", format_hex_pretty((const uint8_t *) tx_message, msg_len).c_str());
 
+  if (this->flow_control_pin_ != nullptr)
+    this->flow_control_pin_->digital_write(true);
+
   this->write_array((const uint8_t *) tx_message, msg_len);
   this->flush();
+
+  if (this->flow_control_pin_ != nullptr)
+    this->flow_control_pin_->digital_write(false);
 }
 
 }  // namespace modbus_solax
