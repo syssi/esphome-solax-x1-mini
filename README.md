@@ -180,6 +180,27 @@ Affected firmware versions:
 
 Workaround: Use one UART per device to handle multiple devices.
 
+## Debugging
+
+If this component doesn't work out of the box for your device please update your configuration to enable the debug output of the UART component and increase the log level to the see outgoing and incoming serial traffic:
+
+```
+logger:
+  baud_rate: 0
+  level: DEBUG
+  logs:
+    api.service: WARN
+    ota: WARN
+    sensor: WARN
+
+uart:
+  id: uart0
+  baud_rate: 9600
+  tx_pin: GPIO1
+  rx_pin: GPIO3
+  debug:
+    direction: BOTH
+```
 
 ## Protocol details
 
