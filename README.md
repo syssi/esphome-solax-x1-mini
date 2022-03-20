@@ -27,33 +27,33 @@ ESPHome component to monitor a Solax X1 mini via RS485.
 
 ## Schematics
 
-### RS485-TTL module without flow control pin
+#### RS485-TTL module without flow control pin
 
 ```
-               RS485                       UART
-┌─────────┐              ┌─────────────┐          ┌─────────────────┐
-│         │              │          GND│<-------->│GND              │
-│  Solax  │<-----B- ---->│  RS485   RXD│<-------->│RX    ESP32/     │
-│ X1 Mini │<---- A+ ---->│  to TTL  TXD│<-------->│TX    ESP8266    │
-│         │<--- GND ---->│  module  VCC│<-------->│3.3V          VCC│<--
-│         │              │             │          │              GND│<--
-└─────────┘              └─────────────┘          └─────────────────┘
+               RS485                        UART
+┌─────────┐              ┌─────────────┐           ┌─────────────────┐
+│         │              │          GND│<--------->│GND              │
+│  Solax  │<-----B- ---->│  RS485   RXD│<--------->│RX    ESP32/     │
+│ X1 Mini │<---- A+ ---->│  to TTL  TXD│<--------->│TX    ESP8266    │
+│         │<--- GND ---->│  module  VCC│<--------->│3.3V          VCC│<--
+│         │              │             │           │              GND│<--
+└─────────┘              └─────────────┘           └─────────────────┘
 
 ```
 
-### RS485-TTL module with flow control pin
+#### RS485-TTL module with flow control pin
 
 ```
-               RS485                       UART
-┌─────────┐              ┌─────────────┐             ┌─────────────────┐
-│         │              │           DI│<----------->│TX               │
-│  Solax  │<-----B- ---->│  RS485    DE│<--\         │         ESP32/  │
-│ X1 Mini │<---- A+ ---->│  to TTL   RE│<---+------->│GPIO0   ESP8266  │
-│         │<--- GND ---->│  module   RO│<----------->│RX               │
-│         │              │             │             │                 │
-│         │              │          VCC│<----------->│3.3V          VCC│<--
-│         │              │          GND│<----------->│GND           GND│<--
-└─────────┘              └─────────────┘             └─────────────────┘
+               RS485                        UART
+┌─────────┐              ┌─────────────┐           ┌─────────────────┐
+│         │              │           DI│<--------->│TX               │
+│  Solax  │<-----B- ---->│  RS485    DE│<--\       │         ESP32/  │
+│ X1 Mini │<---- A+ ---->│  to TTL   RE│<---+----->│GPIO0   ESP8266  │
+│         │<--- GND ---->│  module   RO│<--------->│RX               │
+│         │              │             │           │                 │
+│         │              │          VCC│<--------->│3.3V          VCC│<--
+│         │              │          GND│<--------->│GND           GND│<--
+└─────────┘              └─────────────┘           └─────────────────┘
 
 ```
 
