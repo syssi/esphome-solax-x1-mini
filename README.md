@@ -13,8 +13,9 @@ ESPHome component to monitor a Solax X1 mini via RS485.
 ## Supported devices
 
 * SolaX X1 Mini
-  - SolaX X1 Mini X1-0.6-S-D
+  - SolaX X1 Mini X1-0.6-S-D(L)
 * SolaX X1 Mini G2
+  - SolaX X1 Mini X1-1.5-S-D(L) (master version 1.08, manager version 1.07) (reported by [@beocycris](https://github.com/syssi/esphome-modbus-solax-x1/issues/18#issuecomment-1073188868))
   - SolaX X1 Mini X1-2.0-S-D(L) (master version 1.08, manager version 1.07) (reported by [@zcloud-at](https://github.com/syssi/esphome-modbus-solax-x1/issues/15))
 
 ## Requirements
@@ -26,15 +27,34 @@ ESPHome component to monitor a Solax X1 mini via RS485.
 
 ## Schematics
 
+#### RS485-TTL module without flow control pin
+
 ```
-               RS485                      UART
-┌─────────┐              ┌──────────┐                ┌─────────┐
-│         │              │          │<----- RX ----->│         │
-│  Solax  │<-----B- ---->│  RS485   │<----- TX ----->│ ESP32/  │
-│ X1 Mini │<---- A+ ---->│  to TTL  │<----- GND ---->│ ESP8266 │
-│         │<--- GND ---->│  module  │<-- 3.3 VCC --->│         │<-- VCC
-│         │              │          │                │         │<-- GND
-└─────────┘              └──────────┘                └─────────┘
+               RS485                        UART
+┌─────────┐              ┌─────────────┐           ┌─────────────────┐
+│         │              │          GND│<--------->│GND              │
+│  Solax  │<-----B- ---->│  RS485   RXD│<--------->│RX    ESP32/     │
+│ X1 Mini │<---- A+ ---->│  to TTL  TXD│<--------->│TX    ESP8266    │
+│         │<--- GND ---->│  module  VCC│<--------->│3.3V          VCC│<--
+│         │              │             │           │              GND│<--
+└─────────┘              └─────────────┘           └─────────────────┘
+
+```
+
+#### RS485-TTL module with flow control pin
+
+```
+               RS485                        UART
+┌─────────┐              ┌─────────────┐           ┌─────────────────┐
+│         │              │           DI│<--------->│TX               │
+│  Solax  │<-----B- ---->│  RS485    DE│<--\       │         ESP32/  │
+│ X1 Mini │<---- A+ ---->│  to TTL   RE│<---+----->│GPIO0   ESP8266  │
+│         │<--- GND ---->│  module   RO│<--------->│RX               │
+│         │              │             │           │                 │
+│         │              │          VCC│<--------->│3.3V          VCC│<--
+│         │              │          GND│<--------->│GND           GND│<--
+└─────────┘              └─────────────┘           └─────────────────┘
+
 ```
 
 Please make sure to power the RS485 module with 3.3V because it affects the TTL (transistor-transistor logic) voltage between RS485 module and ESP.
@@ -126,6 +146,7 @@ solax_x1:
   serial_number: "3132333435363737363534333231"
   address: 0x0A
   update_interval: 1s
+#  flow_control_pin: GPIO0
 
 text_sensor:
   - platform: solax_x1

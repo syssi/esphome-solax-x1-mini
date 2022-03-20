@@ -22,11 +22,13 @@ class ModbusSolax : public uart::UARTDevice, public Component {
  public:
   ModbusSolax() = default;
 
+  void setup() override;
   void loop() override;
 
   void dump_config() override;
 
   void register_device(ModbusSolaxDevice *device) { this->devices_.push_back(device); }
+  void set_flow_control_pin(GPIOPin *flow_control_pin) { this->flow_control_pin_ = flow_control_pin; }
 
   float get_setup_priority() const override;
 
@@ -38,6 +40,7 @@ class ModbusSolax : public uart::UARTDevice, public Component {
 
  protected:
   bool parse_modbus_solax_byte_(uint8_t byte);
+  GPIOPin *flow_control_pin_{nullptr};
 
   std::vector<uint8_t> rx_buffer_;
   uint32_t last_modbus_solax_byte_{0};
