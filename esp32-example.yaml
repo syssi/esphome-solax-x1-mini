@@ -35,7 +35,7 @@ uart:
 modbus_solax:
   - id: modbus0
     uart_id: uart0
-    flow_control_pin: GPIO0
+#    flow_control_pin: GPIO0
 
 solax_x1:
   modbus_solax_id: modbus0
