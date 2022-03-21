@@ -130,10 +130,15 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
   // register 20 is not used
 
   uint32_t raw_energy_total = solax_get_32bit(22);
-  float energy_total = raw_energy_total * 0.1f;
+  // The inverter publishes a zero once per day on boot-up. This confuses the energy dashboard.
+  if (raw_energy_total > 0) {
+    this->publish_state_(this->energy_total_sensor_, (float) raw_energy_total * 0.1f);
+  }
 
   uint32_t raw_runtime_total = solax_get_32bit(26);
-  float runtime_total = raw_runtime_total;
+  if (raw_runtime_total > 0) {
+    this->publish_state_(this->runtime_total_sensor_, (float) raw_runtime_total);
+  }
 
   uint8_t mode = (uint8_t) solax_get_16bit(30);
 
@@ -157,8 +162,6 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
   this->publish_state_(this->ac_voltage_sensor_, ac_voltage);
   this->publish_state_(this->ac_frequency_sensor_, ac_frequency);
   this->publish_state_(this->ac_power_sensor_, ac_power);
-  this->publish_state_(this->energy_total_sensor_, energy_total);
-  this->publish_state_(this->runtime_total_sensor_, runtime_total);
   this->publish_state_(this->mode_sensor_, mode);
   this->publish_state_(this->error_bits_sensor_, error_bits);
   this->publish_state_(this->errors_text_sensor_, this->error_bits_to_string_(error_bits));
