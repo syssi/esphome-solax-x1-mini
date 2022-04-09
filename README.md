@@ -209,10 +209,6 @@ If this component doesn't work out of the box for your device please update your
 logger:
   baud_rate: 0
   level: DEBUG
-  logs:
-    api.service: WARN
-    ota: WARN
-    sensor: WARN
 
 uart:
   id: uart0

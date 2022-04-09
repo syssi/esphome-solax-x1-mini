@@ -25,16 +25,6 @@ ota:
 
 logger:
   baud_rate: 0
-  level: INFO
-#  level: VERY_VERBOSE
-#  logs:
-#    uart_esp32: WARN
-#    api.service: WARN
-#    ota: WARN
-#    ethernet: WARN
-#    sensor: WARN
-#    solax_x1: VERY_VERBOSE
-#    modbux_solax: VERY_VERBOSE
 
 mqtt:
   broker: !secret mqtt_host
