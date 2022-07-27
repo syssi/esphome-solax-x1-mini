@@ -1,16 +1,23 @@
 substitutions:
   name: solar-powermeter
+  device_description: "Monitor multiple Solax X1 mini via RS485"
+  external_components_source: github://syssi/esphome-modbus-solax-x1@main
   device0: firstfloor-solar-powermeter
   device1: groundfloor-solar-powermeter
   device2: community-solar-powermeter
 
 esphome:
   name: ${name}
-  platform: ESP32
+  comment: ${device_description}
+  project:
+    name: "syssi.esphome-modbus-solax-x1"
+    version: 1.1.0
+
+esp32:
   board: esp-wrover-kit
 
 external_components:
-  - source: github://syssi/esphome-modbus-solax-x1@main
+  - source: ${external_components_source}
     refresh: 0s
 
 ethernet:
@@ -20,17 +27,20 @@ ethernet:
   clk_mode: GPIO17_OUT
   phy_addr: 0
 
-# api:
 ota:
 
-logger:
-  baud_rate: 0
-
+# If you use Home Assistant please remove this `mqtt` section and uncomment the `api` component!
 mqtt:
   broker: !secret mqtt_host
   username: !secret mqtt_username
   password: !secret mqtt_password
   id: mqtt_client
+
+# api:
+
+logger:
+  baud_rate: 0
+  level: DEBUG
 
 uart:
   - id: uart0
