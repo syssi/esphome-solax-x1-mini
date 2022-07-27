@@ -72,7 +72,7 @@ void SolaxX1::on_modbus_solax_info(const std::vector<uint8_t> &data) {
 }
 
 void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
-  if (data.size() != 52 && data.size() != 50) {
+  if (data.size() != 52 && data.size() != 50 && data.size() != 56) {
     // Solax X1 mini status report:
     // AA.55.00.0A.01.00.11.82.34.00.1A.00.02.00.00.00.00.00.00.00.00.00.00.09.21.13.87.00.00.FF.FF.
     // 00.00.00.12.00.00.00.15.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.04.D6
@@ -80,6 +80,10 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
     // Solax X1 mini g2 status report:
     // AA.55.00.0A.01.00.11.82.32.00.21.00.02.07.EC.00.00.00.1D.00.00.00.18.09.55.13.80.02.2B.FF.FF.
     // 00.00.5D.AF.00.00.10.50.00.02.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.07.A4
+
+    // Solax X1 mini g3 status report:
+    // AA.55.00.0A.01.00.11.82.38.00.1A.00.03.04.0C.00.00.00.19.00.00.00.0B.08.FC.13.8A.00.F8.FF.FF.
+    // 00.00.00.2B.00.00.00.0D.00.02.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.8A.00.DE.08.5F
     ESP_LOGW(TAG, "Invalid response size: %zu", data.size());
     ESP_LOGW(TAG, "Your device is probably not supported. Please create an issue here: "
                   "https://github.com/syssi/esphome-modbus-solax-x1/issues");
