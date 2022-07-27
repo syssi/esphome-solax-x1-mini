@@ -71,14 +71,14 @@ CONFIG_SCHEMA = cv.Schema(
         cv.Optional(CONF_ENERGY_TODAY): sensor.sensor_schema(
             unit_of_measurement=UNIT_KILO_WATT_HOURS,
             icon=ICON_COUNTER,
-            accuracy_decimals=3,
+            accuracy_decimals=1,
             device_class=DEVICE_CLASS_ENERGY,
             state_class=STATE_CLASS_TOTAL_INCREASING,
         ),
         cv.Optional(CONF_ENERGY_TOTAL): sensor.sensor_schema(
             unit_of_measurement=UNIT_KILO_WATT_HOURS,
             icon=ICON_COUNTER,
-            accuracy_decimals=3,
+            accuracy_decimals=1,
             device_class=DEVICE_CLASS_ENERGY,
             state_class=STATE_CLASS_TOTAL_INCREASING,
         ),
@@ -113,7 +113,7 @@ CONFIG_SCHEMA = cv.Schema(
         cv.Optional(CONF_AC_CURRENT): sensor.sensor_schema(
             unit_of_measurement=UNIT_AMPERE,
             icon=ICON_EMPTY,
-            accuracy_decimals=2,
+            accuracy_decimals=1,
             device_class=DEVICE_CLASS_CURRENT,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
@@ -127,7 +127,7 @@ CONFIG_SCHEMA = cv.Schema(
         cv.Optional(CONF_AC_FREQUENCY): sensor.sensor_schema(
             unit_of_measurement=UNIT_HERTZ,
             icon=ICON_CURRENT_AC,
-            accuracy_decimals=1,
+            accuracy_decimals=2,
             device_class=DEVICE_CLASS_EMPTY,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
@@ -160,7 +160,7 @@ CONFIG_SCHEMA = cv.Schema(
         cv.Optional(CONF_TEMPERATURE): sensor.sensor_schema(
             unit_of_measurement=UNIT_CELSIUS,
             icon=ICON_EMPTY,
-            accuracy_decimals=1,
+            accuracy_decimals=0,
             device_class=DEVICE_CLASS_TEMPERATURE,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
