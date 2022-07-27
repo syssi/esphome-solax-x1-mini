@@ -82,8 +82,8 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
     // 00.00.5D.AF.00.00.10.50.00.02.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.07.A4
 
     // Solax X1 mini g3 status report:
-    // ...........................00.17.00.00.03.DE.00.00.00.08.00.00.00.05.09.06.13.85.00.48.FF.FF.
-    // 00.00.00.28.00.00.00.0C.00.02.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.01.00.8A.00.DE
+    // AA.55.00.0A.01.00.11.82.38.00.1A.00.03.04.0C.00.00.00.19.00.00.00.0B.08.FC.13.8A.00.F8.FF.FF.
+    // 00.00.00.2B.00.00.00.0D.00.02.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.8A.00.DE.08.5F
     ESP_LOGW(TAG, "Invalid response size: %zu", data.size());
     ESP_LOGW(TAG, "Your device is probably not supported. Please create an issue here: "
                   "https://github.com/syssi/esphome-modbus-solax-x1/issues");

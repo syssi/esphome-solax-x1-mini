@@ -18,7 +18,7 @@ ESPHome component to monitor a Solax X1 mini via RS485.
   - SolaX X1 Mini X1-1.5-S-D(L) (master version 1.08, manager version 1.07) (reported by [@beocycris](https://github.com/syssi/esphome-modbus-solax-x1/issues/18#issuecomment-1073188868))
   - SolaX X1 Mini X1-2.0-S-D(L) (master version 1.08, manager version 1.07) (reported by [@zcloud-at](https://github.com/syssi/esphome-modbus-solax-x1/issues/15))
 * SolaX X1 Mini G3
-  - SolaX X1 Mini X1-2.0-S-D(L) (master version 1.08, manager version 1.07) (reported by [@neujbit](https://github.com/syssi/esphome-modbus-solax-x1/issues/22))
+  - SolaX X1 Mini X1-0.6-S-D(L) (master version 1.08, manager version 1.07) (reported by [@neujbit](https://github.com/syssi/esphome-modbus-solax-x1/issues/22))
 
 ## Requirements
 
