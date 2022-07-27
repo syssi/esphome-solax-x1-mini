@@ -161,11 +161,10 @@ jobs:
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml'
       - run: |
-          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' esp32-example.yaml
-          esphome esp32-example.yaml config
+          esphome -s external_components_source components config esp32-example.yaml
+          esphome -s external_components_source components config esp32-example-advanced-multiple-uarts.yaml
       - run: |
-          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' esp32-example-advanced-multiple-uarts.yaml
-          esphome esp32-example-advanced-multiple-uarts.yaml config
+          esphome -s external_components_source components config esp8266-example.yaml
 
   esphome-compile:
     runs-on: ubuntu-latest
@@ -203,8 +202,7 @@ jobs:
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml'
       - run: |
-          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' esp32-example.yaml
-          esphome esp32-example.yaml compile
+          esphome -s external_components_source components compile esp32-example.yaml
+          esphome -s external_components_source components compile esp32-example-advanced-multiple-uarts.yaml
       - run: |
-          sed -i 's#source: github://syssi/esphome-modbus-solax-x1@main#source: components#' esp32-example-advanced-multiple-uarts.yaml
-          esphome esp32-example-advanced-multiple-uarts.yaml compile
+          esphome -s external_components_source components compile esp8266-example.yaml
