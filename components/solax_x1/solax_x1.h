@@ -10,16 +10,6 @@ namespace solax_x1 {
 
 static const uint8_t REDISCOVERY_THRESHOLD = 5;
 
-struct SolaxInfoT {
-  char Type;
-  char RatedPower[6];
-  char FirmwareVersion[5];
-  char ModuleName[14];
-  char Manufacturer[14];
-  char SerialNumber[14];
-  char RatedBusVoltage[4];
-};
-
 class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice {
  public:
   void set_energy_today_sensor(sensor::Sensor *energy_today_sensor) { energy_today_sensor_ = energy_today_sensor; }

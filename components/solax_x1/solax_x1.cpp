@@ -63,8 +63,14 @@ void SolaxX1::on_modbus_solax_info(const std::vector<uint8_t> &data) {
   }
 
   ESP_LOGI(TAG, "Device info frame received");
-  ESP_LOGD(TAG, "Info: %s", format_hex_pretty(&data.front(), data.size()).c_str());
-  // @TODO: Output Solax_Info_t
+  ESP_LOGI(TAG, "  Device type: %d", data[0]);
+  ESP_LOGI(TAG, "  Rated power: %s", std::string(data.begin() + 1, data.begin() + 1 + 6).c_str());
+  ESP_LOGI(TAG, "  Firmware version: %s", std::string(data.begin() + 7, data.begin() + 7 + 5).c_str());
+  ESP_LOGI(TAG, "  Module name: %s", std::string(data.begin() + 12, data.begin() + 12 + 14).c_str());
+  ESP_LOGI(TAG, "  Manufacturer: %s", std::string(data.begin() + 26, data.begin() + 26 + 14).c_str());
+  ESP_LOGI(TAG, "  Serial number: %s", std::string(data.begin() + 40, data.begin() + 40 + 14).c_str());
+  ESP_LOGI(TAG, "  Rated bus voltage: %s", std::string(data.begin() + 54, data.begin() + 54 + 4).c_str());
+
   this->no_response_count_ = 0;
 }
 
@@ -197,13 +203,13 @@ void SolaxX1::update() {
     this->publish_device_offline_();
     ESP_LOGD(TAG, "The device is or was offline. Broadcasting discovery for address configuration...");
     this->discover_devices();
-    //    this->query_info(this->address_);
+    //    this->query_device_info(this->address_);
     // Try to query live data on next update again. The device doesn't
     // respond to the discovery broadcast if it's already configured.
     this->no_response_count_ = 0;
   } else {
     no_response_count_++;
-    this->query_live_data(this->address_);
+    this->query_status_report(this->address_);
   }
 }
 
