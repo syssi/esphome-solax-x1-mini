@@ -6,20 +6,16 @@ namespace solax_x1 {
 
 static const char *const TAG = "solax_x1";
 
-// Hybrid.X1.X3-G3.ModbusTCP.RTU.V3.21-.English.pdf
-// May be some modes doesn't apply to the X1 mini
-static const std::string MODE_NAMES[10] = {
+// SolaxPower Single Phase External Communication Protocol - X1 Series V1.2.pdf
+// SolaxPower Single Phase External Communication Protocol - X1 Series V1.8.pdf
+static const std::string MODE_NAMES[7] = {
     "Wait",             // 0
     "Check",            // 1
     "Normal",           // 2
     "Fault",            // 3
     "Permanent Fault",  // 4
-
-    "Update",     // 5
-    "EPS check",  // 6
-    "EPS",        // 7
-    "Self Test",  // 8
-    "Idle",       // 9
+    "Update",           // 5
+    "Self Test",        // 6
 };
 
 static const char *const ERRORS[32] = {
@@ -66,22 +62,23 @@ void SolaxX1::on_modbus_solax_info(const std::vector<uint8_t> &data) {
     return;
   }
 
-  ESP_LOGW(TAG, "Info: %s", format_hex_pretty(&data.front(), data.size()).c_str());
+  ESP_LOGI(TAG, "Device info frame received");
+  ESP_LOGD(TAG, "Info: %s", format_hex_pretty(&data.front(), data.size()).c_str());
   // @TODO: Output Solax_Info_t
   this->no_response_count_ = 0;
 }
 
 void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
   if (data.size() != 52 && data.size() != 50 && data.size() != 56) {
-    // Solax X1 mini status report:
+    // Solax X1 mini status report (data_len 0x34: 52 bytes):
     // AA.55.00.0A.01.00.11.82.34.00.1A.00.02.00.00.00.00.00.00.00.00.00.00.09.21.13.87.00.00.FF.FF.
     // 00.00.00.12.00.00.00.15.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.04.D6
 
-    // Solax X1 mini g2 status report:
+    // Solax X1 mini g2 status report (data_len 0x32: 50 bytes):
     // AA.55.00.0A.01.00.11.82.32.00.21.00.02.07.EC.00.00.00.1D.00.00.00.18.09.55.13.80.02.2B.FF.FF.
     // 00.00.5D.AF.00.00.10.50.00.02.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.07.A4
 
-    // Solax X1 mini g3 status report:
+    // Solax X1 mini g3 status report (data_len 0x38: 56 bytes):
     // AA.55.00.0A.01.00.11.82.38.00.1A.00.03.04.0C.00.00.00.19.00.00.00.0B.08.FC.13.8A.00.F8.FF.FF.
     // 00.00.00.2B.00.00.00.0D.00.02.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.8A.00.DE.08.5F
     ESP_LOGW(TAG, "Invalid response size: %zu", data.size());
@@ -101,6 +98,8 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
   auto solax_get_error_bitmask = [&](size_t i) -> uint32_t {
     return uint32_t((data[i + 3] << 24) | (data[i + 2] << 16) | (data[i + 1] << 8) | data[i]);
   };
+
+  ESP_LOGI(TAG, "Status frame received");
 
   float temperature = solax_get_16bit(0);
 
@@ -146,15 +145,19 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
 
   uint8_t mode = (uint8_t) solax_get_16bit(30);
 
-  // register 32: Grid voltage fault in 0.1V
-  // register 34: Grid frequency fault in 0.01Hz
-  // register 36: DC injection fault in 1mA
-  // register 38: Temperature fault in °C
-  // register 40: Pv1 voltage fault in 0.1V
-  // register 42: Pv2 voltage fault in 0.1V
-  // register 44: GFC fault
+  ESP_LOGD(TAG, "  Grid voltage fault: %f V", solax_get_16bit(32) * 0.1f);
+  ESP_LOGD(TAG, "  Grid frequency fault: %f Hz", solax_get_16bit(34) * 0.01f);
+  ESP_LOGD(TAG, "  DC injection fault: %f A", solax_get_16bit(36) * 0.001f);
+  ESP_LOGD(TAG, "  Temperature fault: %d °C", solax_get_16bit(38));
+  ESP_LOGD(TAG, "  PV1 voltage fault: %f V", solax_get_16bit(40) * 0.1f);
+  ESP_LOGD(TAG, "  PV2 voltage fault: %f V", solax_get_16bit(42) * 0.1f);
+  ESP_LOGD(TAG, "  GFC fault: %f A", solax_get_16bit(44) * 0.001f);
 
   uint32_t error_bits = solax_get_error_bitmask(46);
+
+  if (data.size() > 50) {
+    ESP_LOGD(TAG, "  CT Pgrid: %d W", solax_get_16bit(50));
+  }
 
   this->publish_state_(this->temperature_sensor_, temperature);
   this->publish_state_(this->energy_today_sensor_, energy_today);
