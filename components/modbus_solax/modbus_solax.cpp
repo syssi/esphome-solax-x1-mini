@@ -153,7 +153,7 @@ float ModbusSolax::get_setup_priority() const {
   return setup_priority::BUS - 1.0f;
 }
 
-void ModbusSolax::query_live_data(uint8_t address) {
+void ModbusSolax::query_status_report(uint8_t address) {
   static SolaxMessageT tx_message;
 
   tx_message.Source[0] = 0x01;
@@ -167,7 +167,7 @@ void ModbusSolax::query_live_data(uint8_t address) {
   this->send(&tx_message);
 }
 
-void ModbusSolax::query_info(uint8_t address) {
+void ModbusSolax::query_device_info(uint8_t address) {
   static SolaxMessageT tx_message;
 
   tx_message.Source[0] = 0x01;
