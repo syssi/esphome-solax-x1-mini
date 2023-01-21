@@ -6,6 +6,10 @@ namespace solax_x1 {
 
 static const char *const TAG = "solax_x1";
 
+static const uint8_t FUNCTION_DEVICE_INFO = 0x82;
+static const uint8_t FUNCTION_STATUS_REPORT = 0x83;
+static const uint8_t FUNCTION_CONFIG_SETTINGS = 0x84;
+
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.2.pdf
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.8.pdf
 static const std::string MODE_NAMES[7] = {
@@ -56,7 +60,23 @@ static const char *const ERRORS[32] = {
     "Error Bit 31",        // Byte 3.7
 };
 
-void SolaxX1::on_modbus_solax_info(const std::vector<uint8_t> &data) {
+void SolaxX1::on_modbus_solax_data(const uint8_t &function, const std::vector<uint8_t> &data) {
+  switch (function) {
+    case FUNCTION_DEVICE_INFO:
+      this->decode_device_info_(data);
+      break;
+    case FUNCTION_STATUS_REPORT:
+      this->decode_status_report_(data);
+      break;
+    case FUNCTION_CONFIG_SETTINGS:
+      this->decode_config_settings_(data);
+      break;
+    default:
+      ESP_LOGW(TAG, "Unhandled solax frame: %s", format_hex_pretty(&data.front(), data.size()).c_str());
+  }
+}
+
+void SolaxX1::decode_device_info_(const std::vector<uint8_t> &data) {
   if (data.size() != 58) {
     ESP_LOGW(TAG, "Invalid response size: %zu", data.size());
     return;
@@ -74,7 +94,103 @@ void SolaxX1::on_modbus_solax_info(const std::vector<uint8_t> &data) {
   this->no_response_count_ = 0;
 }
 
-void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
+void SolaxX1::decode_config_settings_(const std::vector<uint8_t> &data) {
+  if (data.size() != 68) {
+    ESP_LOGW(TAG, "Invalid response size: %zu", data.size());
+    return;
+  }
+
+  auto solax_get_16bit = [&](size_t i) -> uint16_t {
+    return (uint16_t(data[i + 0]) << 8) | (uint16_t(data[i + 1]) << 0);
+  };
+
+  ESP_LOGI(TAG, "Config settings frame received");
+  ESP_LOGI(TAG, "  wVpvStart [9.10]: %f V", solax_get_16bit(0) * 0.1f);
+  ESP_LOGI(TAG, "  wTimeStart [11.12]: %d S", solax_get_16bit(2));
+  ESP_LOGI(TAG, "  wVacMinProtect [13.14]: %f V", solax_get_16bit(4) * 0.1f);
+  ESP_LOGI(TAG, "  wVacMaxProtect [15.16]: %f V", solax_get_16bit(6) * 0.1f);
+  ESP_LOGI(TAG, "  wFacMinProtect [17.18]: %f Hz", solax_get_16bit(8) * 0.01f);
+  ESP_LOGI(TAG, "  wFacMaxProtect [19.20]: %f Hz", solax_get_16bit(10) * 0.01f);
+  ESP_LOGI(TAG, "  wDciLimits [21.22]: %d mA", solax_get_16bit(12));
+  ESP_LOGI(TAG, "  wGrid10MinAvgProtect [23,24]: %f V", solax_get_16bit(14) * 0.1f);
+  ESP_LOGI(TAG, "  wVacMinSlowProtect [25.26]: %f V", solax_get_16bit(16) * 0.1f);
+  ESP_LOGI(TAG, "  wVacMaxSlowProtect [27.28]: %f V", solax_get_16bit(18) * 0.1f);
+  ESP_LOGI(TAG, "  wFacMinSlowProtect [29.30]: %f Hz", solax_get_16bit(20) * 0.01f);
+  ESP_LOGI(TAG, "  wFacMaxSlowProtect [31.32]: %f Hz", solax_get_16bit(22) * 0.01f);
+  ESP_LOGI(TAG, "  wSafety [33.34]: %d", solax_get_16bit(24));
+  // Supported safety values:
+  //
+  // 0: VDE0126
+  // 1: VDE4105
+  // 2: AS4777
+  // 3: G98
+  // 4: C10_11
+  // 5: TOR
+  // 6: EN50438_NL
+  // 7: Denmark2019_W
+  // 8: CEB
+  // 9: Cyprus2019
+  // 10: cNRS097_2_1
+  // 11: VDE0126_Greece
+  // 12: UTE_C15_712_Fr
+  // 13: IEC61727
+  // 14: G99
+  // 15: CQC
+  // 16: VDE0126_Greece_is
+  // 17: C15_712_Fr_island_50
+  // 18: C15_712_Fr_island_60
+  // 19: Guyana
+  // 20: MEA_Thailand
+  // 21: PEA_Thailand
+  // 22: cNewZealand
+  // 23: cIreland
+  // 24: cCE10_21
+  // 25: cRD1699
+  // 26: EN50438_Sweden
+  // 27: EN50549_PL
+  // 28: Czech PPDS
+  // 29: EN50438_Norway
+  // 30: EN50438_Portug
+  // 31: cCQC_WideRange
+  // 32: BRAZIL
+  // 33: EN50438_CEZ
+  // 34: IEC_Chile
+  // 35: Sri_Lanka
+  // 36: BRAZIL_240
+  // 37: EN50549-SK
+  // 38: EN50549_EU
+  // 39: G98/NI
+  // 40: Denmark2019_E
+  // 41: RD1699_island
+  ESP_LOGI(TAG, "  wPowerfactor_mode [35]: %d", data[26]);
+  ESP_LOGI(TAG, "  wPowerfactor_data [36]: %d", data[27]);
+  ESP_LOGI(TAG, "  wUpperLimit [37]: %d", data[28]);
+  ESP_LOGI(TAG, "  wLowerLimit [38]: %d", data[29]);
+  ESP_LOGI(TAG, "  wPowerLow [39]: %d", data[30]);
+  ESP_LOGI(TAG, "  wPowerUp [40]: %d", data[31]);
+  ESP_LOGI(TAG, "  Qpower_set [41.42]: %d", solax_get_16bit(32));
+  ESP_LOGI(TAG, "  WFreqSetPoint [43.44]: %f Hz", solax_get_16bit(34) * 0.01f);
+  ESP_LOGI(TAG, "  WFreqDropRate [45.46]: %d", solax_get_16bit(36));
+  ESP_LOGI(TAG, "  QuVupRate [47.48]: %d", solax_get_16bit(38));
+  ESP_LOGI(TAG, "  QuVlowRate [49.50]: %d", solax_get_16bit(40));
+  ESP_LOGI(TAG, "  WPowerLimitsPercent [51.52]: %d", solax_get_16bit(42));
+  ESP_LOGI(TAG, "  WWgra [53.54]: %f %%", solax_get_16bit(44) * 0.01f);
+  ESP_LOGI(TAG, "  wWv2 [55.56]: %f V", solax_get_16bit(46) * 0.1f);
+  ESP_LOGI(TAG, "  wWv3 [57.58]: %f V", solax_get_16bit(48) * 0.1f);
+  ESP_LOGI(TAG, "  wWv4 [59.60]: %f V", solax_get_16bit(50) * 0.1f);
+  ESP_LOGI(TAG, "  wQurangeV1 [61.62]: %d %%", solax_get_16bit(52));
+  ESP_LOGI(TAG, "  wQurangeV4 [63.64]: %d %%", solax_get_16bit(54));
+  ESP_LOGI(TAG, "  BVoltPowerLimit [65.66]: %d", solax_get_16bit(56));
+  ESP_LOGI(TAG, "  WPowerManagerEnable [67.68]: %d", solax_get_16bit(58));
+  ESP_LOGI(TAG, "  WGlobalSearchMPPTStartFlag [69.70]: %d", solax_get_16bit(60));
+  ESP_LOGI(TAG, "  WFreqProtectRestrictive [71.72]: %d", solax_get_16bit(62));
+  ESP_LOGI(TAG, "  WQuDelayTimer [73.74]: %d S", solax_get_16bit(64));
+  ESP_LOGI(TAG, "  WFreqActivePowerDelayTimer [75.76]: %d ms", solax_get_16bit(66));
+
+  this->no_response_count_ = 0;
+}
+
+void SolaxX1::decode_status_report_(const std::vector<uint8_t> &data) {
   if (data.size() != 52 && data.size() != 50 && data.size() != 56) {
     // Solax X1 mini status report (data_len 0x34: 52 bytes):
     // AA.55.00.0A.01.00.11.82.34.00.1A.00.02.00.00.00.00.00.00.00.00.00.00.09.21.13.87.00.00.FF.FF.
@@ -208,7 +324,7 @@ void SolaxX1::update() {
     // respond to the discovery broadcast if it's already configured.
     this->no_response_count_ = 0;
   } else {
-    no_response_count_++;
+    this->no_response_count_++;
     this->query_status_report(this->address_);
   }
 }

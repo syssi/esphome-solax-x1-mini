@@ -35,6 +35,7 @@ class ModbusSolax : public uart::UARTDevice, public Component {
   void send(SolaxMessageT *tx_message);
   void query_status_report(uint8_t address);
   void query_device_info(uint8_t address);
+  void query_config_settings(uint8_t address);
   void discover_devices();
   void register_address(uint8_t serial_number[14], uint8_t address);
 
@@ -52,11 +53,11 @@ class ModbusSolaxDevice {
   void set_parent(ModbusSolax *parent) { parent_ = parent; }
   void set_address(uint8_t address) { address_ = address; }
   void set_serial_number(uint8_t *serial_number) { serial_number_ = serial_number; }
-  virtual void on_modbus_solax_data(const std::vector<uint8_t> &data) = 0;
-  virtual void on_modbus_solax_info(const std::vector<uint8_t> &data) = 0;
+  virtual void on_modbus_solax_data(const uint8_t &function, const std::vector<uint8_t> &data) = 0;
 
   void query_status_report(uint8_t address) { this->parent_->query_status_report(address); }
   void query_device_info(uint8_t address) { this->parent_->query_device_info(address); }
+  void query_config_settings(uint8_t address) { this->parent_->query_config_settings(address); }
   void discover_devices() { this->parent_->discover_devices(); }
 
  protected:

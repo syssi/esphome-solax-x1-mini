@@ -121,16 +121,10 @@ bool ModbusSolax::parse_modbus_solax_byte_(uint8_t byte) {
   for (auto *device : this->devices_) {
     if (device->address_ == address) {
       if (frame[6] == 0x11) {
-        if (frame[7] == 0x83) {
-          // query live data response
-          device->on_modbus_solax_info(data);
-        } else if (frame[7] == 0x82) {
-          // query device info response
-          device->on_modbus_solax_data(data);
-        } else {
-          ESP_LOGW(TAG, "Unhandled solax frame for address 0x%02X: %s", address,
-                   format_hex_pretty(frame, at + 1).c_str());
-        }
+        device->on_modbus_solax_data(frame[7], data);
+      } else {
+        ESP_LOGW(TAG, "Unhandled control code (%d) of frame for address 0x%02X: %s", frame[6], address,
+                 format_hex_pretty(frame, at + 1).c_str());
       }
       found = true;
     }
@@ -176,6 +170,20 @@ void ModbusSolax::query_device_info(uint8_t address) {
   tx_message.Destination[1] = address;
   tx_message.ControlCode = 0x11;
   tx_message.FunctionCode = 0x03;
+  tx_message.DataLength = 0x00;
+
+  this->send(&tx_message);
+}
+
+void ModbusSolax::query_config_settings(uint8_t address) {
+  static SolaxMessageT tx_message;
+
+  tx_message.Source[0] = 0x01;
+  tx_message.Source[1] = 0x00;
+  tx_message.Destination[0] = 0x00;
+  tx_message.Destination[1] = address;
+  tx_message.ControlCode = 0x11;
+  tx_message.FunctionCode = 0x04;
   tx_message.DataLength = 0x00;
 
   this->send(&tx_message);
