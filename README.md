@@ -209,14 +209,13 @@ If this component doesn't work out of the box for your device please update your
 
 ```
 logger:
-  baud_rate: 0
   level: DEBUG
 
 uart:
   id: uart0
   baud_rate: 9600
-  tx_pin: GPIO1
-  rx_pin: GPIO3
+  tx_pin: GPIO4
+  rx_pin: GPIO5
   debug:
     direction: BOTH
 ```
@@ -290,12 +289,12 @@ Data 30...31 (mode):               0x00 0x02 (2: Normal)
 Data 32...33 (grid voltage fault): 0x00 0x00 (0.0 V)
 Data 34...35 (grid freq. fault)    0x00 0x00 (0.00 Hz)
 Data 36...37 (dc injection fault): 0x00 0x00 (0 mA)
-Data 38...39 (temperature fault):  0x00 0x00
-Data 40...41 (pv1 voltage fault):  0x00 0x00
-Data 42...43 (pv2 voltage fault):  0x00 0x00
-Data 44...45 (gfc fault):          0x00 0x00
-Data 46...49 (error message):      0x00 0x00 0x00 0x00
-Data 50...52 (unknown):            0x02 0xD0
+Data 38...39 (temperature fault):  0x00 0x00 (0 °C)
+Data 40...41 (pv1 voltage fault):  0x00 0x00 (0 V)
+Data 42...43 (pv2 voltage fault):  0x00 0x00 (0 V)
+Data 44...45 (gfc fault):          0x00 0x00 (0 mA)
+Data 46...49 (error message):      0x00 0x00 0x00 0x00 (No error)
+Data 50...52 (ct pgrid):           0x02 0xD0 (720 W)
 
 ```
 
