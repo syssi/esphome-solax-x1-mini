@@ -107,7 +107,7 @@ void SolaxX1::on_modbus_solax_data(const std::vector<uint8_t> &data) {
 
   ESP_LOGI(TAG, "Status frame received");
 
-  float temperature = solax_get_16bit(0);
+  float temperature = (int16_t) solax_get_16bit(0);
 
   uint16_t raw_energy_today = solax_get_16bit(2);
   float energy_today = raw_energy_today * 0.1f;
