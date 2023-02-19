@@ -31,10 +31,7 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   uint8_t get_no_response_count() { return no_response_count_; }
 
   void update() override;
-
-  void on_modbus_solax_data(const std::vector<uint8_t> &data) override;
-  void on_modbus_solax_info(const std::vector<uint8_t> &data) override;
-
+  void on_modbus_solax_data(const uint8_t &function, const std::vector<uint8_t> &data) override;
   void dump_config() override;
 
  protected:
@@ -56,6 +53,9 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   text_sensor::TextSensor *errors_text_sensor_;
   uint8_t no_response_count_ = REDISCOVERY_THRESHOLD;
 
+  void decode_device_info_(const std::vector<uint8_t> &data);
+  void decode_status_report_(const std::vector<uint8_t> &data);
+  void decode_config_settings_(const std::vector<uint8_t> &data);
   void publish_state_(sensor::Sensor *sensor, float value);
   void publish_state_(text_sensor::TextSensor *text_sensor, const std::string &state);
   void publish_device_offline_();
