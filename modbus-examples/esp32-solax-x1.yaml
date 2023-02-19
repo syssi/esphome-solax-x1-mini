@@ -55,7 +55,7 @@ modbus_controller:
 
 text_sensor:
   - platform: modbus_controller
-    modbus_controller_id: solax
+    modbus_controller_id: solax0
     name: "${name} operation mode"
     address: 0x40f
     register_type: read
