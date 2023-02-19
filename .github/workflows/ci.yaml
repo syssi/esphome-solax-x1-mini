@@ -164,10 +164,15 @@ jobs:
         run: |
           esphome -s external_components_source components config esp32-example.yaml
           esphome -s external_components_source components config esp32-example-advanced-multiple-uarts.yaml
-          esphome config modbus-examples/esp32-solax-x1.yaml
       - name: Validate esp8266 example configurations
         run: |
           esphome -s external_components_source components config esp8266-example.yaml
+      - name: Write modbus-examples/secrets.yaml
+        shell: bash
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > modbus-examples/secrets.yaml'
+      - name: Validate modbus example configurations
+        run: |
+          esphome config modbus-examples/esp32-solax-x1.yaml
 
   esphome-compile:
     runs-on: ubuntu-latest
