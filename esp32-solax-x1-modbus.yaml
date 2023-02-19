@@ -231,7 +231,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: solax0
-    name: "${name} production total"
+    name: "${name} energy total"
     address: 0x423
     register_type: read
     value_type: U_WORD
@@ -244,7 +244,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: solax0
-    name: "${name} production today"
+    name: "${name} energy today"
     address: 0x425
     register_type: read
     value_type: U_WORD
