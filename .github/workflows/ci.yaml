@@ -164,7 +164,7 @@ jobs:
         run: |
           esphome -s external_components_source components config esp32-example.yaml
           esphome -s external_components_source components config esp32-example-advanced-multiple-uarts.yaml
-          esphome config esp32-solax-x1-modbus.yaml
+          esphome config modbus-examples/esp32-solax-x1.yaml
       - name: Validate esp8266 example configurations
         run: |
           esphome -s external_components_source components config esp8266-example.yaml

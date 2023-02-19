@@ -221,13 +221,13 @@ sensor:
   - platform: template
     id: solax0_total_dc_power
     name: "${name} total dc power"
-    lambda: |-
-      return (id(solax0_power_dc1).state + id(solax0_power_dc2).state);
     update_interval: never
     unit_of_measurement: W
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
+    lambda: |-
+      return (id(solax0_power_dc1).state + id(solax0_power_dc2).state);
 
   - platform: modbus_controller
     modbus_controller_id: solax0
