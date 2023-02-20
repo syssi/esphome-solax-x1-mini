@@ -1,7 +1,7 @@
 substitutions:
   name: solar-powermeter
   device_description: "Monitor multiple Solax X1 mini via RS485"
-  external_components_source: github://syssi/esphome-modbus-solax-x1@main
+  external_components_source: github://syssi/esphome-solax-x1-mini@main
   device0: firstfloor-solar-powermeter
   device1: groundfloor-solar-powermeter
   device2: community-solar-powermeter
@@ -10,7 +10,7 @@ esphome:
   name: ${name}
   comment: ${device_description}
   project:
-    name: "syssi.esphome-modbus-solax-x1"
+    name: "syssi.esphome-solax-x1-mini"
     version: 1.2.1
 
 esp32:
@@ -64,7 +64,7 @@ solax_modbus:
   - id: modbus2
     uart_id: uart2
 
-solax_x1:
+solax_x1_mini:
   - id: solax0
     solax_modbus_id: modbus0
     update_interval: 2s
@@ -76,30 +76,30 @@ solax_x1:
     update_interval: 2s
 
 text_sensor:
-  - platform: solax_x1
-    solax_x1_id: solax0
+  - platform: solax_x1_mini
+    solax_x1_mini_id: solax0
     mode_name:
       name: "${device0} mode name"
     errors:
       name: "${device0} errors"
 
-  - platform: solax_x1
-    solax_x1_id: solax1
+  - platform: solax_x1_mini
+    solax_x1_mini_id: solax1
     mode_name:
       name: "${device1} mode name"
     errors:
       name: "${device1} errors"
 
-  - platform: solax_x1
-    solax_x1_id: solax2
+  - platform: solax_x1_mini
+    solax_x1_mini_id: solax2
     mode_name:
       name: "${device2} mode name"
     errors:
       name: "${device2} errors"
 
 sensor:
-  - platform: solax_x1
-    solax_x1_id: solax0
+  - platform: solax_x1_mini
+    solax_x1_mini_id: solax0
     ac_power:
       name: "${device0} ac power"
     energy_today:
@@ -139,8 +139,8 @@ sensor:
     gfc_fault:
       name: "${device0} gfc fault"
 
-  - platform: solax_x1
-    solax_x1_id: solax1
+  - platform: solax_x1_mini
+    solax_x1_mini_id: solax1
     ac_power:
       name: "${device1} ac power"
     energy_today:
@@ -180,8 +180,8 @@ sensor:
     gfc_fault:
       name: "${device1} gfc fault"
 
-  - platform: solax_x1
-    solax_x1_id: solax2
+  - platform: solax_x1_mini
+    solax_x1_mini_id: solax2
     ac_power:
       name: "${device2} ac power"
     energy_today:

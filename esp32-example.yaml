@@ -1,7 +1,7 @@
 substitutions:
   name: solar-powermeter
   device_description: "Monitor a Solax X1 mini via RS485"
-  external_components_source: github://syssi/esphome-modbus-solax-x1@main
+  external_components_source: github://syssi/esphome-solax-x1-mini@main
   tx_pin: GPIO16
   rx_pin: GPIO17
 
@@ -9,7 +9,7 @@ esphome:
   name: ${name}
   comment: ${device_description}
   project:
-    name: "syssi.esphome-modbus-solax-x1"
+    name: "syssi.esphome-solax-x1-mini"
     version: 1.2.1
 
 esp32:
@@ -48,19 +48,19 @@ solax_modbus:
     uart_id: uart0
 #    flow_control_pin: GPIO0
 
-solax_x1:
+solax_x1_mini:
   solax_modbus_id: modbus0
   update_interval: 1s
 
 text_sensor:
-  - platform: solax_x1
+  - platform: solax_x1_mini
     mode_name:
       name: "${name} mode name"
     errors:
       name: "${name} errors"
 
 sensor:
-  - platform: solax_x1
+  - platform: solax_x1_mini
     ac_power:
       name: "${name} ac power"
     energy_today:

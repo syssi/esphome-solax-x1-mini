@@ -7,15 +7,15 @@ AUTO_LOAD = ["solax_modbus", "sensor", "text_sensor"]
 CODEOWNERS = ["@syssi"]
 MULTI_CONF = True
 
-CONF_SOLAX_X1_ID = "solax_x1_id"
+CONF_SOLAX_X1_MINI_ID = "solax_x1_mini_id"
 
-solax_x1_ns = cg.esphome_ns.namespace("solax_x1")
-SolaxX1 = solax_x1_ns.class_(
-    "SolaxX1", cg.PollingComponent, solax_modbus.SolaxModbusDevice
+solax_x1_mini_ns = cg.esphome_ns.namespace("solax_x1_mini")
+SolaxX1Mini = solax_x1_mini_ns.class_(
+    "SolaxX1Mini", cg.PollingComponent, solax_modbus.SolaxModbusDevice
 )
 
 CONFIG_SCHEMA = (
-    cv.Schema({cv.GenerateID(): cv.declare_id(SolaxX1)})
+    cv.Schema({cv.GenerateID(): cv.declare_id(SolaxX1Mini)})
     .extend(cv.polling_component_schema("30s"))
     .extend(
         solax_modbus.solax_modbus_device_schema(0x0A, "3132333435363737363534333231")

@@ -1,10 +1,10 @@
-#include "solax_x1.h"
+#include "solax_x1_mini.h"
 #include "esphome/core/log.h"
 
 namespace esphome {
-namespace solax_x1 {
+namespace solax_x1_mini {
 
-static const char *const TAG = "solax_x1";
+static const char *const TAG = "solax_x1_mini";
 
 static const uint8_t FUNCTION_STATUS_REPORT = 0x82;
 static const uint8_t FUNCTION_DEVICE_INFO = 0x83;
@@ -60,7 +60,7 @@ static const char *const ERRORS[ERRORS_SIZE] = {
     "Error (Bit 31)",                            // 1000 0000 0000 0000 0000 0000 0000 0000 (32)
 };
 
-void SolaxX1::on_solax_modbus_data(const uint8_t &function, const std::vector<uint8_t> &data) {
+void SolaxX1Mini::on_solax_modbus_data(const uint8_t &function, const std::vector<uint8_t> &data) {
   switch (function) {
     case FUNCTION_DEVICE_INFO:
       this->decode_device_info_(data);
@@ -76,7 +76,7 @@ void SolaxX1::on_solax_modbus_data(const uint8_t &function, const std::vector<ui
   }
 }
 
-void SolaxX1::decode_device_info_(const std::vector<uint8_t> &data) {
+void SolaxX1Mini::decode_device_info_(const std::vector<uint8_t> &data) {
   if (data.size() != 58) {
     ESP_LOGW(TAG, "Invalid response size: %zu", data.size());
     return;
@@ -94,7 +94,7 @@ void SolaxX1::decode_device_info_(const std::vector<uint8_t> &data) {
   this->no_response_count_ = 0;
 }
 
-void SolaxX1::decode_config_settings_(const std::vector<uint8_t> &data) {
+void SolaxX1Mini::decode_config_settings_(const std::vector<uint8_t> &data) {
   if (data.size() != 68) {
     ESP_LOGW(TAG, "Invalid response size: %zu", data.size());
     return;
@@ -190,7 +190,7 @@ void SolaxX1::decode_config_settings_(const std::vector<uint8_t> &data) {
   this->no_response_count_ = 0;
 }
 
-void SolaxX1::decode_status_report_(const std::vector<uint8_t> &data) {
+void SolaxX1Mini::decode_status_report_(const std::vector<uint8_t> &data) {
   if (data.size() != 52 && data.size() != 50 && data.size() != 56) {
     // Solax X1 mini status report (data_len 0x34: 52 bytes):
     // AA.55.00.0A.01.00.11.82.34.00.1A.00.02.00.00.00.00.00.00.00.00.00.00.09.21.13.87.00.00.FF.FF.
@@ -270,7 +270,7 @@ void SolaxX1::decode_status_report_(const std::vector<uint8_t> &data) {
   this->no_response_count_ = 0;
 }
 
-void SolaxX1::publish_device_offline_() {
+void SolaxX1Mini::publish_device_offline_() {
   this->publish_state_(this->mode_sensor_, -1);
   this->publish_state_(this->mode_name_text_sensor_, "Offline");
 
@@ -292,7 +292,7 @@ void SolaxX1::publish_device_offline_() {
   this->publish_state_(this->gfc_fault_sensor_, NAN);
 }
 
-void SolaxX1::update() {
+void SolaxX1Mini::update() {
   if (this->no_response_count_ >= REDISCOVERY_THRESHOLD) {
     this->publish_device_offline_();
     ESP_LOGD(TAG, "The device is or was offline. Broadcasting discovery for address configuration...");
@@ -307,22 +307,22 @@ void SolaxX1::update() {
   }
 }
 
-void SolaxX1::publish_state_(sensor::Sensor *sensor, float value) {
+void SolaxX1Mini::publish_state_(sensor::Sensor *sensor, float value) {
   if (sensor == nullptr)
     return;
 
   sensor->publish_state(value);
 }
 
-void SolaxX1::publish_state_(text_sensor::TextSensor *text_sensor, const std::string &state) {
+void SolaxX1Mini::publish_state_(text_sensor::TextSensor *text_sensor, const std::string &state) {
   if (text_sensor == nullptr)
     return;
 
   text_sensor->publish_state(state);
 }
 
-void SolaxX1::dump_config() {
-  ESP_LOGCONFIG(TAG, "SolaxX1:");
+void SolaxX1Mini::dump_config() {
+  ESP_LOGCONFIG(TAG, "SolaxX1Mini:");
   ESP_LOGCONFIG(TAG, "  Address: 0x%02X", this->address_);
   LOG_SENSOR("", "Temperature", this->temperature_sensor_);
   LOG_SENSOR("", "Energy today", this->energy_today_sensor_);
@@ -349,7 +349,7 @@ void SolaxX1::dump_config() {
   LOG_TEXT_SENSOR("  ", "Errors", this->errors_text_sensor_);
 }
 
-std::string SolaxX1::error_bits_to_string_(const uint32_t mask) {
+std::string SolaxX1Mini::error_bits_to_string_(const uint32_t mask) {
   std::string values = "";
   if (mask) {
     for (int i = 0; i < ERRORS_SIZE; i++) {
@@ -365,5 +365,5 @@ std::string SolaxX1::error_bits_to_string_(const uint32_t mask) {
   return values;
 }
 
-}  // namespace solax_x1
+}  // namespace solax_x1_mini
 }  // namespace esphome

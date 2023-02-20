@@ -1,9 +1,9 @@
-# esphome-modbus-solax-x1
+# esphome-solax-x1-mini
 
-![GitHub actions](https://github.com/syssi/esphome-modbus-solax-x1/actions/workflows/ci.yaml/badge.svg)
-![GitHub stars](https://img.shields.io/github/stars/syssi/esphome-modbus-solax-x1)
-![GitHub forks](https://img.shields.io/github/forks/syssi/esphome-modbus-solax-x1)
-![GitHub watchers](https://img.shields.io/github/watchers/syssi/esphome-modbus-solax-x1)
+![GitHub actions](https://github.com/syssi/esphome-solax-x1-mini/actions/workflows/ci.yaml/badge.svg)
+![GitHub stars](https://img.shields.io/github/stars/syssi/esphome-solax-x1-mini)
+![GitHub forks](https://img.shields.io/github/forks/syssi/esphome-solax-x1-mini)
+![GitHub watchers](https://img.shields.io/github/watchers/syssi/esphome-solax-x1-mini)
 [!["Buy Me A Coffee"](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/syssi)
 
 ESPHome component to monitor a Solax X1 mini via RS485.
@@ -15,10 +15,10 @@ ESPHome component to monitor a Solax X1 mini via RS485.
 * SolaX X1 Mini
   - SolaX X1 Mini X1-0.6-S-D(L)
 * SolaX X1 Mini G2
-  - SolaX X1 Mini X1-1.5-S-D(L) (master version 1.08, manager version 1.07) (reported by [@beocycris](https://github.com/syssi/esphome-modbus-solax-x1/issues/18#issuecomment-1073188868))
-  - SolaX X1 Mini X1-2.0-S-D(L) (master version 1.08, manager version 1.07) (reported by [@zcloud-at](https://github.com/syssi/esphome-modbus-solax-x1/issues/15))
+  - SolaX X1 Mini X1-1.5-S-D(L) (master version 1.08, manager version 1.07) (reported by [@beocycris](https://github.com/syssi/esphome-solax-x1-mini/issues/18#issuecomment-1073188868))
+  - SolaX X1 Mini X1-2.0-S-D(L) (master version 1.08, manager version 1.07) (reported by [@zcloud-at](https://github.com/syssi/esphome-solax-x1-mini/issues/15))
 * SolaX X1 Mini G3
-  - SolaX X1 Mini X1-0.6-S-D(L) (master version 1.08, manager version 1.07) (reported by [@neujbit](https://github.com/syssi/esphome-modbus-solax-x1/issues/22))
+  - SolaX X1 Mini X1-0.6-S-D(L) (master version 1.08, manager version 1.07) (reported by [@neujbit](https://github.com/syssi/esphome-solax-x1-mini/issues/22))
 
 ## Requirements
 
@@ -79,7 +79,7 @@ Please make sure to power the RS485 module with 3.3V because it affects the TTL 
 You can install this component with [ESPHome external components feature](https://esphome.io/components/external_components.html) like this:
 ```yaml
 external_components:
-  - source: github://syssi/esphome-modbus-solax-x1@main
+  - source: github://syssi/esphome-solax-x1-mini@main
 ```
 
 or just use the `esp32-example.yaml` / `esp8266-example.yaml` as proof of concept:
@@ -89,8 +89,8 @@ or just use the `esp32-example.yaml` / `esp8266-example.yaml` as proof of concep
 pip3 install esphome
 
 # Clone this external component
-git clone https://github.com/syssi/esphome-modbus-solax-x1.git
-cd esphome-modbus-solax-x1
+git clone https://github.com/syssi/esphome-solax-x1-mini.git
+cd esphome-solax-x1-mini
 
 # Create a secrets.yaml containing some setup specific secrets
 cat > secrets.yaml <<EOF
@@ -120,7 +120,7 @@ esphome:
   board: esp-wrover-kit
 
 external_components:
-  - source: github://syssi/esphome-modbus-solax-x1@main
+  - source: github://syssi/esphome-solax-x1-mini@main
     refresh: 0s
 
 wifi:
@@ -148,18 +148,18 @@ uart:
 solax_modbus:
 #   flow_control_pin: GPIO0
 
-solax_x1:
+solax_x1_mini:
   update_interval: 1s
 
 text_sensor:
-  - platform: solax_x1
+  - platform: solax_x1_mini
     mode_name:
       name: "${name} mode name"
     errors:
       name: "${name} errors"
 
 sensor:
-  - platform: solax_x1
+  - platform: solax_x1_mini
     ac_power:
       name: "${name} ac power"
     energy_today:
@@ -304,4 +304,4 @@ Data 50...52 (ct pgrid):           0x02 0xD0 (720 W)
 * https://github.com/JensJordan/solaXd/
 * https://github.com/arendst/Tasmota/blob/development/tasmota/xnrg_12_solaxX1.ino
 * https://github.com/esphome/esphome/blob/dev/esphome/components/modbus/modbus.cpp
-* https://github.com/syssi/esphome-modbus-solax-x1/blob/main/docs/SolaxPower_Single_Phase_External_Communication_Protocol_-_X1_Series_V1.2.pdf
+* https://github.com/syssi/esphome-solax-x1-mini/blob/main/docs/SolaxPower_Single_Phase_External_Communication_Protocol_-_X1_Series_V1.2.pdf

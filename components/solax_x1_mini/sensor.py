@@ -24,9 +24,9 @@ from esphome.const import (
     UNIT_WATT,
 )
 
-from . import CONF_SOLAX_X1_ID, SolaxX1
+from . import CONF_SOLAX_X1_MINI_ID, SolaxX1Mini
 
-DEPENDENCIES = ["solax_x1"]
+DEPENDENCIES = ["solax_x1_mini"]
 
 CONF_ENERGY_TODAY = "energy_today"
 CONF_ENERGY_TOTAL = "energy_total"
@@ -74,7 +74,7 @@ SENSORS = [
 # pylint: disable=too-many-function-args
 CONFIG_SCHEMA = cv.Schema(
     {
-        cv.GenerateID(CONF_SOLAX_X1_ID): cv.use_id(SolaxX1),
+        cv.GenerateID(CONF_SOLAX_X1_MINI_ID): cv.use_id(SolaxX1Mini),
         cv.Optional(CONF_ENERGY_TODAY): sensor.sensor_schema(
             unit_of_measurement=UNIT_KILO_WATT_HOURS,
             icon=ICON_COUNTER,
@@ -210,7 +210,7 @@ CONFIG_SCHEMA = cv.Schema(
 
 
 async def to_code(config):
-    hub = await cg.get_variable(config[CONF_SOLAX_X1_ID])
+    hub = await cg.get_variable(config[CONF_SOLAX_X1_MINI_ID])
     for key in SENSORS:
         if key in config:
             conf = config[key]
