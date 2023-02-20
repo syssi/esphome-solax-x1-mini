@@ -25,41 +25,38 @@ static const std::string MODES[MODES_SIZE] = {
 
 static const uint8_t ERRORS_SIZE = 32;
 static const char *const ERRORS[ERRORS_SIZE] = {
-    "Tz Protection Fault",   // Byte 0.0
-    "Mains Lost Fault",      // Byte 0.1
-    "Grid Voltage Fault",    // Byte 0.2
-    "Grid Frequency Fault",  // Byte 0.3
-    "PLL Lost Fault",        // Byte 0.4
-    "Bus Voltage Fault",     // Byte 0.5
-    "Error Bit 06",          // Byte 0.6
-    "Oscillator Fault",      // Byte 0.7
-
-    "DCI OCP Fault",           // Byte 1.0
-    "Residual Current Fault",  // Byte 1.1
-    "PV Voltage Fault",        // Byte 1.2
-    "Ac10Mins Voltage Fault",  // Byte 1.3
-    "Isolation Fault",         // Byte 1.4
-    "Over Temperature Fault",  // Byte 1.5
-    "Ventilator Fault",        // Byte 1.6
-    "Error Bit 15",            // Byte 1.7
-
-    "SPI Communication Fault",        // Byte 2.0
-    "SCI Communication Fault",        // Byte 2.1
-    "Error Bit 18",                   // Byte 2.2
-    "Input Configuration Fault",      // Byte 2.3
-    "EEPROM Fault",                   // Byte 2.4
-    "Relay Fault",                    // Byte 2.5
-    "Sample Consistence Fault",       // Byte 2.6
-    "Residual-Current Device Fault",  // Byte 2.7
-
-    "Error Bit 24",        // Byte 3.0
-    "Error Bit 25",        // Byte 3.1
-    "Error Bit 26",        // Byte 3.2
-    "Error Bit 27",        // Byte 3.3
-    "Error Bit 28",        // Byte 3.4
-    "DCI Device Fault",    // Byte 3.5
-    "Other Device Fault",  // Byte 3.6
-    "Error Bit 31",        // Byte 3.7
+    "Tz Protection Fault",            // 0000 0000 0000 0000 0000 0000 0000 0001 (1)
+    "Mains Lost Fault",               // 0000 0000 0000 0000 0000 0000 0000 0010 (2)
+    "Grid Voltage Fault",             // 0000 0000 0000 0000 0000 0000 0000 0100 (3)
+    "Grid Frequency Fault",           // 0000 0000 0000 0000 0000 0000 0000 1000 (4)
+    "PLL Lost Fault",                 // 0000 0000 0000 0000 0000 0000 0001 0000 (5)
+    "Bus Voltage Fault",              // 0000 0000 0000 0000 0000 0000 0010 0000 (6)
+    "Error (Bit 6)",                  // 0000 0000 0000 0000 0000 0000 0100 0000 (7)
+    "Oscillator Fault",               // 0000 0000 0000 0000 0000 0000 1000 0000 (8)
+    "DCI OCP Fault",                  // 0000 0000 0000 0000 0000 0001 0000 0000 (9)
+    "Residual Current Fault",         // 0000 0000 0000 0000 0000 0010 0000 0000 (10)
+    "PV Voltage Fault",               // 0000 0000 0000 0000 0000 0100 0000 0000 (11)
+    "Ac10Mins Voltage Fault",         // 0000 0000 0000 0000 0000 1000 0000 0000 (12)
+    "Isolation Fault",                // 0000 0000 0000 0000 0001 0000 0000 0000 (13)
+    "Over Temperature Fault",         // 0000 0000 0000 0000 0010 0000 0000 0000 (14)
+    "Ventilator Fault",               // 0000 0000 0000 0000 0100 0000 0000 0000 (15)
+    "Error (Bit 15)",                 // 0000 0000 0000 0000 1000 0000 0000 0000 (16)
+    "SPI Communication Fault",        // 0000 0000 0000 0001 0000 0000 0000 0000 (17)
+    "SCI Communication Fault",        // 0000 0000 0000 0010 0000 0000 0000 0000 (18)
+    "Error (Bit 18)",                 // 0000 0000 0000 0100 0000 0000 0000 0000 (19)
+    "Input Configuration Fault",      // 0000 0000 0000 1000 0000 0000 0000 0000 (20)
+    "EEPROM Fault",                   // 0000 0000 0001 0000 0000 0000 0000 0000 (21)
+    "Relay Fault",                    // 0000 0000 0010 0000 0000 0000 0000 0000 (22)
+    "Sample Consistence Fault",       // 0000 0000 0100 0000 0000 0000 0000 0000 (23)
+    "Residual-Current Device Fault",  // 0000 0000 1000 0000 0000 0000 0000 0000 (24)
+    "Error (Bit 24)",                 // 0000 0001 0000 0000 0000 0000 0000 0000 (25)
+    "Error (Bit 25)",                 // 0000 0010 0000 0000 0000 0000 0000 0000 (26)
+    "Error (Bit 26)",                 // 0000 0100 0000 0000 0000 0000 0000 0000 (27)
+    "Error (Bit 27)",                 // 0000 1000 0000 0000 0000 0000 0000 0000 (28)
+    "Error (Bit 28)",                 // 0001 0000 0000 0000 0000 0000 0000 0000 (29)
+    "DCI Device Fault",               // 0010 0000 0000 0000 0000 0000 0000 0000 (30)
+    "Other Device Fault",             // 0100 0000 0000 0000 0000 0000 0000 0000 (31)
+    "Error (Bit 31)",                 // 1000 0000 0000 0000 0000 0000 0000 0000 (32)
 };
 
 void SolaxX1::on_modbus_solax_data(const uint8_t &function, const std::vector<uint8_t> &data) {
