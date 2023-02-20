@@ -91,3 +91,17 @@ sensor:
       name: "${name} mode"
     error_bits:
       name: "${name} error bits"
+    grid_voltage_fault:
+      name: "${name} grid voltage fault"
+    grid_frequency_fault:
+      name: "${name} grid frequency fault"
+    dc_injection_fault:
+      name: "${name} dc injection fault"
+    temperature_fault:
+      name: "${name} temperature fault"
+    pv1_voltage_fault:
+      name: "${name} pv1 voltage fault"
+    pv2_voltage_fault:
+      name: "${name} pv2 voltage fault"
+    gfc_fault:
+      name: "${name} gfc fault"
