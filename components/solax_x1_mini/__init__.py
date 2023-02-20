@@ -7,7 +7,7 @@ AUTO_LOAD = ["solax_modbus", "sensor", "text_sensor"]
 CODEOWNERS = ["@syssi"]
 MULTI_CONF = True
 
-CONF__SOLAX_X1_MINI_ID = "solax_x1_mini_id"
+CONF_SOLAX_X1_MINI_ID = "solax_x1_mini_id"
 
 solax_x1_mini_ns = cg.esphome_ns.namespace("solax_x1_mini")
 SolaxX1Mini = solax_x1_mini_ns.class_(
