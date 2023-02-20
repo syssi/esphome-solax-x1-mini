@@ -176,7 +176,7 @@ sensor:
     register_type: read
     value_type: U_WORD
     accuracy_decimals: 0
-    unit_of_measurement: C
+    unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
 
