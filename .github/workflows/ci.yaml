@@ -172,7 +172,7 @@ jobs:
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > modbus-examples/secrets.yaml'
       - name: Validate modbus example configurations
         run: |
-          esphome config modbus-examples/esp32-solax-x1.yaml
+          esphome config modbus-examples/esp32-solax-x1-boost.yaml
 
   esphome-compile:
     runs-on: ubuntu-latest

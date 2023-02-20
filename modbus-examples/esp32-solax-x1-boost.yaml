@@ -1,9 +1,18 @@
+# This configuration is for a Solax X1 Boost
+#
+# The Solax X1 Boost can be interfaced using ModbusRTU via RS485.
+#
+# Please `enable` the Modbus support at the settings (password 6868)
+# of your inverter and make sure the modbus address is set to `1`.
+#
 # Kudos to @benjaminvdb and @kidwellj
+#
 # https://github.com/syssi/esphome-modbus-solax-x1/issues/31
+# https://github.com/aiolos/ESPHome-config/blob/main/modbus-solax.yaml
 
 substitutions:
   name: solax-x1
-  device_description: "Monitor a Solax X1 via RS485"
+  device_description: "Monitor a Solax X1 Boost via RS485"
   tx_pin: GPIO16
   rx_pin: GPIO17
 
@@ -84,10 +93,10 @@ sensor:
     address: 0x400
     register_type: read
     value_type: U_WORD
-    accuracy_decimals: 1
     unit_of_measurement: V
     device_class: voltage
     state_class: measurement
+    accuracy_decimals: 1
     filters:
       - multiply: 0.1
 
@@ -97,10 +106,10 @@ sensor:
     address: 0x401
     register_type: read
     value_type: U_WORD
-    accuracy_decimals: 1
     unit_of_measurement: V
     device_class: voltage
     state_class: measurement
+    accuracy_decimals: 1
     filters:
       - multiply: 0.1
 
@@ -110,10 +119,10 @@ sensor:
     address: 0x402
     register_type: read
     value_type: U_WORD
-    accuracy_decimals: 1
     unit_of_measurement: A
     device_class: current
     state_class: measurement
+    accuracy_decimals: 1
     filters:
       - multiply: 0.1
 
@@ -123,10 +132,10 @@ sensor:
     address: 0x403
     register_type: read
     value_type: U_WORD
-    accuracy_decimals: 1
     unit_of_measurement: A
     device_class: current
     state_class: measurement
+    accuracy_decimals: 1
     filters:
       - multiply: 0.1
 
@@ -136,10 +145,10 @@ sensor:
     address: 0x404
     register_type: read
     value_type: U_WORD
-    accuracy_decimals: 1
     unit_of_measurement: V
     device_class: voltage
     state_class: measurement
+    accuracy_decimals: 1
     filters:
       - multiply: 0.1
 
@@ -149,10 +158,10 @@ sensor:
     address: 0x407
     register_type: read
     value_type: U_WORD
-    accuracy_decimals: 2
     unit_of_measurement: Hz
     device_class: frequency
     state_class: measurement
+    accuracy_decimals: 2
     filters:
       - multiply: 0.01
 
@@ -162,10 +171,10 @@ sensor:
     address: 0x40A
     register_type: read
     value_type: U_WORD
-    accuracy_decimals: 1
     unit_of_measurement: A
     device_class: current
     state_class: measurement
+    accuracy_decimals: 1
     filters:
       - multiply: 0.1
 
@@ -175,10 +184,10 @@ sensor:
     address: 0x40D
     register_type: read
     value_type: U_WORD
-    accuracy_decimals: 0
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
+    accuracy_decimals: 0
 
   - platform: modbus_controller
     modbus_controller_id: solax0
@@ -235,10 +244,10 @@ sensor:
     address: 0x423
     register_type: read
     value_type: U_WORD
-    accuracy_decimals: 1
     unit_of_measurement: kWh
     device_class: energy
     state_class: total_increasing
+    accuracy_decimals: 1
     filters:
       - multiply: 0.1
 
@@ -248,9 +257,9 @@ sensor:
     address: 0x425
     register_type: read
     value_type: U_WORD
-    accuracy_decimals: 1
     unit_of_measurement: kWh
     device_class: energy
     state_class: total_increasing
+    accuracy_decimals: 1
     filters:
       - multiply: 0.1
