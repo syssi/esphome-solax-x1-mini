@@ -12,7 +12,8 @@ static const uint8_t FUNCTION_CONFIG_SETTINGS = 0x84;
 
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.2.pdf
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.8.pdf
-static const std::string MODE_NAMES[7] = {
+static const uint8_t MODES_SIZE = 7;
+static const std::string MODES[MODES_SIZE] = {
     "Wait",             // 0
     "Check",            // 1
     "Normal",           // 2
@@ -22,42 +23,41 @@ static const std::string MODE_NAMES[7] = {
     "Self Test",        // 6
 };
 
-static const char *const ERRORS[32] = {
-    "Tz Protection Fault",   // Byte 0.0
-    "Mains Lost Fault",      // Byte 0.1
-    "Grid Voltage Fault",    // Byte 0.2
-    "Grid Frequency Fault",  // Byte 0.3
-    "PLL Lost Fault",        // Byte 0.4
-    "Bus Voltage Fault",     // Byte 0.5
-    "Error Bit 06",          // Byte 0.6
-    "Oscillator Fault",      // Byte 0.7
-
-    "DCI OCP Fault",           // Byte 1.0
-    "Residual Current Fault",  // Byte 1.1
-    "PV Voltage Fault",        // Byte 1.2
-    "Ac10Mins Voltage Fault",  // Byte 1.3
-    "Isolation Fault",         // Byte 1.4
-    "Over Temperature Fault",  // Byte 1.5
-    "Ventilator Fault",        // Byte 1.6
-    "Error Bit 15",            // Byte 1.7
-
-    "SPI Communication Fault",        // Byte 2.0
-    "SCI Communication Fault",        // Byte 2.1
-    "Error Bit 18",                   // Byte 2.2
-    "Input Configuration Fault",      // Byte 2.3
-    "EEPROM Fault",                   // Byte 2.4
-    "Relay Fault",                    // Byte 2.5
-    "Sample Consistence Fault",       // Byte 2.6
-    "Residual-Current Device Fault",  // Byte 2.7
-
-    "Error Bit 24",        // Byte 3.0
-    "Error Bit 25",        // Byte 3.1
-    "Error Bit 26",        // Byte 3.2
-    "Error Bit 27",        // Byte 3.3
-    "Error Bit 28",        // Byte 3.4
-    "DCI Device Fault",    // Byte 3.5
-    "Other Device Fault",  // Byte 3.6
-    "Error Bit 31",        // Byte 3.7
+// SolaxPower Single Phase External Communication Protocol - X1 Series V1.8.pdf
+static const uint8_t ERRORS_SIZE = 32;
+static const char *const ERRORS[ERRORS_SIZE] = {
+    "TZ Protect Fault",                          // 0000 0000 0000 0000 0000 0000 0000 0001 (1)
+    "Grid Lost Fault",                           // 0000 0000 0000 0000 0000 0000 0000 0010 (2)
+    "Grid Voltage Fault",                        // 0000 0000 0000 0000 0000 0000 0000 0100 (3)
+    "Grid Frequency Fault",                      // 0000 0000 0000 0000 0000 0000 0000 1000 (4)
+    "PLL Lost Fault",                            // 0000 0000 0000 0000 0000 0000 0001 0000 (5)
+    "Bus Voltage Fault",                         // 0000 0000 0000 0000 0000 0000 0010 0000 (6)
+    "Error (Bit 6)",                             // 0000 0000 0000 0000 0000 0000 0100 0000 (7)
+    "Oscillator Fault",                          // 0000 0000 0000 0000 0000 0000 1000 0000 (8)
+    "DCI Over Current Protection Fault",         // 0000 0000 0000 0000 0000 0001 0000 0000 (9)
+    "Residual Current Fault",                    // 0000 0000 0000 0000 0000 0010 0000 0000 (10)
+    "PV Voltage Fault",                          // 0000 0000 0000 0000 0000 0100 0000 0000 (11)
+    "AC voltage out of range since 10 minutes",  // 0000 0000 0000 0000 0000 1000 0000 0000 (12)
+    "Isolation Fault",                           // 0000 0000 0000 0000 0001 0000 0000 0000 (13)
+    "Over Temperature Fault",                    // 0000 0000 0000 0000 0010 0000 0000 0000 (14)
+    "Fan Fault",                                 // 0000 0000 0000 0000 0100 0000 0000 0000 (15)
+    "Error (Bit 15)",                            // 0000 0000 0000 0000 1000 0000 0000 0000 (16)
+    "SPI Communication Fault",                   // 0000 0000 0000 0001 0000 0000 0000 0000 (17)
+    "SCI Communication Fault",                   // 0000 0000 0000 0010 0000 0000 0000 0000 (18)
+    "Error (Bit 18)",                            // 0000 0000 0000 0100 0000 0000 0000 0000 (19)
+    "Input Configuration Fault",                 // 0000 0000 0000 1000 0000 0000 0000 0000 (20)
+    "EEPROM Fault",                              // 0000 0000 0001 0000 0000 0000 0000 0000 (21)
+    "Relay Fault",                               // 0000 0000 0010 0000 0000 0000 0000 0000 (22)
+    "Sample Consistence Fault",                  // 0000 0000 0100 0000 0000 0000 0000 0000 (23)
+    "Residual Current Device Fault",             // 0000 0000 1000 0000 0000 0000 0000 0000 (24)
+    "Error (Bit 24)",                            // 0000 0001 0000 0000 0000 0000 0000 0000 (25)
+    "Error (Bit 25)",                            // 0000 0010 0000 0000 0000 0000 0000 0000 (26)
+    "Error (Bit 26)",                            // 0000 0100 0000 0000 0000 0000 0000 0000 (27)
+    "Error (Bit 27)",                            // 0000 1000 0000 0000 0000 0000 0000 0000 (28)
+    "Error (Bit 28)",                            // 0001 0000 0000 0000 0000 0000 0000 0000 (29)
+    "DCI Device Fault",                          // 0010 0000 0000 0000 0000 0000 0000 0000 (30)
+    "Other Device Fault",                        // 0100 0000 0000 0000 0000 0000 0000 0000 (31)
+    "Error (Bit 31)",                            // 1000 0000 0000 0000 0000 0000 0000 0000 (32)
 };
 
 void SolaxX1::on_modbus_solax_data(const uint8_t &function, const std::vector<uint8_t> &data) {
@@ -249,7 +249,7 @@ void SolaxX1::decode_status_report_(const std::vector<uint8_t> &data) {
 
   uint8_t mode = (uint8_t) solax_get_16bit(30);
   this->publish_state_(this->mode_sensor_, mode);
-  this->publish_state_(this->mode_name_text_sensor_, (mode <= 9) ? MODE_NAMES[mode] : "Unknown");
+  this->publish_state_(this->mode_name_text_sensor_, (mode < MODES_SIZE) ? MODES[mode] : "Unknown");
 
   this->publish_state_(this->grid_voltage_fault_sensor_, solax_get_16bit(32) * 0.1f);
   this->publish_state_(this->grid_frequency_fault_sensor_, solax_get_16bit(34) * 0.01f);
@@ -350,23 +350,19 @@ void SolaxX1::dump_config() {
 }
 
 std::string SolaxX1::error_bits_to_string_(const uint32_t mask) {
-  bool first = true;
-  std::string errors_list = "";
-
+  std::string values = "";
   if (mask) {
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < ERRORS_SIZE; i++) {
       if (mask & (1 << i)) {
-        if (first) {
-          first = false;
-        } else {
-          errors_list.append(";");
-        }
-        errors_list.append(ERRORS[i]);
+        values.append(ERRORS[i]);
+        values.append(";");
       }
     }
+    if (!values.empty()) {
+      values.pop_back();
+    }
   }
-
-  return errors_list;
+  return values;
 }
 
 }  // namespace solax_x1
