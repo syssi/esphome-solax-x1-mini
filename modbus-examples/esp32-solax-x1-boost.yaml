@@ -7,7 +7,7 @@
 #
 # Kudos to @benjaminvdb and @kidwellj
 #
-# https://github.com/syssi/esphome-modbus-solax-x1/issues/31
+# https://github.com/syssi/esphome-solax-x1-mini/issues/31
 # https://github.com/aiolos/ESPHome-config/blob/main/modbus-solax.yaml
 
 substitutions:
@@ -20,8 +20,8 @@ esphome:
   name: ${name}
   comment: ${device_description}
   project:
-    name: "syssi.esphome-modbus-solax-x1"
-    version: 1.2.1
+    name: "syssi.esphome-solax-x1-mini"
+    version: 2.0.0
 
 esp32:
   board: wemos_d1_mini32

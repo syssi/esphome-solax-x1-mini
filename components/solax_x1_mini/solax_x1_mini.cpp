@@ -205,7 +205,7 @@ void SolaxX1Mini::decode_status_report_(const std::vector<uint8_t> &data) {
     // 00.00.00.2B.00.00.00.0D.00.02.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.00.8A.00.DE.08.5F
     ESP_LOGW(TAG, "Invalid response size: %zu", data.size());
     ESP_LOGW(TAG, "Your device is probably not supported. Please create an issue here: "
-                  "https://github.com/syssi/esphome-modbus-solax-x1/issues");
+                  "https://github.com/syssi/esphome-solax-x1-mini/issues");
     ESP_LOGW(TAG, "Please provide the following status response data: %s",
              format_hex_pretty(&data.front(), data.size()).c_str());
     return;
