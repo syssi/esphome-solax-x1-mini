@@ -12,7 +12,8 @@ static const uint8_t FUNCTION_CONFIG_SETTINGS = 0x84;
 
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.2.pdf
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.8.pdf
-static const std::string MODE_NAMES[7] = {
+static const uint8_t MODES_SIZE = 7;
+static const std::string MODES[MODES_SIZE] = {
     "Wait",             // 0
     "Check",            // 1
     "Normal",           // 2
@@ -22,7 +23,8 @@ static const std::string MODE_NAMES[7] = {
     "Self Test",        // 6
 };
 
-static const char *const ERRORS[32] = {
+static const uint8_t ERRORS_SIZE = 32;
+static const char *const ERRORS[ERRORS_SIZE] = {
     "Tz Protection Fault",   // Byte 0.0
     "Mains Lost Fault",      // Byte 0.1
     "Grid Voltage Fault",    // Byte 0.2
@@ -249,7 +251,7 @@ void SolaxX1::decode_status_report_(const std::vector<uint8_t> &data) {
 
   uint8_t mode = (uint8_t) solax_get_16bit(30);
   this->publish_state_(this->mode_sensor_, mode);
-  this->publish_state_(this->mode_name_text_sensor_, (mode <= 9) ? MODE_NAMES[mode] : "Unknown");
+  this->publish_state_(this->mode_name_text_sensor_, (mode < MODES_SIZE) ? MODES[mode] : "Unknown");
 
   this->publish_state_(this->grid_voltage_fault_sensor_, solax_get_16bit(32) * 0.1f);
   this->publish_state_(this->grid_frequency_fault_sensor_, solax_get_16bit(34) * 0.01f);
@@ -350,23 +352,19 @@ void SolaxX1::dump_config() {
 }
 
 std::string SolaxX1::error_bits_to_string_(const uint32_t mask) {
-  bool first = true;
-  std::string errors_list = "";
-
+  std::string values = "";
   if (mask) {
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < ERRORS_SIZE; i++) {
       if (mask & (1 << i)) {
-        if (first) {
-          first = false;
-        } else {
-          errors_list.append(";");
-        }
-        errors_list.append(ERRORS[i]);
+        values.append(ERRORS[i]);
+        values.append(";");
       }
     }
+    if (!values.empty()) {
+      values.pop_back();
+    }
   }
-
-  return errors_list;
+  return values;
 }
 
 }  // namespace solax_x1
