@@ -283,6 +283,13 @@ void SolaxX1::publish_device_offline_() {
   this->publish_state_(this->ac_voltage_sensor_, NAN);
   this->publish_state_(this->ac_frequency_sensor_, NAN);
   this->publish_state_(this->ac_power_sensor_, 0);
+  this->publish_state_(this->grid_voltage_fault_sensor_, NAN);
+  this->publish_state_(this->grid_frequency_fault_sensor_, NAN);
+  this->publish_state_(this->dc_injection_fault_sensor_, NAN);
+  this->publish_state_(this->temperature_fault_sensor_, NAN);
+  this->publish_state_(this->pv1_voltage_fault_sensor_, NAN);
+  this->publish_state_(this->pv2_voltage_fault_sensor_, NAN);
+  this->publish_state_(this->gfc_fault_sensor_, NAN);
 }
 
 void SolaxX1::update() {
@@ -318,20 +325,27 @@ void SolaxX1::dump_config() {
   ESP_LOGCONFIG(TAG, "SolaxX1:");
   ESP_LOGCONFIG(TAG, "  Address: 0x%02X", this->address_);
   LOG_SENSOR("", "Temperature", this->temperature_sensor_);
-  LOG_SENSOR("", "Energy Today", this->energy_today_sensor_);
-  LOG_SENSOR("", "DC1 Voltage", this->dc1_voltage_sensor_);
-  LOG_SENSOR("", "DC2 Voltage", this->dc2_voltage_sensor_);
-  LOG_SENSOR("", "DC1 Current", this->dc1_current_sensor_);
-  LOG_SENSOR("", "DC2 Current", this->dc2_current_sensor_);
-  LOG_SENSOR("", "AC Current", this->ac_current_sensor_);
-  LOG_SENSOR("", "AC Voltage", this->ac_voltage_sensor_);
-  LOG_SENSOR("", "AC Frequency", this->ac_frequency_sensor_);
-  LOG_SENSOR("", "AC Power", this->ac_power_sensor_);
-  LOG_SENSOR("", "Energy Total", this->energy_total_sensor_);
-  LOG_SENSOR("", "Runtime Total", this->runtime_total_sensor_);
+  LOG_SENSOR("", "Energy today", this->energy_today_sensor_);
+  LOG_SENSOR("", "DC1 voltage", this->dc1_voltage_sensor_);
+  LOG_SENSOR("", "DC2 voltage", this->dc2_voltage_sensor_);
+  LOG_SENSOR("", "DC1 current", this->dc1_current_sensor_);
+  LOG_SENSOR("", "DC2 current", this->dc2_current_sensor_);
+  LOG_SENSOR("", "AC current", this->ac_current_sensor_);
+  LOG_SENSOR("", "AC voltage", this->ac_voltage_sensor_);
+  LOG_SENSOR("", "AC frequency", this->ac_frequency_sensor_);
+  LOG_SENSOR("", "AC power", this->ac_power_sensor_);
+  LOG_SENSOR("", "Energy total", this->energy_total_sensor_);
+  LOG_SENSOR("", "Runtime total", this->runtime_total_sensor_);
   LOG_SENSOR("", "Mode", this->mode_sensor_);
-  LOG_SENSOR("", "Error Bits", this->error_bits_sensor_);
-  LOG_TEXT_SENSOR("  ", "Mode Name", this->mode_name_text_sensor_);
+  LOG_SENSOR("", "Error bits", this->error_bits_sensor_);
+  LOG_SENSOR("", "Grid voltage fault", this->grid_voltage_fault_sensor_);
+  LOG_SENSOR("", "Grid frequency fault", this->grid_frequency_fault_sensor_);
+  LOG_SENSOR("", "DC injection fault", this->dc_injection_fault_sensor_);
+  LOG_SENSOR("", "Temperature fault", this->temperature_fault_sensor_);
+  LOG_SENSOR("", "PV1 voltage fault", this->pv1_voltage_fault_sensor_);
+  LOG_SENSOR("", "PV2 voltage fault", this->pv2_voltage_fault_sensor_);
+  LOG_SENSOR("", "GFC fault", this->gfc_fault_sensor_);
+  LOG_TEXT_SENSOR("  ", "Mode name", this->mode_name_text_sensor_);
   LOG_TEXT_SENSOR("  ", "Errors", this->errors_text_sensor_);
 }
 
