@@ -167,6 +167,7 @@ jobs:
       - name: Validate esp8266 example configurations
         run: |
           esphome -s external_components_source components config esp8266-example.yaml
+          esphome -s external_components_source components config esp8266-virtual-meter.yaml
       - name: Write modbus-examples/secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > modbus-examples/secrets.yaml'
@@ -216,3 +217,4 @@ jobs:
       - name: Compile esp8266 example configurations
         run: |
           esphome -s external_components_source components compile esp8266-example.yaml
+          esphome -s external_components_source components compile esp8266-virtual-meter.yaml
