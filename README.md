@@ -146,8 +146,6 @@ uart:
   rx_pin: GPIO3
 
 solax_x1:
-  serial_number: "3132333435363737363534333231"
-  address: 0x0A
   update_interval: 1s
 #  flow_control_pin: GPIO0
 

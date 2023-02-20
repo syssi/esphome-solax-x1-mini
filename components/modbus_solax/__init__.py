@@ -1,9 +1,9 @@
+from esphome import pins
 import esphome.codegen as cg
 from esphome.components import uart
 import esphome.config_validation as cv
 from esphome.const import CONF_ADDRESS, CONF_FLOW_CONTROL_PIN, CONF_ID
 from esphome.cpp_helpers import gpio_pin_expression
-from esphome import pins
 
 CODEOWNERS = ["@syssi"]
 DEPENDENCIES = ["uart"]
@@ -64,12 +64,22 @@ async def to_code(config):
         cg.add(var.set_flow_control_pin(pin))
 
 
-def modbus_solax_device_schema():
+def modbus_solax_device_schema(default_address, default_serial):
     schema = {
         cv.GenerateID(CONF_MODBUS_SOLAX_ID): cv.use_id(ModbusSolax),
-        cv.Required(CONF_ADDRESS): cv.hex_uint8_t,
-        cv.Required(CONF_SERIAL_NUMBER): validate_serial_number,
     }
+    if default_address is None:
+        schema[cv.Required(CONF_ADDRESS)] = cv.hex_uint8_t
+    else:
+        schema[cv.Optional(CONF_ADDRESS, default=default_address)] = cv.hex_uint8_t
+
+    if default_address is None:
+        schema[cv.Required(CONF_SERIAL_NUMBER)] = validate_serial_number
+    else:
+        schema[
+            cv.Optional(CONF_SERIAL_NUMBER, default=default_serial)
+        ] = validate_serial_number
+
     return cv.Schema(schema)
 
 
