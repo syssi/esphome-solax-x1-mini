@@ -6,8 +6,8 @@ namespace solax_x1 {
 
 static const char *const TAG = "solax_x1";
 
-static const uint8_t FUNCTION_DEVICE_INFO = 0x82;
-static const uint8_t FUNCTION_STATUS_REPORT = 0x83;
+static const uint8_t FUNCTION_STATUS_REPORT = 0x82;
+static const uint8_t FUNCTION_DEVICE_INFO = 0x83;
 static const uint8_t FUNCTION_CONFIG_SETTINGS = 0x84;
 
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.2.pdf
