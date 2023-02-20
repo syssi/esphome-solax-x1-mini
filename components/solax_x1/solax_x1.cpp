@@ -23,6 +23,7 @@ static const std::string MODES[MODES_SIZE] = {
     "Self Test",        // 6
 };
 
+// SolaxPower Single Phase External Communication Protocol - X1 Series V1.8.pdf
 static const uint8_t ERRORS_SIZE = 32;
 static const char *const ERRORS[ERRORS_SIZE] = {
     "TZ Protect Fault",                          // 0000 0000 0000 0000 0000 0000 0000 0001 (1)
@@ -39,7 +40,7 @@ static const char *const ERRORS[ERRORS_SIZE] = {
     "AC voltage out of range since 10 minutes",  // 0000 0000 0000 0000 0000 1000 0000 0000 (12)
     "Isolation Fault",                           // 0000 0000 0000 0000 0001 0000 0000 0000 (13)
     "Over Temperature Fault",                    // 0000 0000 0000 0000 0010 0000 0000 0000 (14)
-    "Ventilator Fault",                          // 0000 0000 0000 0000 0100 0000 0000 0000 (15)
+    "Fan Fault",                                 // 0000 0000 0000 0000 0100 0000 0000 0000 (15)
     "Error (Bit 15)",                            // 0000 0000 0000 0000 1000 0000 0000 0000 (16)
     "SPI Communication Fault",                   // 0000 0000 0000 0001 0000 0000 0000 0000 (17)
     "SCI Communication Fault",                   // 0000 0000 0000 0010 0000 0000 0000 0000 (18)
