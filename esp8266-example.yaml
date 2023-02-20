@@ -43,13 +43,13 @@ uart:
   tx_pin: ${tx_pin}
   rx_pin: ${rx_pin}
 
-modbus_solax:
+solax_modbus:
   - id: modbus0
     uart_id: uart0
 #    flow_control_pin: GPIO0
 
 solax_x1:
-  modbus_solax_id: modbus0
+  solax_modbus_id: modbus0
   update_interval: 1s
 
 text_sensor:

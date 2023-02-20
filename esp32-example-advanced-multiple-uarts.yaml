@@ -56,7 +56,7 @@ uart:
     tx_pin: GPIO32
     rx_pin: GPIO33
 
-modbus_solax:
+solax_modbus:
   - id: modbus0
     uart_id: uart0
   - id: modbus1
@@ -66,13 +66,13 @@ modbus_solax:
 
 solax_x1:
   - id: solax0
-    modbus_solax_id: modbus0
+    solax_modbus_id: modbus0
     update_interval: 2s
   - id: solax1
-    modbus_solax_id: modbus1
+    solax_modbus_id: modbus1
     update_interval: 2s
   - id: solax2
-    modbus_solax_id: modbus2
+    solax_modbus_id: modbus2
     update_interval: 2s
 
 text_sensor:
