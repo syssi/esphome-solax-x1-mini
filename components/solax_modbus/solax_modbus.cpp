@@ -1,32 +1,32 @@
-#include "modbus_solax.h"
+#include "solax_modbus.h"
 #include "esphome/core/log.h"
 #include "esphome/core/helpers.h"
 
 #define BROADCAST_ADDRESS 0xFF
 
 namespace esphome {
-namespace modbus_solax {
+namespace solax_modbus {
 
-static const char *const TAG = "modbus_solax";
+static const char *const TAG = "solax_modbus";
 
-void ModbusSolax::setup() {
+void SolaxModbus::setup() {
   if (this->flow_control_pin_ != nullptr) {
     this->flow_control_pin_->setup();
   }
 }
 
-void ModbusSolax::loop() {
+void SolaxModbus::loop() {
   const uint32_t now = millis();
-  if (now - this->last_modbus_solax_byte_ > 50) {
+  if (now - this->last_solax_modbus_byte_ > 50) {
     this->rx_buffer_.clear();
-    this->last_modbus_solax_byte_ = now;
+    this->last_solax_modbus_byte_ = now;
   }
 
   while (this->available()) {
     uint8_t byte;
     this->read_byte(&byte);
-    if (this->parse_modbus_solax_byte_(byte)) {
-      this->last_modbus_solax_byte_ = now;
+    if (this->parse_solax_modbus_byte_(byte)) {
+      this->last_solax_modbus_byte_ = now;
     } else {
       this->rx_buffer_.clear();
     }
@@ -52,7 +52,7 @@ uint16_t chksum(const uint8_t data[], const uint8_t len) {
   return checksum;
 }
 
-bool ModbusSolax::parse_modbus_solax_byte_(uint8_t byte) {
+bool SolaxModbus::parse_solax_modbus_byte_(uint8_t byte) {
   size_t at = this->rx_buffer_.size();
   this->rx_buffer_.push_back(byte);
   const uint8_t *frame = &this->rx_buffer_[0];
@@ -121,7 +121,7 @@ bool ModbusSolax::parse_modbus_solax_byte_(uint8_t byte) {
   for (auto *device : this->devices_) {
     if (device->address_ == address) {
       if (frame[6] == 0x11) {
-        device->on_modbus_solax_data(frame[7], data);
+        device->on_solax_modbus_data(frame[7], data);
       } else {
         ESP_LOGW(TAG, "Unhandled control code (%d) of frame for address 0x%02X: %s", frame[6], address,
                  format_hex_pretty(frame, at + 1).c_str());
@@ -138,16 +138,16 @@ bool ModbusSolax::parse_modbus_solax_byte_(uint8_t byte) {
   return false;
 }
 
-void ModbusSolax::dump_config() {
-  ESP_LOGCONFIG(TAG, "ModbusSolax:");
+void SolaxModbus::dump_config() {
+  ESP_LOGCONFIG(TAG, "SolaxModbus:");
   LOG_PIN("  Flow Control Pin: ", this->flow_control_pin_);
 }
-float ModbusSolax::get_setup_priority() const {
+float SolaxModbus::get_setup_priority() const {
   // After UART bus
   return setup_priority::BUS - 1.0f;
 }
 
-void ModbusSolax::query_status_report(uint8_t address) {
+void SolaxModbus::query_status_report(uint8_t address) {
   static SolaxMessageT tx_message;
 
   tx_message.Source[0] = 0x01;
@@ -161,7 +161,7 @@ void ModbusSolax::query_status_report(uint8_t address) {
   this->send(&tx_message);
 }
 
-void ModbusSolax::query_device_info(uint8_t address) {
+void SolaxModbus::query_device_info(uint8_t address) {
   static SolaxMessageT tx_message;
 
   tx_message.Source[0] = 0x01;
@@ -175,7 +175,7 @@ void ModbusSolax::query_device_info(uint8_t address) {
   this->send(&tx_message);
 }
 
-void ModbusSolax::query_config_settings(uint8_t address) {
+void SolaxModbus::query_config_settings(uint8_t address) {
   static SolaxMessageT tx_message;
 
   tx_message.Source[0] = 0x01;
@@ -189,7 +189,7 @@ void ModbusSolax::query_config_settings(uint8_t address) {
   this->send(&tx_message);
 }
 
-void ModbusSolax::register_address(uint8_t serial_number[14], uint8_t address) {
+void SolaxModbus::register_address(uint8_t serial_number[14], uint8_t address) {
   static SolaxMessageT tx_message;
 
   tx_message.Source[0] = 0x00;
@@ -205,7 +205,7 @@ void ModbusSolax::register_address(uint8_t serial_number[14], uint8_t address) {
   this->send(&tx_message);
 }
 
-void ModbusSolax::discover_devices() {
+void SolaxModbus::discover_devices() {
   static SolaxMessageT tx_message;
 
   tx_message.Source[0] = 0x01;
@@ -219,7 +219,7 @@ void ModbusSolax::discover_devices() {
   this->send(&tx_message);
 }
 
-void ModbusSolax::send(SolaxMessageT *tx_message) {
+void SolaxModbus::send(SolaxMessageT *tx_message) {
   uint8_t msg_len;
 
   tx_message->Header[0] = 0xAA;
@@ -244,5 +244,5 @@ void ModbusSolax::send(SolaxMessageT *tx_message) {
     this->flow_control_pin_->digital_write(false);
 }
 
-}  // namespace modbus_solax
+}  // namespace solax_modbus
 }  // namespace esphome
