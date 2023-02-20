@@ -130,6 +130,20 @@ sensor:
       name: "${device0} mode"
     error_bits:
       name: "${device0} error bits"
+    grid_voltage_fault:
+      name: "${device0} grid voltage fault"
+    grid_frequency_fault:
+      name: "${device0} grid frequency fault"
+    dc_injection_fault:
+      name: "${device0} dc injection fault"
+    temperature_fault:
+      name: "${device0} temperature fault"
+    pv1_voltage_fault:
+      name: "${device0} pv1 voltage fault"
+    pv2_voltage_fault:
+      name: "${device0} pv2 voltage fault"
+    gfc_fault:
+      name: "${device0} gfc fault"
 
   - platform: solax_x1
     solax_x1_id: solax1
@@ -157,6 +171,20 @@ sensor:
       name: "${device1} mode"
     error_bits:
       name: "${device1} error bits"
+    grid_voltage_fault:
+      name: "${device1} grid voltage fault"
+    grid_frequency_fault:
+      name: "${device1} grid frequency fault"
+    dc_injection_fault:
+      name: "${device1} dc injection fault"
+    temperature_fault:
+      name: "${device1} temperature fault"
+    pv1_voltage_fault:
+      name: "${device1} pv1 voltage fault"
+    pv2_voltage_fault:
+      name: "${device1} pv2 voltage fault"
+    gfc_fault:
+      name: "${device1} gfc fault"
 
   - platform: solax_x1
     solax_x1_id: solax2
@@ -184,3 +212,17 @@ sensor:
       name: "${device2} mode"
     error_bits:
       name: "${device2} error bits"
+    grid_voltage_fault:
+      name: "${device2} grid voltage fault"
+    grid_frequency_fault:
+      name: "${device2} grid frequency fault"
+    dc_injection_fault:
+      name: "${device2} dc injection fault"
+    temperature_fault:
+      name: "${device2} temperature fault"
+    pv1_voltage_fault:
+      name: "${device2} pv1 voltage fault"
+    pv2_voltage_fault:
+      name: "${device2} pv2 voltage fault"
+    gfc_fault:
+      name: "${device2} gfc fault"

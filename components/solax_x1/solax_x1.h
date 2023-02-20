@@ -28,6 +28,26 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   void set_error_bits_sensor(sensor::Sensor *error_bits_sensor) { error_bits_sensor_ = error_bits_sensor; }
   void set_errors_text_sensor(text_sensor::TextSensor *sensor) { this->errors_text_sensor_ = sensor; }
   void set_runtime_total_sensor(sensor::Sensor *runtime_total_sensor) { runtime_total_sensor_ = runtime_total_sensor; }
+  void set_grid_voltage_fault_sensor(sensor::Sensor *grid_voltage_fault_sensor) {
+    grid_voltage_fault_sensor_ = grid_voltage_fault_sensor;
+  }
+  void set_grid_frequency_fault_sensor(sensor::Sensor *grid_frequency_fault_sensor) {
+    grid_frequency_fault_sensor_ = grid_frequency_fault_sensor;
+  }
+  void set_dc_injection_fault_sensor(sensor::Sensor *dc_injection_fault_sensor) {
+    dc_injection_fault_sensor_ = dc_injection_fault_sensor;
+  }
+  void set_temperature_fault_sensor(sensor::Sensor *temperature_fault_sensor) {
+    temperature_fault_sensor_ = temperature_fault_sensor;
+  }
+  void set_pv1_voltage_fault_sensor(sensor::Sensor *pv1_voltage_fault_sensor) {
+    pv1_voltage_fault_sensor_ = pv1_voltage_fault_sensor;
+  }
+  void set_pv2_voltage_fault_sensor(sensor::Sensor *pv2_voltage_fault_sensor) {
+    pv2_voltage_fault_sensor_ = pv2_voltage_fault_sensor;
+  }
+  void set_gfc_fault_sensor(sensor::Sensor *gfc_fault_sensor) { gfc_fault_sensor_ = gfc_fault_sensor; }
+
   uint8_t get_no_response_count() { return no_response_count_; }
 
   void update() override;
@@ -49,6 +69,14 @@ class SolaxX1 : public PollingComponent, public modbus_solax::ModbusSolaxDevice 
   sensor::Sensor *mode_sensor_;
   sensor::Sensor *error_bits_sensor_;
   sensor::Sensor *runtime_total_sensor_;
+  sensor::Sensor *grid_voltage_fault_sensor_;
+  sensor::Sensor *grid_frequency_fault_sensor_;
+  sensor::Sensor *dc_injection_fault_sensor_;
+  sensor::Sensor *temperature_fault_sensor_;
+  sensor::Sensor *pv1_voltage_fault_sensor_;
+  sensor::Sensor *pv2_voltage_fault_sensor_;
+  sensor::Sensor *gfc_fault_sensor_;
+
   text_sensor::TextSensor *mode_name_text_sensor_;
   text_sensor::TextSensor *errors_text_sensor_;
   uint8_t no_response_count_ = REDISCOVERY_THRESHOLD;

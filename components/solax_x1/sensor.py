@@ -7,11 +7,11 @@ from esphome.const import (
     DEVICE_CLASS_CURRENT,
     DEVICE_CLASS_EMPTY,
     DEVICE_CLASS_ENERGY,
+    DEVICE_CLASS_FREQUENCY,
     DEVICE_CLASS_POWER,
     DEVICE_CLASS_TEMPERATURE,
     DEVICE_CLASS_VOLTAGE,
     ICON_COUNTER,
-    ICON_CURRENT_AC,
     ICON_EMPTY,
     ICON_TIMER,
     STATE_CLASS_MEASUREMENT,
@@ -40,6 +40,13 @@ CONF_AC_FREQUENCY = "ac_frequency"
 CONF_AC_POWER = "ac_power"
 CONF_RUNTIME_TOTAL = "runtime_total"
 CONF_ERROR_BITS = "error_bits"
+CONF_GRID_VOLTAGE_FAULT = "grid_voltage_fault"
+CONF_GRID_FREQUENCY_FAULT = "grid_frequency_fault"
+CONF_DC_INJECTION_FAULT = "dc_injection_fault"
+CONF_TEMPERATURE_FAULT = "temperature_fault"
+CONF_PV1_VOLTAGE_FAULT = "pv1_voltage_fault"
+CONF_PV2_VOLTAGE_FAULT = "pv2_voltage_fault"
+CONF_GFC_FAULT = "gfc_fault"
 
 UNIT_HOURS = "h"
 UNIT_KILO_WATT_HOURS = "kWh"
@@ -84,56 +91,48 @@ CONFIG_SCHEMA = cv.Schema(
         ),
         cv.Optional(CONF_DC1_CURRENT): sensor.sensor_schema(
             unit_of_measurement=UNIT_AMPERE,
-            icon=ICON_EMPTY,
             accuracy_decimals=1,
             device_class=DEVICE_CLASS_CURRENT,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_DC1_VOLTAGE): sensor.sensor_schema(
             unit_of_measurement=UNIT_VOLT,
-            icon=ICON_EMPTY,
             accuracy_decimals=1,
             device_class=DEVICE_CLASS_VOLTAGE,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_DC2_CURRENT): sensor.sensor_schema(
             unit_of_measurement=UNIT_AMPERE,
-            icon=ICON_EMPTY,
             accuracy_decimals=1,
             device_class=DEVICE_CLASS_CURRENT,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_DC2_VOLTAGE): sensor.sensor_schema(
             unit_of_measurement=UNIT_VOLT,
-            icon=ICON_EMPTY,
             accuracy_decimals=1,
             device_class=DEVICE_CLASS_VOLTAGE,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_AC_CURRENT): sensor.sensor_schema(
             unit_of_measurement=UNIT_AMPERE,
-            icon=ICON_EMPTY,
             accuracy_decimals=1,
             device_class=DEVICE_CLASS_CURRENT,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_AC_VOLTAGE): sensor.sensor_schema(
             unit_of_measurement=UNIT_VOLT,
-            icon=ICON_EMPTY,
             accuracy_decimals=1,
             device_class=DEVICE_CLASS_VOLTAGE,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_AC_FREQUENCY): sensor.sensor_schema(
             unit_of_measurement=UNIT_HERTZ,
-            icon=ICON_CURRENT_AC,
             accuracy_decimals=2,
-            device_class=DEVICE_CLASS_EMPTY,
+            device_class=DEVICE_CLASS_FREQUENCY,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_AC_POWER): sensor.sensor_schema(
             unit_of_measurement=UNIT_WATT,
-            icon=ICON_EMPTY,
             accuracy_decimals=0,
             device_class=DEVICE_CLASS_POWER,
             state_class=STATE_CLASS_MEASUREMENT,
@@ -159,9 +158,51 @@ CONFIG_SCHEMA = cv.Schema(
         ),
         cv.Optional(CONF_TEMPERATURE): sensor.sensor_schema(
             unit_of_measurement=UNIT_CELSIUS,
-            icon=ICON_EMPTY,
             accuracy_decimals=0,
             device_class=DEVICE_CLASS_TEMPERATURE,
+            state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_GRID_VOLTAGE_FAULT): sensor.sensor_schema(
+            unit_of_measurement=UNIT_VOLT,
+            icon=ICON_EMPTY,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_VOLTAGE,
+            state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_GRID_FREQUENCY_FAULT): sensor.sensor_schema(
+            unit_of_measurement=UNIT_HERTZ,
+            accuracy_decimals=2,
+            device_class=DEVICE_CLASS_FREQUENCY,
+            state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_DC_INJECTION_FAULT): sensor.sensor_schema(
+            unit_of_measurement=UNIT_AMPERE,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_CURRENT,
+            state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_TEMPERATURE_FAULT): sensor.sensor_schema(
+            unit_of_measurement=UNIT_CELSIUS,
+            accuracy_decimals=0,
+            device_class=DEVICE_CLASS_TEMPERATURE,
+            state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_PV1_VOLTAGE_FAULT): sensor.sensor_schema(
+            unit_of_measurement=UNIT_VOLT,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_VOLTAGE,
+            state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_PV2_VOLTAGE_FAULT): sensor.sensor_schema(
+            unit_of_measurement=UNIT_VOLT,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_VOLTAGE,
+            state_class=STATE_CLASS_MEASUREMENT,
+        ),
+        cv.Optional(CONF_GFC_FAULT): sensor.sensor_schema(
+            unit_of_measurement=UNIT_AMPERE,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_CURRENT,
             state_class=STATE_CLASS_MEASUREMENT,
         ),
     }
