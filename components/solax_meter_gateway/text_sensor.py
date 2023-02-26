@@ -3,9 +3,9 @@ from esphome.components import text_sensor
 import esphome.config_validation as cv
 from esphome.const import CONF_ICON, CONF_ID
 
-from . import CONF_SOLAX_VIRTUAL_METER_ID, SolaxVirtualMeter
+from . import CONF_SOLAX_METER_GATEWAY_ID, SolaxMeterGateway
 
-DEPENDENCIES = ["solax_virtual_meter"]
+DEPENDENCIES = ["solax_meter_gateway"]
 
 CODEOWNERS = ["@syssi"]
 
@@ -19,7 +19,7 @@ TEXT_SENSORS = [
 
 CONFIG_SCHEMA = cv.Schema(
     {
-        cv.GenerateID(CONF_SOLAX_VIRTUAL_METER_ID): cv.use_id(SolaxVirtualMeter),
+        cv.GenerateID(CONF_SOLAX_METER_GATEWAY_ID): cv.use_id(SolaxMeterGateway),
         cv.Optional(CONF_OPERATION_MODE): text_sensor.TEXT_SENSOR_SCHEMA.extend(
             {
                 cv.GenerateID(): cv.declare_id(text_sensor.TextSensor),
@@ -31,7 +31,7 @@ CONFIG_SCHEMA = cv.Schema(
 
 
 async def to_code(config):
-    hub = await cg.get_variable(config[CONF_SOLAX_VIRTUAL_METER_ID])
+    hub = await cg.get_variable(config[CONF_SOLAX_METER_GATEWAY_ID])
     for key in TEXT_SENSORS:
         if key in config:
             conf = config[key]

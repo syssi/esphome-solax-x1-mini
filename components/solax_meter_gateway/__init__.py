@@ -7,14 +7,14 @@ AUTO_LOAD = ["solax_meter_modbus", "sensor", "switch", "text_sensor"]
 CODEOWNERS = ["@syssi"]
 MULTI_CONF = True
 
-CONF_SOLAX_VIRTUAL_METER_ID = "solax_virtual_meter_id"
+CONF_SOLAX_METER_GATEWAY_ID = "solax_meter_gateway_id"
 CONF_POWER_ID = "power_id"
 CONF_POWER_SENSOR_INACTIVITY_TIMEOUT = "power_sensor_inactivity_timeout"
 CONF_OPERATION_MODE_ID = "operation_mode_id"
 
-solax_virtual_meter_ns = cg.esphome_ns.namespace("solax_virtual_meter")
-SolaxVirtualMeter = solax_virtual_meter_ns.class_(
-    "SolaxVirtualMeter",
+solax_meter_gateway_ns = cg.esphome_ns.namespace("solax_meter_gateway")
+SolaxMeterGateway = solax_meter_gateway_ns.class_(
+    "SolaxMeterGateway",
     cg.PollingComponent,
     solax_meter_modbus.SolaxMeterModbusDevice,
 )
@@ -23,7 +23,7 @@ SolaxVirtualMeter = solax_virtual_meter_ns.class_(
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
-            cv.GenerateID(): cv.declare_id(SolaxVirtualMeter),
+            cv.GenerateID(): cv.declare_id(SolaxMeterGateway),
             cv.Required(CONF_POWER_ID): cv.use_id(sensor.Sensor),
             cv.Optional(CONF_OPERATION_MODE_ID): cv.use_id(sensor.Sensor),
             cv.Optional(

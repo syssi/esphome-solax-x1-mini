@@ -3,9 +3,9 @@
 #include "esphome/core/application.h"
 
 namespace esphome {
-namespace solax_virtual_meter {
+namespace solax_meter_gateway {
 
-static const char *const TAG = "solax_virtual_meter.switch";
+static const char *const TAG = "solax_meter_gateway.switch";
 
 void SolaxSwitch::setup() {
   ESP_LOGCONFIG(TAG, "Setting up Solax Switch '%s'...", this->name_.c_str());
@@ -33,7 +33,7 @@ void SolaxSwitch::setup() {
   }
 }
 void SolaxSwitch::dump_config() {
-  LOG_SWITCH("", "SolaxVirtualMeter Switch", this);
+  LOG_SWITCH("", "SolaxMeterGateway Switch", this);
   const LogString *restore_mode = LOG_STR("");
   switch (this->restore_mode_) {
     case SOLAX_SWITCH_RESTORE_DEFAULT_OFF:
@@ -53,5 +53,5 @@ void SolaxSwitch::dump_config() {
 }
 void SolaxSwitch::write_state(bool state) { this->publish_state(state); }
 
-}  // namespace solax_virtual_meter
+}  // namespace solax_meter_gateway
 }  // namespace esphome

@@ -7,9 +7,9 @@
 #include "esphome/components/solax_meter_modbus/solax_meter_modbus.h"
 
 namespace esphome {
-namespace solax_virtual_meter {
+namespace solax_meter_gateway {
 
-class SolaxVirtualMeter : public PollingComponent, public solax_meter_modbus::SolaxMeterModbusDevice {
+class SolaxMeterGateway : public PollingComponent, public solax_meter_modbus::SolaxMeterModbusDevice {
  public:
   void set_power_sensor(sensor::Sensor *power_sensor) { power_sensor_ = power_sensor; }
   void set_power_demand_sensor(sensor::Sensor *power_demand_sensor) { power_demand_sensor_ = power_demand_sensor; }
@@ -52,5 +52,5 @@ class SolaxVirtualMeter : public PollingComponent, public solax_meter_modbus::So
   bool inactivity_timeout_();
 };
 
-}  // namespace solax_virtual_meter
+}  // namespace solax_meter_gateway
 }  // namespace esphome

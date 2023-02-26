@@ -1,5 +1,5 @@
 substitutions:
-  name: solax-virtual-meter
+  name: solax-meter-gateway
   device_description: "Control the export of a Solax X1 mini via RS485"
   external_components_source: github://syssi/esphome-modbus-solax-x1@export-control
   tx_pin: GPIO4
@@ -50,7 +50,7 @@ solax_meter_modbus:
     uart_id: uart0
 #    flow_control_pin: GPIO0
 
-solax_virtual_meter:
+solax_meter_gateway:
   solax_meter_modbus_id: modbus0
   address: 0x01
 
@@ -69,17 +69,17 @@ sensor:
     unit_of_measurement: W
     device_class: power
 
-  - platform: solax_virtual_meter
+  - platform: solax_meter_gateway
     power_demand:
       name: "${name} power demand"
 
 text_sensor:
-  - platform: solax_virtual_meter
+  - platform: solax_meter_gateway
     operation_mode:
       name: "${name} operation mode"
 
 switch:
-  - platform: solax_virtual_meter
+  - platform: solax_meter_gateway
     emergency_power_off:
       name: "${name} emergency power off"
       restore_mode: RESTORE_DEFAULT_OFF

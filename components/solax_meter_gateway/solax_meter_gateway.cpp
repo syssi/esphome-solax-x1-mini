@@ -1,10 +1,10 @@
-#include "solax_virtual_meter.h"
+#include "solax_meter_gateway.h"
 #include "esphome/core/log.h"
 
 namespace esphome {
-namespace solax_virtual_meter {
+namespace solax_meter_gateway {
 
-static const char *const TAG = "solax_virtual_meter";
+static const char *const TAG = "solax_meter_gateway";
 
 static const uint8_t REGISTER_HANDSHAKE = 0x0B;
 static const uint8_t REGISTER_READ_POWER_16BIT_SINT = 0x0E;
@@ -13,7 +13,7 @@ static const uint8_t REGISTER_READ_TOTAL_ENERGY = 0x08;
 static const uint8_t REGISTER_READ_TOTAL_ENERGY_IMPORT_32BIT_FLOAT = 0x48;
 static const uint8_t REGISTER_READ_TOTAL_ENERGY_EXPORT_32BIT_FLOAT = 0x4A;
 
-void SolaxVirtualMeter::on_solax_meter_modbus_data(const std::vector<uint8_t> &data) {
+void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &data) {
   if (this->inactivity_timeout_()) {
     this->publish_state_(this->operation_mode_text_sensor_, "Meter fault");
     this->publish_state_(power_demand_sensor_, NAN);
@@ -77,7 +77,7 @@ void SolaxVirtualMeter::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
   }
 }
 
-void SolaxVirtualMeter::setup() {
+void SolaxMeterGateway::setup() {
   this->power_sensor_->add_on_state_callback([this](float state) {
     if (std::isnan(state))
       return;
@@ -87,16 +87,16 @@ void SolaxVirtualMeter::setup() {
   });
 }
 
-void SolaxVirtualMeter::dump_config() {
-  ESP_LOGCONFIG(TAG, "SolaxVirtualMeter:");
+void SolaxMeterGateway::dump_config() {
+  ESP_LOGCONFIG(TAG, "SolaxMeterGateway:");
   ESP_LOGCONFIG(TAG, "  Address: 0x%02X", this->address_);
   LOG_SENSOR("  ", "Power Demand", this->power_demand_sensor_);
   LOG_TEXT_SENSOR("  ", "Operation name", this->operation_mode_text_sensor_);
 }
 
-void SolaxVirtualMeter::update() {}
+void SolaxMeterGateway::update() {}
 
-bool SolaxVirtualMeter::inactivity_timeout_() {
+bool SolaxMeterGateway::inactivity_timeout_() {
   if (this->power_sensor_inactivity_timeout_s_ == 0) {
     return false;
   }
@@ -104,19 +104,19 @@ bool SolaxVirtualMeter::inactivity_timeout_() {
   return millis() - this->last_power_demand_received_ > (this->power_sensor_inactivity_timeout_s_ * 1000);
 }
 
-void SolaxVirtualMeter::publish_state_(sensor::Sensor *sensor, float value) {
+void SolaxMeterGateway::publish_state_(sensor::Sensor *sensor, float value) {
   if (sensor == nullptr)
     return;
 
   sensor->publish_state(value);
 }
 
-void SolaxVirtualMeter::publish_state_(text_sensor::TextSensor *text_sensor, const std::string &state) {
+void SolaxMeterGateway::publish_state_(text_sensor::TextSensor *text_sensor, const std::string &state) {
   if (text_sensor == nullptr)
     return;
 
   text_sensor->publish_state(state);
 }
 
-}  // namespace solax_virtual_meter
+}  // namespace solax_meter_gateway
 }  // namespace esphome

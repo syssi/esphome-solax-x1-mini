@@ -3,9 +3,9 @@ from esphome.components import switch
 import esphome.config_validation as cv
 from esphome.const import CONF_ICON, CONF_ID, CONF_RESTORE_MODE
 
-from .. import CONF_SOLAX_VIRTUAL_METER_ID, SolaxVirtualMeter, solax_virtual_meter_ns
+from .. import CONF_SOLAX_METER_GATEWAY_ID, SolaxMeterGateway, solax_meter_gateway_ns
 
-DEPENDENCIES = ["solax_virtual_meter"]
+DEPENDENCIES = ["solax_meter_gateway"]
 
 CODEOWNERS = ["@syssi"]
 
@@ -17,8 +17,8 @@ SWITCHES = [
     CONF_EMERGENCY_POWER_OFF,
 ]
 
-SolaxSwitch = solax_virtual_meter_ns.class_("SolaxSwitch", switch.Switch, cg.Component)
-SolaxSwitchRestoreMode = solax_virtual_meter_ns.enum("SolaxSwitchRestoreMode")
+SolaxSwitch = solax_meter_gateway_ns.class_("SolaxSwitch", switch.Switch, cg.Component)
+SolaxSwitchRestoreMode = solax_meter_gateway_ns.enum("SolaxSwitchRestoreMode")
 
 RESTORE_MODES = {
     "RESTORE_DEFAULT_OFF": SolaxSwitchRestoreMode.SOLAX_SWITCH_RESTORE_DEFAULT_OFF,
@@ -29,7 +29,7 @@ RESTORE_MODES = {
 
 CONFIG_SCHEMA = cv.Schema(
     {
-        cv.GenerateID(CONF_SOLAX_VIRTUAL_METER_ID): cv.use_id(SolaxVirtualMeter),
+        cv.GenerateID(CONF_SOLAX_METER_GATEWAY_ID): cv.use_id(SolaxMeterGateway),
         cv.Optional(CONF_EMERGENCY_POWER_OFF): switch.SWITCH_SCHEMA.extend(
             {
                 cv.GenerateID(): cv.declare_id(SolaxSwitch),
@@ -44,7 +44,7 @@ CONFIG_SCHEMA = cv.Schema(
 
 
 async def to_code(config):
-    hub = await cg.get_variable(config[CONF_SOLAX_VIRTUAL_METER_ID])
+    hub = await cg.get_variable(config[CONF_SOLAX_METER_GATEWAY_ID])
     for key in SWITCHES:
         if key in config:
             conf = config[key]
