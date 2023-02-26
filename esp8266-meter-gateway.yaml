@@ -1,7 +1,8 @@
 substitutions:
   name: solax-meter-gateway
   device_description: "Control the export of a Solax X1 mini via RS485"
-  external_components_source: github://syssi/esphome-modbus-solax-x1@export-control
+  external_components_source: github://syssi/esphome-modbus-solax-x1@main
+  instantaneous_power_topic: "stat/EZ3/P_Wirk_L1"
   tx_pin: GPIO4
   rx_pin: GPIO5
 
@@ -10,7 +11,7 @@ esphome:
   comment: ${device_description}
   project:
     name: "syssi.esphome-modbus-solax-x1"
-    version: 1.1.0
+    version: 2.1.0
 
 esp8266:
   board: d1_mini
@@ -64,7 +65,7 @@ sensor:
     internal: true
     platform: mqtt_subscribe
     name: "${name} instantaneous power consumption"
-    topic: "stat/EZ3/P_Wirk_L1"
+    topic: "${instantaneous_power_topic}"
     accuracy_decimals: 2
     unit_of_measurement: W
     device_class: power
