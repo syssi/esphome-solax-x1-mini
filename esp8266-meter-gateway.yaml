@@ -1,0 +1,85 @@
+substitutions:
+  name: solax-meter-gateway
+  device_description: "Control the export of a Solax X1 mini via RS485"
+  external_components_source: github://syssi/esphome-modbus-solax-x1@export-control
+  tx_pin: GPIO4
+  rx_pin: GPIO5
+
+esphome:
+  name: ${name}
+  comment: ${device_description}
+  project:
+    name: "syssi.esphome-modbus-solax-x1"
+    version: 1.1.0
+
+esp8266:
+  board: d1_mini
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+
+mqtt:
+  broker: !secret mqtt_host
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  id: mqtt_client
+
+api:
+  reboot_timeout: 0s
+
+logger:
+  level: DEBUG
+
+uart:
+  id: uart0
+  baud_rate: 9600
+  tx_pin: ${tx_pin}
+  rx_pin: ${rx_pin}
+  debug:
+    direction: BOTH
+
+solax_meter_modbus:
+  - id: modbus0
+    uart_id: uart0
+#    flow_control_pin: GPIO0
+
+solax_meter_gateway:
+  solax_meter_modbus_id: modbus0
+  address: 0x01
+
+  # The state of this sensor (instantaneous power in watt) is used as source
+  power_id: powermeter0
+  power_sensor_inactivity_timeout: 5s
+  update_interval: 1s
+
+sensor:
+  - id: powermeter0
+    internal: true
+    platform: mqtt_subscribe
+    name: "${name} instantaneous power consumption"
+    topic: "stat/EZ3/P_Wirk_L1"
+    accuracy_decimals: 2
+    unit_of_measurement: W
+    device_class: power
+
+  - platform: solax_meter_gateway
+    power_demand:
+      name: "${name} power demand"
+
+text_sensor:
+  - platform: solax_meter_gateway
+    operation_mode:
+      name: "${name} operation mode"
+
+switch:
+  - platform: solax_meter_gateway
+    emergency_power_off:
+      name: "${name} emergency power off"
+      restore_mode: RESTORE_DEFAULT_OFF
