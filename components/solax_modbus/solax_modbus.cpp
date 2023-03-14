@@ -89,7 +89,7 @@ bool SolaxModbus::parse_solax_modbus_byte_(uint8_t byte) {
   ESP_LOGVV(TAG, "RX <- %s", format_hex_pretty(frame, at + 1).c_str());
 
   if (frame[0] != 0xAA || frame[1] != 0x55) {
-    ESP_LOGW(TAG, "Invalid header.");
+    ESP_LOGW(TAG, "Invalid header");
     return false;
   }
 
@@ -97,7 +97,7 @@ bool SolaxModbus::parse_solax_modbus_byte_(uint8_t byte) {
   uint16_t computed_checksum = chksum(frame, 9 + data_len - 1);
   uint16_t remote_checksum = uint16_t(frame[9 + data_len + 1]) | (uint16_t(frame[9 + data_len]) << 8);
   if (computed_checksum != remote_checksum) {
-    ESP_LOGW(TAG, "Invalid checksum! %02X!=%02X", computed_checksum, remote_checksum);
+    ESP_LOGW(TAG, "Invalid checksum! 0x%02X !=  0x%02X", computed_checksum, remote_checksum);
     return false;
   }
 
