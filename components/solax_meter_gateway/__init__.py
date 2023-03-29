@@ -3,8 +3,10 @@ from esphome.components import sensor, solax_meter_modbus
 import esphome.config_validation as cv
 from esphome.const import CONF_ID
 
-AUTO_LOAD = ["solax_meter_modbus", "sensor", "switch", "text_sensor"]
 CODEOWNERS = ["@syssi"]
+
+DEPENDENCIES = ["solax_meter_modbus"]
+AUTO_LOAD = ["sensor", "switch", "text_sensor"]
 MULTI_CONF = True
 
 CONF_SOLAX_METER_GATEWAY_ID = "solax_meter_gateway_id"
@@ -18,7 +20,6 @@ SolaxMeterGateway = solax_meter_gateway_ns.class_(
     cg.PollingComponent,
     solax_meter_modbus.SolaxMeterModbusDevice,
 )
-
 
 CONFIG_SCHEMA = cv.All(
     cv.Schema(

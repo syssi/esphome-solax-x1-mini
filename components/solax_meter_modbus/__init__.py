@@ -6,15 +6,15 @@ from esphome.const import CONF_ADDRESS, CONF_FLOW_CONTROL_PIN, CONF_ID
 from esphome.cpp_helpers import gpio_pin_expression
 
 DEPENDENCIES = ["uart"]
+MULTI_CONF = True
+
+CONF_SOLAX_METER_MODBUS_ID = "solax_meter_modbus_id"
 
 solax_meter_modbus_ns = cg.esphome_ns.namespace("solax_meter_modbus")
 SolaxMeterModbus = solax_meter_modbus_ns.class_(
     "SolaxMeterModbus", cg.Component, uart.UARTDevice
 )
 SolaxMeterModbusDevice = solax_meter_modbus_ns.class_("SolaxMeterModbusDevice")
-MULTI_CONF = True
-
-CONF_SOLAX_METER_MODBUS_ID = "solax_meter_modbus_id"
 
 CONFIG_SCHEMA = (
     cv.Schema(

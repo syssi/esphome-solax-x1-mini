@@ -6,15 +6,17 @@ from esphome.const import CONF_ADDRESS, CONF_FLOW_CONTROL_PIN, CONF_ID
 from esphome.cpp_helpers import gpio_pin_expression
 
 CODEOWNERS = ["@syssi"]
-DEPENDENCIES = ["uart"]
 
-solax_modbus_ns = cg.esphome_ns.namespace("solax_modbus")
-SolaxModbus = solax_modbus_ns.class_("SolaxModbus", cg.Component, uart.UARTDevice)
-SolaxModbusDevice = solax_modbus_ns.class_("SolaxModbusDevice")
+DEPENDENCIES = ["uart"]
 MULTI_CONF = True
 
 CONF_SOLAX_MODBUS_ID = "solax_modbus_id"
 CONF_SERIAL_NUMBER = "serial_number"
+
+solax_modbus_ns = cg.esphome_ns.namespace("solax_modbus")
+SolaxModbus = solax_modbus_ns.class_("SolaxModbus", cg.Component, uart.UARTDevice)
+SolaxModbusDevice = solax_modbus_ns.class_("SolaxModbusDevice")
+
 CONFIG_SCHEMA = (
     cv.Schema(
         {
