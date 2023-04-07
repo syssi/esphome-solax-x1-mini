@@ -141,7 +141,10 @@ bool SolaxModbus::parse_solax_modbus_byte_(uint8_t byte) {
 void SolaxModbus::dump_config() {
   ESP_LOGCONFIG(TAG, "SolaxModbus:");
   LOG_PIN("  Flow Control Pin: ", this->flow_control_pin_);
+
+  this->check_uart_settings(9600);
 }
+
 float SolaxModbus::get_setup_priority() const {
   // After UART bus
   return setup_priority::BUS - 1.0f;
