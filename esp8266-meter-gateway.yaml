@@ -29,14 +29,14 @@ ota:
 logger:
   level: DEBUG
 
+api:
+  reboot_timeout: 0s
+
 mqtt:
   broker: !secret mqtt_host
   username: !secret mqtt_username
   password: !secret mqtt_password
   id: mqtt_client
-
-api:
-  reboot_timeout: 0s
 
 uart:
   id: uart0
