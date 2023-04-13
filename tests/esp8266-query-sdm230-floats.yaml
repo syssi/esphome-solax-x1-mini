@@ -13,9 +13,11 @@ wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
 
-api:
 ota:
 logger:
+
+api:
+  reboot_timeout: 0s
 
 uart:
   id: uart0

@@ -1,5 +1,5 @@
 substitutions:
-  name: solar-powermeter
+  name: solax-x1-mini
   device_description: "Monitor a Solax X1 mini via RS485"
   external_components_source: github://syssi/esphome-solax-x1-mini@main
   tx_pin: GPIO16
@@ -25,17 +25,17 @@ wifi:
 
 ota:
 
-# If you use Home Assistant please remove this `mqtt` section and uncomment the `api` component!
+logger:
+  level: DEBUG
+
+# If you use Home Assistant please uncomment the native `api` component and remove the `mqtt` section!
+# api:
+
 mqtt:
   broker: !secret mqtt_host
   username: !secret mqtt_username
   password: !secret mqtt_password
   id: mqtt_client
-
-# api:
-
-logger:
-  level: DEBUG
 
 uart:
   id: uart0

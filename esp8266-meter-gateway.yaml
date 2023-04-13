@@ -26,6 +26,9 @@ wifi:
 
 ota:
 
+logger:
+  level: DEBUG
+
 mqtt:
   broker: !secret mqtt_host
   username: !secret mqtt_username
@@ -34,9 +37,6 @@ mqtt:
 
 api:
   reboot_timeout: 0s
-
-logger:
-  level: DEBUG
 
 uart:
   id: uart0

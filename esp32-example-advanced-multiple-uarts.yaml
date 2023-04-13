@@ -1,10 +1,10 @@
 substitutions:
-  name: solar-powermeter
+  name: solax-x1-mini
   device_description: "Monitor multiple Solax X1 mini via RS485"
   external_components_source: github://syssi/esphome-solax-x1-mini@main
-  device0: firstfloor-solar-powermeter
-  device1: groundfloor-solar-powermeter
-  device2: community-solar-powermeter
+  device0: firstfloor-x1-mini
+  device1: groundfloor-x1-mini
+  device2: community-x1-mini
 
 esphome:
   name: ${name}
@@ -29,18 +29,18 @@ ethernet:
 
 ota:
 
-# If you use Home Assistant please remove this `mqtt` section and uncomment the `api` component!
+logger:
+  baud_rate: 0
+  level: DEBUG
+
+# If you use Home Assistant please uncomment the native `api` component and remove the `mqtt` section!
+# api:
+
 mqtt:
   broker: !secret mqtt_host
   username: !secret mqtt_username
   password: !secret mqtt_password
   id: mqtt_client
-
-# api:
-
-logger:
-  baud_rate: 0
-  level: DEBUG
 
 uart:
   - id: uart0
