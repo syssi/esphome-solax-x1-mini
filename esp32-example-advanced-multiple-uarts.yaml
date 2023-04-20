@@ -52,7 +52,7 @@ uart:
     baud_rate: 9600
     tx_pin: GPIO14
     rx_pin: GPIO4
-  - id: uart2
+  - id: uart_2
     baud_rate: 9600
     tx_pin: GPIO32
     rx_pin: GPIO33
@@ -63,7 +63,7 @@ solax_modbus:
   - id: modbus1
     uart_id: uart_1
   - id: modbus2
-    uart_id: uart2
+    uart_id: uart_2
 
 solax_x1_mini:
   - id: solax0
