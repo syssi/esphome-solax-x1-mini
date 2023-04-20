@@ -44,11 +44,11 @@ mqtt:
 # api:
 
 uart:
-  - id: uart0
+  - id: uart_0
     baud_rate: 9600
     tx_pin: GPIO1
     rx_pin: GPIO3
-  - id: uart1
+  - id: uart_1
     baud_rate: 9600
     tx_pin: GPIO14
     rx_pin: GPIO4
@@ -59,9 +59,9 @@ uart:
 
 solax_modbus:
   - id: modbus0
-    uart_id: uart0
+    uart_id: uart_0
   - id: modbus1
-    uart_id: uart1
+    uart_id: uart_1
   - id: modbus2
     uart_id: uart2
 
