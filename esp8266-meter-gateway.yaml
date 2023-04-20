@@ -39,7 +39,7 @@ mqtt:
   id: mqtt_client
 
 uart:
-  id: uart0
+  id: uart_0
   baud_rate: 9600
   tx_pin: ${tx_pin}
   rx_pin: ${rx_pin}
@@ -48,7 +48,7 @@ uart:
 
 solax_meter_modbus:
   - id: modbus0
-    uart_id: uart0
+    uart_id: uart_0
 #    flow_control_pin: GPIO0
 
 solax_meter_gateway:
