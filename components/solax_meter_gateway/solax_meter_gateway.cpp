@@ -79,11 +79,15 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
 
 void SolaxMeterGateway::setup() {
   this->power_sensor_->add_on_state_callback([this](float state) {
-    if (std::isnan(state))
+    if (std::isnan(state)) {
+      ESP_LOGVV(TAG, "Invalid power demand received: NaN");
       return;
+    }
 
     this->power_demand_ = state;
     this->last_power_demand_received_ = millis();
+    ESP_LOGVV(TAG, "New power demand received (%.2f). Resetting inactivity timeout (%d)", this->power_demand_,
+              this->last_power_demand_received_);
   });
 }
 
