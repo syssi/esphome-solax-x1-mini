@@ -128,7 +128,10 @@ If this component doesn't work out of the box for your device please update your
 
 ```
 logger:
-  level: DEBUG
+  level: VERY_VERBOSE
+  logs:
+    scheduler: DEBUG
+    component: DEBUG
 
 uart:
   id: uart_0
