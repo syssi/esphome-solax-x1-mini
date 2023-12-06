@@ -26,7 +26,6 @@ CONFIG_SCHEMA = cv.All(
         {
             cv.GenerateID(): cv.declare_id(SolaxMeterGateway),
             cv.Required(CONF_POWER_ID): cv.use_id(sensor.Sensor),
-            cv.Optional(CONF_OPERATION_MODE_ID): cv.use_id(sensor.Sensor),
             cv.Optional(
                 CONF_POWER_SENSOR_INACTIVITY_TIMEOUT, default="5s"
             ): cv.positive_time_period_seconds,
@@ -50,7 +49,3 @@ async def to_code(config):
             config[CONF_POWER_SENSOR_INACTIVITY_TIMEOUT]
         )
     )
-
-    if CONF_OPERATION_MODE_ID in config:
-        operation_mode_sensor = await cg.get_variable(config[CONF_OPERATION_MODE_ID])
-        cg.add(var.set_operation_mode_sensor(operation_mode_sensor))
