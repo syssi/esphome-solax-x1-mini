@@ -1,6 +1,7 @@
 #pragma once
 
 #include "esphome/core/component.h"
+#include "esphome/components/number/number.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/switch/switch.h"
 #include "esphome/components/text_sensor/text_sensor.h"
@@ -11,12 +12,17 @@ namespace solax_meter_gateway {
 
 class SolaxMeterGateway : public PollingComponent, public solax_meter_modbus::SolaxMeterModbusDevice {
  public:
+  void set_manual_power_demand_number(number::Number *manual_power_demand_number) {
+    manual_power_demand_number_ = manual_power_demand_number;
+  }
+
   void set_power_sensor(sensor::Sensor *power_sensor) { power_sensor_ = power_sensor; }
   void set_power_demand_sensor(sensor::Sensor *power_demand_sensor) { power_demand_sensor_ = power_demand_sensor; }
   void set_power_sensor_inactivity_timeout(uint16_t power_sensor_inactivity_timeout_s) {
     this->power_sensor_inactivity_timeout_s_ = power_sensor_inactivity_timeout_s;
   }
 
+  void set_manual_mode_switch(switch_::Switch *manual_mode_switch) { manual_mode_switch_ = manual_mode_switch; }
   void set_emergency_power_off_switch(switch_::Switch *emergency_power_off_switch) {
     emergency_power_off_switch_ = emergency_power_off_switch;
   }
@@ -36,9 +42,12 @@ class SolaxMeterGateway : public PollingComponent, public solax_meter_modbus::So
   float get_setup_priority() const override { return setup_priority::DATA; }
 
  protected:
+  number::Number *manual_power_demand_number_;
+
   sensor::Sensor *power_sensor_;
   sensor::Sensor *power_demand_sensor_;
 
+  switch_::Switch *manual_mode_switch_;
   switch_::Switch *emergency_power_off_switch_;
 
   text_sensor::TextSensor *operation_mode_text_sensor_;

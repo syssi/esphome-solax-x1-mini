@@ -28,6 +28,17 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
     return;
   }
 
+  if (this->manual_mode_switch_ != nullptr && this->manual_mode_switch_->state) {
+    this->publish_state_(this->operation_mode_text_sensor_, "Manual");
+    if (this->manual_power_demand_number_ != nullptr && this->manual_power_demand_number_->has_state()) {
+      this->power_demand_ = this->manual_power_demand_number_->state;
+    } else {
+      this->power_demand_ = 0.0f;
+    }
+  } else {
+    this->publish_state_(this->operation_mode_text_sensor_, "Auto");
+  }
+
   uint8_t register_address = data[2];
   switch (register_address) {
     case REGISTER_HANDSHAKE:
@@ -42,7 +53,6 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
       // this->send_raw({0x01, 0x04, 0x04, 0x45, 0x8e, 0x3c, 0x35});  // -4551.52W
       this->send(this->power_demand_);
       this->publish_state_(power_demand_sensor_, this->power_demand_);
-      this->publish_state_(this->operation_mode_text_sensor_, "On");
       break;
     case REGISTER_READ_TOTAL_ENERGY_IMPORT_32BIT_FLOAT:
     case REGISTER_READ_TOTAL_ENERGY_EXPORT_32BIT_FLOAT:
@@ -60,7 +70,6 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
       // this->send_raw({0x01, 0x03, 0x02, 0x00, 0x00});
       this->send((int16_t) this->power_demand_);
       this->publish_state_(power_demand_sensor_, this->power_demand_);
-      this->publish_state_(this->operation_mode_text_sensor_, "On");
       break;
     case REGISTER_READ_TOTAL_ENERGY:
       // Request: 0x01 0x03 0x00 0x08 0x00 0x04 0xC5 0xCB
@@ -84,6 +93,11 @@ void SolaxMeterGateway::setup() {
       return;
     }
 
+    // Skip updates in manual mode
+    if (this->manual_mode_switch_ != nullptr && this->manual_mode_switch_->state) {
+      return;
+    }
+
     this->power_demand_ = state;
     this->last_power_demand_received_ = millis();
     ESP_LOGVV(TAG, "New power demand received (%.2f). Resetting inactivity timeout (%d)", this->power_demand_,
@@ -102,6 +116,11 @@ void SolaxMeterGateway::update() {}
 
 bool SolaxMeterGateway::inactivity_timeout_() {
   if (this->power_sensor_inactivity_timeout_s_ == 0) {
+    return false;
+  }
+
+  // Skip the inactivity timeout in manual mode
+  if (this->manual_mode_switch_ != nullptr && this->manual_mode_switch_->state) {
     return false;
   }
 
