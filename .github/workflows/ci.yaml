@@ -163,6 +163,7 @@ jobs:
         run: |
           esphome -s external_components_source components config esp32-example.yaml
           esphome -s external_components_source components config esp32-example-advanced-multiple-uarts.yaml
+          esphome -s external_components_source components config esp32-meter-gateway-multiple-uarts.yaml
       - name: Validate esp8266 example configurations
         run: |
           esphome -s external_components_source components config esp8266-example.yaml
@@ -213,6 +214,7 @@ jobs:
         run: |
           esphome -s external_components_source components compile esp32-example.yaml
           esphome -s external_components_source components compile esp32-example-advanced-multiple-uarts.yaml
+          esphome -s external_components_source components compile esp32-meter-gateway-multiple-uarts.yaml
       - name: Compile esp8266 example configurations
         run: |
           esphome -s external_components_source components compile esp8266-example.yaml
