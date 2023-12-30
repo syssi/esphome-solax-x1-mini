@@ -6,13 +6,16 @@ from esphome.const import CONF_ID
 CODEOWNERS = ["@syssi"]
 
 DEPENDENCIES = ["solax_meter_modbus"]
-AUTO_LOAD = ["sensor", "switch", "text_sensor"]
+AUTO_LOAD = ["number", "sensor", "switch", "text_sensor"]
 MULTI_CONF = True
 
 CONF_SOLAX_METER_GATEWAY_ID = "solax_meter_gateway_id"
 CONF_POWER_ID = "power_id"
 CONF_POWER_SENSOR_INACTIVITY_TIMEOUT = "power_sensor_inactivity_timeout"
 CONF_OPERATION_MODE_ID = "operation_mode_id"
+
+DEFAULT_MIN_POWER_DEMAND = 0
+DEFAULT_MAX_POWER_DEMAND = 600
 
 solax_meter_gateway_ns = cg.esphome_ns.namespace("solax_meter_gateway")
 SolaxMeterGateway = solax_meter_gateway_ns.class_(

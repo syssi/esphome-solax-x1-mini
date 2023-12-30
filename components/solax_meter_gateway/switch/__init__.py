@@ -9,11 +9,14 @@ DEPENDENCIES = ["solax_meter_gateway"]
 
 CODEOWNERS = ["@syssi"]
 
+CONF_MANUAL_MODE = "manual_mode"
 CONF_EMERGENCY_POWER_OFF = "emergency_power_off"
 
+ICON_MANUAL_MODE = "mdi:auto-fix"
 ICON_EMERGENCY_POWER_OFF = "mdi:power"
 
 SWITCHES = [
+    CONF_MANUAL_MODE,
     CONF_EMERGENCY_POWER_OFF,
 ]
 
@@ -30,6 +33,15 @@ RESTORE_MODES = {
 CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(CONF_SOLAX_METER_GATEWAY_ID): cv.use_id(SolaxMeterGateway),
+        cv.Optional(CONF_MANUAL_MODE): switch.SWITCH_SCHEMA.extend(
+            {
+                cv.GenerateID(): cv.declare_id(SolaxSwitch),
+                cv.Optional(CONF_ICON, default=ICON_MANUAL_MODE): cv.icon,
+                cv.Optional(CONF_RESTORE_MODE, default="RESTORE_DEFAULT_OFF"): cv.enum(
+                    RESTORE_MODES, upper=True, space="_"
+                ),
+            }
+        ).extend(cv.COMPONENT_SCHEMA),
         cv.Optional(CONF_EMERGENCY_POWER_OFF): switch.SWITCH_SCHEMA.extend(
             {
                 cv.GenerateID(): cv.declare_id(SolaxSwitch),
