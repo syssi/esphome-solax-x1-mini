@@ -78,9 +78,9 @@ def solax_modbus_device_schema(default_address, default_serial):
     if default_address is None:
         schema[cv.Required(CONF_SERIAL_NUMBER)] = validate_serial_number
     else:
-        schema[
-            cv.Optional(CONF_SERIAL_NUMBER, default=default_serial)
-        ] = validate_serial_number
+        schema[cv.Optional(CONF_SERIAL_NUMBER, default=default_serial)] = (
+            validate_serial_number
+        )
 
     return cv.Schema(schema)
 
