@@ -2,7 +2,7 @@
 #include "esphome/core/log.h"
 #include "esphome/core/helpers.h"
 
-#define BROADCAST_ADDRESS 0xFF
+static const uint8_t BROADCAST_ADDRESS = 0xFF;
 
 namespace esphome {
 namespace solax_modbus {
