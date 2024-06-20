@@ -28,6 +28,7 @@ ethernet:
   phy_addr: 0
 
 ota:
+  platform: esphome
 
 logger:
   baud_rate: 0
