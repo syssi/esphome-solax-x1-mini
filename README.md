@@ -22,7 +22,7 @@ ESPHome component to monitor a Solax X1 mini via RS485.
 
 ## Requirements
 
-* [ESPHome 1.18.0 or higher](https://github.com/esphome/esphome/releases).
+* [ESPHome 2024.6.0 or higher](https://github.com/esphome/esphome/releases).
 * One half of an ethernet cable with RJ45 connector
 * RS485-to-TTL module (`HW-0519` f.e.)
 * Generic ESP32 or ESP8266 board
