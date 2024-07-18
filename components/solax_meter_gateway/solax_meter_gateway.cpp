@@ -14,6 +14,8 @@ static const uint8_t REGISTER_READ_TOTAL_ENERGY_IMPORT_32BIT_FLOAT = 0x48;
 static const uint8_t REGISTER_READ_TOTAL_ENERGY_EXPORT_32BIT_FLOAT = 0x4A;
 
 void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &data) {
+  this->last_power_demand_received_ = millis();
+
   if (this->inactivity_timeout_()) {
     this->publish_state_(this->operation_mode_text_sensor_, "Meter fault");
     this->publish_state_(power_demand_sensor_, NAN);
@@ -112,7 +114,12 @@ void SolaxMeterGateway::dump_config() {
   LOG_TEXT_SENSOR("  ", "Operation name", this->operation_mode_text_sensor_);
 }
 
-void SolaxMeterGateway::update() {}
+void SolaxMeterGateway::update() {
+  if (millis() - this->last_solax_request_received_ > (this->solax_request_inactivity_timeout_s_ * 1000)) {
+    this->publish_state_(this->operation_mode_text_sensor_, "Standby");
+    ESP_LOGI(TAG, "No solax request received. Is the inverter online and export control mode 'meter' enabled?");
+  }
+}
 
 bool SolaxMeterGateway::inactivity_timeout_() {
   if (this->power_sensor_inactivity_timeout_s_ == 0) {
