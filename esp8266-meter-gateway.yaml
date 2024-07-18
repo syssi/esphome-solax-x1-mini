@@ -60,7 +60,7 @@ solax_meter_gateway:
   # The state of this sensor (instantaneous power in watt) is used as source
   power_id: powermeter0
   power_sensor_inactivity_timeout: 5s
-  update_interval: 1s
+  update_interval: 5s
 
 sensor:
   - id: powermeter0
