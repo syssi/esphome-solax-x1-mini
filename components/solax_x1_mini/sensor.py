@@ -20,6 +20,7 @@ from esphome.const import (
     UNIT_CELSIUS,
     UNIT_EMPTY,
     UNIT_HERTZ,
+    UNIT_KILOWATT_HOURS,
     UNIT_VOLT,
     UNIT_WATT,
 )
@@ -49,7 +50,6 @@ CONF_PV2_VOLTAGE_FAULT = "pv2_voltage_fault"
 CONF_GFC_FAULT = "gfc_fault"
 
 UNIT_HOURS = "h"
-UNIT_KILO_WATT_HOURS = "kWh"
 
 ICON_MODE = "mdi:heart-pulse"
 ICON_ERROR_BITS = "mdi:alert-circle-outline"
@@ -76,14 +76,14 @@ CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(CONF_SOLAX_X1_MINI_ID): cv.use_id(SolaxX1Mini),
         cv.Optional(CONF_ENERGY_TODAY): sensor.sensor_schema(
-            unit_of_measurement=UNIT_KILO_WATT_HOURS,
+            unit_of_measurement=UNIT_KILOWATT_HOURS,
             icon=ICON_COUNTER,
             accuracy_decimals=1,
             device_class=DEVICE_CLASS_ENERGY,
             state_class=STATE_CLASS_TOTAL_INCREASING,
         ),
         cv.Optional(CONF_ENERGY_TOTAL): sensor.sensor_schema(
-            unit_of_measurement=UNIT_KILO_WATT_HOURS,
+            unit_of_measurement=UNIT_KILOWATT_HOURS,
             icon=ICON_COUNTER,
             accuracy_decimals=1,
             device_class=DEVICE_CLASS_ENERGY,
