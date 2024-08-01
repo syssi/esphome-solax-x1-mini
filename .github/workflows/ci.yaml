@@ -8,6 +8,9 @@ on:  # yamllint disable-line rule:truthy
   schedule:
     - cron: 0 12 * * *
 
+env:
+  FORCE_COLOR: 1
+
 jobs:
   yamllint:
     runs-on: ubuntu-latest
@@ -187,21 +190,27 @@ jobs:
       - name: Write secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml'
-      - name: Validate esp32 example configurations
+      - name: Validate example configurations
         run: |
-          esphome -s external_components_source components config esp32-example.yaml
-          esphome -s external_components_source components config esp32-example-advanced-multiple-uarts.yaml
-          esphome -s external_components_source components config esp32-meter-gateway-multiple-uarts.yaml
-      - name: Validate esp8266 example configurations
+          for YAML in esp*.yaml; do
+            esphome -s external_components_source components config $YAML >/dev/null
+          done
+      - name: Write tests/secrets.yaml
+        shell: bash
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > tests/secrets.yaml'
+      - name: Validate example configurations
         run: |
-          esphome -s external_components_source components config esp8266-example.yaml
-          esphome -s external_components_source components config esp8266-meter-gateway.yaml
+          for YAML in tests/esp*.yaml; do
+            esphome -s external_components_source ../components config $YAML >/dev/null
+          done
       - name: Write modbus-examples/secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > modbus-examples/secrets.yaml'
       - name: Validate modbus example configurations
         run: |
-          esphome config modbus-examples/esp32-solax-x1-boost.yaml
+          for YAML in modbus-examples/esp*.yaml; do
+            esphome -s external_components_source ../components config $YAML >/dev/null
+          done
 
   esphome-compile:
     runs-on: ubuntu-latest
