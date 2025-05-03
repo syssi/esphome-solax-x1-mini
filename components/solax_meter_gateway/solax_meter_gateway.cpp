@@ -102,7 +102,7 @@ void SolaxMeterGateway::setup() {
 
     this->power_demand_ = state;
     this->last_power_demand_received_ = millis();
-    ESP_LOGVV(TAG, "New power demand received (%.2f). Resetting inactivity timeout (%lu)", this->power_demand_,
+    ESP_LOGVV(TAG, "New power demand received (%.2f). Resetting inactivity timeout (%u)", this->power_demand_,
               (unsigned long) this->last_power_demand_received_);
   });
 }
