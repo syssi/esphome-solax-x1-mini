@@ -34,7 +34,7 @@ void SolaxSwitch::setup() {
 }
 void SolaxSwitch::dump_config() {
   LOG_SWITCH("", "SolaxMeterGateway Switch", this);
-  const LogString *restore_mode;
+  const LogString *restore_mode = LOG_STR("");
   switch (this->restore_mode_) {
     case SOLAX_SWITCH_RESTORE_DEFAULT_OFF:
       restore_mode = LOG_STR("Restore (Defaults to OFF)");
