@@ -3,15 +3,14 @@ from esphome.components import sensor
 import esphome.config_validation as cv
 from esphome.const import DEVICE_CLASS_POWER, ICON_EMPTY, UNIT_WATT
 
-from . import CONF_SOLAX_METER_GATEWAY_ID, SolaxMeterGateway
+from . import CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA, CONF_SOLAX_METER_GATEWAY_ID
 
 DEPENDENCIES = ["solax_meter_gateway"]
 
 CONF_POWER_DEMAND = "power_demand"
 
-CONFIG_SCHEMA = cv.Schema(
+CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
     {
-        cv.GenerateID(CONF_SOLAX_METER_GATEWAY_ID): cv.use_id(SolaxMeterGateway),
         cv.Optional(CONF_POWER_DEMAND): sensor.sensor_schema(
             unit_of_measurement=UNIT_WATT,
             icon=ICON_EMPTY,
