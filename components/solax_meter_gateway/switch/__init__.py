@@ -3,7 +3,11 @@ from esphome.components import switch
 import esphome.config_validation as cv
 from esphome.const import CONF_ID, CONF_RESTORE_MODE
 
-from .. import CONF_SOLAX_METER_GATEWAY_ID, SolaxMeterGateway, solax_meter_gateway_ns
+from .. import (
+    CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA,
+    CONF_SOLAX_METER_GATEWAY_ID,
+    solax_meter_gateway_ns,
+)
 
 DEPENDENCIES = ["solax_meter_gateway"]
 
@@ -30,9 +34,8 @@ RESTORE_MODES = {
     "ALWAYS_ON": SolaxSwitchRestoreMode.SOLAX_SWITCH_ALWAYS_ON,
 }
 
-CONFIG_SCHEMA = cv.Schema(
+CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
     {
-        cv.GenerateID(CONF_SOLAX_METER_GATEWAY_ID): cv.use_id(SolaxMeterGateway),
         cv.Optional(CONF_MANUAL_MODE): switch.switch_schema(
             SolaxSwitch,
             icon=ICON_MANUAL_MODE,

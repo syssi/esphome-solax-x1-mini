@@ -3,7 +3,7 @@ from esphome.components import text_sensor
 import esphome.config_validation as cv
 from esphome.const import CONF_ID
 
-from . import CONF_SOLAX_X1_MINI_ID, SolaxX1Mini
+from . import CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA, CONF_SOLAX_X1_MINI_ID
 
 DEPENDENCIES = ["solax_x1_mini"]
 
@@ -13,9 +13,8 @@ CONF_ERRORS = "errors"
 ICON_MODE_NAME = "mdi:heart-pulse"
 ICON_ERRORS = "mdi:alert-circle-outline"
 
-CONFIG_SCHEMA = cv.Schema(
+CONFIG_SCHEMA = CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA.extend(
     {
-        cv.GenerateID(CONF_SOLAX_X1_MINI_ID): cv.use_id(SolaxX1Mini),
         cv.Optional(CONF_MODE_NAME): text_sensor.text_sensor_schema(
             text_sensor.TextSensor, icon=ICON_MODE_NAME
         ),

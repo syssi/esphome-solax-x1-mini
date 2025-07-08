@@ -25,7 +25,7 @@ from esphome.const import (
     UNIT_WATT,
 )
 
-from . import CONF_SOLAX_X1_MINI_ID, SolaxX1Mini
+from . import CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA, CONF_SOLAX_X1_MINI_ID
 
 DEPENDENCIES = ["solax_x1_mini"]
 
@@ -72,9 +72,8 @@ SENSORS = [
 ]
 
 # pylint: disable=too-many-function-args
-CONFIG_SCHEMA = cv.Schema(
+CONFIG_SCHEMA = CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA.extend(
     {
-        cv.GenerateID(CONF_SOLAX_X1_MINI_ID): cv.use_id(SolaxX1Mini),
         cv.Optional(CONF_ENERGY_TODAY): sensor.sensor_schema(
             unit_of_measurement=UNIT_KILOWATT_HOURS,
             icon=ICON_COUNTER,

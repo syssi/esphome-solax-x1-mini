@@ -3,7 +3,7 @@ from esphome.components import text_sensor
 import esphome.config_validation as cv
 from esphome.const import CONF_ID
 
-from . import CONF_SOLAX_METER_GATEWAY_ID, SolaxMeterGateway
+from . import CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA, CONF_SOLAX_METER_GATEWAY_ID
 
 DEPENDENCIES = ["solax_meter_gateway"]
 
@@ -17,9 +17,8 @@ TEXT_SENSORS = [
     CONF_OPERATION_MODE,
 ]
 
-CONFIG_SCHEMA = cv.Schema(
+CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
     {
-        cv.GenerateID(CONF_SOLAX_METER_GATEWAY_ID): cv.use_id(SolaxMeterGateway),
         cv.Optional(CONF_OPERATION_MODE): text_sensor.text_sensor_schema(
             text_sensor.TextSensor,
             icon=ICON_OPERATION_MODE,
