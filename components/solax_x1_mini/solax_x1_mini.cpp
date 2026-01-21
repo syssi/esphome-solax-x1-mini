@@ -72,7 +72,7 @@ void SolaxX1Mini::on_solax_modbus_data(const uint8_t &function, const std::vecto
       this->decode_config_settings_(data);
       break;
     default:
-      ESP_LOGW(TAG, "Unhandled solax frame: %s", format_hex_pretty(&data.front(), data.size()).c_str());
+      ESP_LOGW(TAG, "Unhandled solax frame: %s", format_hex_pretty(&data.front(), data.size()).c_str());  // NOLINT
   }
 }
 
@@ -207,7 +207,7 @@ void SolaxX1Mini::decode_status_report_(const std::vector<uint8_t> &data) {
     ESP_LOGW(TAG, "Your device is probably not supported. Please create an issue here: "
                   "https://github.com/syssi/esphome-solax-x1-mini/issues");
     ESP_LOGW(TAG, "Please provide the following status response data: %s",
-             format_hex_pretty(&data.front(), data.size()).c_str());
+             format_hex_pretty(&data.front(), data.size()).c_str());  // NOLINT
     return;
   }
 
