@@ -84,7 +84,7 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
       ESP_LOGW(TAG, "Your device is probably not supported. Please create an issue here: "
                     "https://github.com/syssi/esphome-solax-x1-mini/issues");
       ESP_LOGW(TAG, "Please provide the following request data: %s",
-               format_hex_pretty(&data.front(), data.size()).c_str());
+               format_hex_pretty(&data.front(), data.size()).c_str());  // NOLINT
   }
 }
 
