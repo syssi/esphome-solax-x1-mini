@@ -26,7 +26,7 @@ CONFIG_SCHEMA = cv.All(
     .extend(cv.polling_component_schema("30s"))
     .extend(
         solax_modbus.solax_modbus_device_schema(0x0A, "3132333435363737363534333231")
-    )
+    ),
 )
 
 
