@@ -39,27 +39,23 @@ CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
         cv.Optional(CONF_MANUAL_MODE): switch.switch_schema(
             SolaxSwitch,
             icon=ICON_MANUAL_MODE,
-        )
-        .extend(
+        ).extend(
             {
                 cv.Optional(CONF_RESTORE_MODE, default="RESTORE_DEFAULT_OFF"): cv.enum(
                     RESTORE_MODES, upper=True, space="_"
                 ),
             }
-        )
-        .extend(cv.COMPONENT_SCHEMA),
+        ),
         cv.Optional(CONF_EMERGENCY_POWER_OFF): switch.switch_schema(
             SolaxSwitch,
             icon=ICON_EMERGENCY_POWER_OFF,
-        )
-        .extend(
+        ).extend(
             {
                 cv.Optional(CONF_RESTORE_MODE, default="RESTORE_DEFAULT_OFF"): cv.enum(
                     RESTORE_MODES, upper=True, space="_"
                 ),
             }
-        )
-        .extend(cv.COMPONENT_SCHEMA),
+        ),
     }
 )
 
