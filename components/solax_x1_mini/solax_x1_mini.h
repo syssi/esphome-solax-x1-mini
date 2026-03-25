@@ -55,30 +55,30 @@ class SolaxX1Mini : public PollingComponent, public solax_modbus::SolaxModbusDev
   void dump_config() override;
 
  protected:
-  sensor::Sensor *energy_today_sensor_;
-  sensor::Sensor *energy_total_sensor_;
-  sensor::Sensor *dc1_current_sensor_;
-  sensor::Sensor *dc2_current_sensor_;
-  sensor::Sensor *dc1_voltage_sensor_;
-  sensor::Sensor *dc2_voltage_sensor_;
-  sensor::Sensor *ac_current_sensor_;
-  sensor::Sensor *ac_frequency_sensor_;
-  sensor::Sensor *ac_power_sensor_;
-  sensor::Sensor *ac_voltage_sensor_;
-  sensor::Sensor *temperature_sensor_;
-  sensor::Sensor *mode_sensor_;
-  sensor::Sensor *error_bits_sensor_;
-  sensor::Sensor *runtime_total_sensor_;
-  sensor::Sensor *grid_voltage_fault_sensor_;
-  sensor::Sensor *grid_frequency_fault_sensor_;
-  sensor::Sensor *dc_injection_fault_sensor_;
-  sensor::Sensor *temperature_fault_sensor_;
-  sensor::Sensor *pv1_voltage_fault_sensor_;
-  sensor::Sensor *pv2_voltage_fault_sensor_;
-  sensor::Sensor *gfc_fault_sensor_;
+  sensor::Sensor *energy_today_sensor_{nullptr};
+  sensor::Sensor *energy_total_sensor_{nullptr};
+  sensor::Sensor *dc1_current_sensor_{nullptr};
+  sensor::Sensor *dc2_current_sensor_{nullptr};
+  sensor::Sensor *dc1_voltage_sensor_{nullptr};
+  sensor::Sensor *dc2_voltage_sensor_{nullptr};
+  sensor::Sensor *ac_current_sensor_{nullptr};
+  sensor::Sensor *ac_frequency_sensor_{nullptr};
+  sensor::Sensor *ac_power_sensor_{nullptr};
+  sensor::Sensor *ac_voltage_sensor_{nullptr};
+  sensor::Sensor *temperature_sensor_{nullptr};
+  sensor::Sensor *mode_sensor_{nullptr};
+  sensor::Sensor *error_bits_sensor_{nullptr};
+  sensor::Sensor *runtime_total_sensor_{nullptr};
+  sensor::Sensor *grid_voltage_fault_sensor_{nullptr};
+  sensor::Sensor *grid_frequency_fault_sensor_{nullptr};
+  sensor::Sensor *dc_injection_fault_sensor_{nullptr};
+  sensor::Sensor *temperature_fault_sensor_{nullptr};
+  sensor::Sensor *pv1_voltage_fault_sensor_{nullptr};
+  sensor::Sensor *pv2_voltage_fault_sensor_{nullptr};
+  sensor::Sensor *gfc_fault_sensor_{nullptr};
 
-  text_sensor::TextSensor *mode_name_text_sensor_;
-  text_sensor::TextSensor *errors_text_sensor_;
+  text_sensor::TextSensor *mode_name_text_sensor_{nullptr};
+  text_sensor::TextSensor *errors_text_sensor_{nullptr};
   uint8_t no_response_count_ = REDISCOVERY_THRESHOLD;
 
   void decode_device_info_(const std::vector<uint8_t> &data);
