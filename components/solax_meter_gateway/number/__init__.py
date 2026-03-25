@@ -62,8 +62,7 @@ CONFIG_SCHEMA = cv.Schema(
                 SolaxNumber,
                 icon=ICON_MANUAL_POWER_DEMAND,
                 unit_of_measurement=UNIT_WATT,
-            )
-            .extend(
+            ).extend(
                 {
                     cv.Optional(
                         CONF_MIN_VALUE, default=DEFAULT_MIN_POWER_DEMAND
