@@ -46,8 +46,7 @@ CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
                     RESTORE_MODES, upper=True, space="_"
                 ),
             }
-        )
-        .extend(cv.COMPONENT_SCHEMA),
+        ),
         cv.Optional(CONF_EMERGENCY_POWER_OFF): switch.switch_schema(
             SolaxSwitch,
             icon=ICON_EMERGENCY_POWER_OFF,
@@ -58,8 +57,7 @@ CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
                     RESTORE_MODES, upper=True, space="_"
                 ),
             }
-        )
-        .extend(cv.COMPONENT_SCHEMA),
+        ),
     }
 )
 

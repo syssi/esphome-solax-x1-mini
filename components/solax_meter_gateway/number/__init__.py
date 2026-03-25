@@ -75,8 +75,7 @@ CONFIG_SCHEMA = cv.Schema(
                     cv.Optional(CONF_INITIAL_VALUE): cv.float_,
                     cv.Optional(CONF_RESTORE_VALUE, default=False): cv.boolean,
                 }
-            )
-            .extend(cv.COMPONENT_SCHEMA),
+            ),
             validate_min_max,
             validate,
         ),
