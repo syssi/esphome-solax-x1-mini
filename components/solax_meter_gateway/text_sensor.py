@@ -1,7 +1,6 @@
 import esphome.codegen as cg
 from esphome.components import text_sensor
 import esphome.config_validation as cv
-from esphome.const import CONF_ID
 
 from . import CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA, CONF_SOLAX_METER_GATEWAY_ID
 
@@ -32,6 +31,5 @@ async def to_code(config):
     for key in TEXT_SENSORS:
         if key in config:
             conf = config[key]
-            sens = cg.new_Pvariable(conf[CONF_ID])
-            await text_sensor.register_text_sensor(sens, conf)
+            sens = await text_sensor.new_text_sensor(conf)
             cg.add(getattr(hub, f"set_{key}_text_sensor")(sens))
