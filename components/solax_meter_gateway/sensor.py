@@ -3,7 +3,6 @@ from esphome.components import sensor
 import esphome.config_validation as cv
 from esphome.const import (
     DEVICE_CLASS_POWER,
-    ICON_EMPTY,
     STATE_CLASS_MEASUREMENT,
     UNIT_WATT,
 )
@@ -18,7 +17,7 @@ CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(CONF_POWER_DEMAND): sensor.sensor_schema(
             unit_of_measurement=UNIT_WATT,
-            icon=ICON_EMPTY,
+            icon=None,
             accuracy_decimals=0,
             device_class=DEVICE_CLASS_POWER,
             state_class=STATE_CLASS_MEASUREMENT,
