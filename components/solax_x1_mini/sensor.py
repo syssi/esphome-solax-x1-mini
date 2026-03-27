@@ -28,6 +28,7 @@ from esphome.const import (
 from . import CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA, CONF_SOLAX_X1_MINI_ID
 
 DEPENDENCIES = ["solax_x1_mini"]
+CODEOWNERS = ["@syssi"]
 
 CONF_ENERGY_TODAY = "energy_today"
 CONF_ENERGY_TOTAL = "energy_total"
