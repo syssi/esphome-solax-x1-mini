@@ -19,7 +19,6 @@ TEXT_SENSORS = [
 CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(CONF_OPERATION_MODE): text_sensor.text_sensor_schema(
-            text_sensor.TextSensor,
             icon=ICON_OPERATION_MODE,
         ),
     }
