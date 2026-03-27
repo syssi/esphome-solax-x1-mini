@@ -5,6 +5,7 @@ import esphome.config_validation as cv
 from . import CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA, CONF_SOLAX_X1_MINI_ID
 
 DEPENDENCIES = ["solax_x1_mini"]
+CODEOWNERS = ["@syssi"]
 
 CONF_MODE_NAME = "mode_name"
 CONF_ERRORS = "errors"

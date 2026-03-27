@@ -11,6 +11,7 @@ from esphome.const import (
 from . import CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA, CONF_SOLAX_METER_GATEWAY_ID
 
 DEPENDENCIES = ["solax_meter_gateway"]
+CODEOWNERS = ["@syssi"]
 
 CONF_POWER_DEMAND = "power_demand"
 
