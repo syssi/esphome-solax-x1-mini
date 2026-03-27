@@ -1,6 +1,7 @@
 import esphome.codegen as cg
 from esphome.components import text_sensor
 import esphome.config_validation as cv
+from esphome.const import ENTITY_CATEGORY_DIAGNOSTIC
 
 from . import CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA, CONF_SOLAX_X1_MINI_ID
 
@@ -16,10 +17,11 @@ ICON_ERRORS = "mdi:alert-circle-outline"
 CONFIG_SCHEMA = CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(CONF_MODE_NAME): text_sensor.text_sensor_schema(
-            text_sensor.TextSensor, icon=ICON_MODE_NAME
+            icon=ICON_MODE_NAME
         ),
         cv.Optional(CONF_ERRORS): text_sensor.text_sensor_schema(
-            text_sensor.TextSensor, icon=ICON_ERRORS
+            icon=ICON_ERRORS,
+            entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
         ),
     }
 )
