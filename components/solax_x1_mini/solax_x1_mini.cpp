@@ -13,7 +13,7 @@ static const uint8_t FUNCTION_CONFIG_SETTINGS = 0x84;
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.2.pdf
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.8.pdf
 static const uint8_t MODES_SIZE = 7;
-static const std::string MODES[MODES_SIZE] = {
+static constexpr const char *MODES[MODES_SIZE] = {
     "Wait",             // 0
     "Check",            // 1
     "Normal",           // 2
