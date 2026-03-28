@@ -57,51 +57,51 @@ solax_x1_mini:
 text_sensor:
   - platform: solax_x1_mini
     mode_name:
-      name: "${name} mode name"
+      name: "mode name"
     errors:
-      name: "${name} errors"
+      name: "errors"
 
 sensor:
   - platform: solax_x1_mini
     ac_power:
-      name: "${name} ac power"
+      name: "ac power"
     energy_today:
-      name: "${name} energy today"
+      name: "energy today"
     energy_total:
-      name: "${name} energy total"
+      name: "energy total"
     dc1_voltage:
-      name: "${name} dc1 voltage"
+      name: "dc1 voltage"
     dc2_voltage:
-      name: "${name} dc2 voltage"
+      name: "dc2 voltage"
     dc1_current:
-      name: "${name} dc1 current"
+      name: "dc1 current"
     dc2_current:
-      name: "${name} dc2 current"
+      name: "dc2 current"
     ac_current:
-      name: "${name} ac current"
+      name: "ac current"
     ac_voltage:
-      name: "${name} ac voltage"
+      name: "ac voltage"
     ac_frequency:
-      name: "${name} ac frequency"
+      name: "ac frequency"
     temperature:
-      name: "${name} temperature"
+      name: "temperature"
     runtime_total:
-      name: "${name} runtime total"
+      name: "runtime total"
     mode:
-      name: "${name} mode"
+      name: "mode"
     error_bits:
-      name: "${name} error bits"
+      name: "error bits"
     grid_voltage_fault:
-      name: "${name} grid voltage fault"
+      name: "grid voltage fault"
     grid_frequency_fault:
-      name: "${name} grid frequency fault"
+      name: "grid frequency fault"
     dc_injection_fault:
-      name: "${name} dc injection fault"
+      name: "dc injection fault"
     temperature_fault:
-      name: "${name} temperature fault"
+      name: "temperature fault"
     pv1_voltage_fault:
-      name: "${name} pv1 voltage fault"
+      name: "pv1 voltage fault"
     pv2_voltage_fault:
-      name: "${name} pv2 voltage fault"
+      name: "pv2 voltage fault"
     gfc_fault:
-      name: "${name} gfc fault"
+      name: "gfc fault"
