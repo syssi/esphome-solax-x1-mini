@@ -112,8 +112,8 @@ For a more advanced setup take a look at the [esp32-example-advanced-multiple-ua
 
 ## Known issues
 
-All known firmware versions (`V1.00`) responds with the same serial number (`3132333435363737363534333231`) to the discovery 
-broadcast (`AA.55.01.00.00.00.10.00.00.01.10`). For this reason it's challenging to use multiple devices on the same bus and 
+All known firmware versions (`V1.00`) responds with the same serial number (`3132333435363737363534333231`) to the discovery
+broadcast (`AA.55.01.00.00.00.10.00.00.01.10`). For this reason it's challenging to use multiple devices on the same bus and
 assign an individual address per device.
 
 Affected firmware versions:
