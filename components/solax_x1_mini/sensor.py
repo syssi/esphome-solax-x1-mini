@@ -55,156 +55,146 @@ UNIT_HOURS = "h"
 ICON_MODE = "mdi:heart-pulse"
 ICON_ERROR_BITS = "mdi:alert-circle-outline"
 
-SENSORS = [
-    CONF_ENERGY_TODAY,
-    CONF_ENERGY_TOTAL,
-    CONF_DC1_CURRENT,
-    CONF_DC1_VOLTAGE,
-    CONF_DC2_CURRENT,
-    CONF_DC2_VOLTAGE,
-    CONF_AC_CURRENT,
-    CONF_AC_VOLTAGE,
-    CONF_AC_FREQUENCY,
-    CONF_AC_POWER,
-    CONF_RUNTIME_TOTAL,
-    CONF_ERROR_BITS,
-    CONF_MODE,
-    CONF_TEMPERATURE,
-]
+# key: sensor_schema kwargs
+SENSOR_DEFS = {
+    CONF_ENERGY_TODAY: {
+        "unit_of_measurement": UNIT_KILOWATT_HOURS,
+        "icon": ICON_COUNTER,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_ENERGY,
+        "state_class": STATE_CLASS_TOTAL_INCREASING,
+    },
+    CONF_ENERGY_TOTAL: {
+        "unit_of_measurement": UNIT_KILOWATT_HOURS,
+        "icon": ICON_COUNTER,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_ENERGY,
+        "state_class": STATE_CLASS_TOTAL_INCREASING,
+    },
+    CONF_DC1_CURRENT: {
+        "unit_of_measurement": UNIT_AMPERE,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_CURRENT,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_DC1_VOLTAGE: {
+        "unit_of_measurement": UNIT_VOLT,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_VOLTAGE,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_DC2_CURRENT: {
+        "unit_of_measurement": UNIT_AMPERE,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_CURRENT,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_DC2_VOLTAGE: {
+        "unit_of_measurement": UNIT_VOLT,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_VOLTAGE,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_AC_CURRENT: {
+        "unit_of_measurement": UNIT_AMPERE,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_CURRENT,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_AC_VOLTAGE: {
+        "unit_of_measurement": UNIT_VOLT,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_VOLTAGE,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_AC_FREQUENCY: {
+        "unit_of_measurement": UNIT_HERTZ,
+        "accuracy_decimals": 2,
+        "device_class": DEVICE_CLASS_FREQUENCY,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_AC_POWER: {
+        "unit_of_measurement": UNIT_WATT,
+        "accuracy_decimals": 0,
+        "device_class": DEVICE_CLASS_POWER,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_RUNTIME_TOTAL: {
+        "unit_of_measurement": UNIT_HOURS,
+        "icon": ICON_TIMER,
+        "accuracy_decimals": 0,
+        "device_class": DEVICE_CLASS_EMPTY,
+        "state_class": STATE_CLASS_TOTAL_INCREASING,
+    },
+    CONF_ERROR_BITS: {
+        "unit_of_measurement": UNIT_EMPTY,
+        "icon": ICON_ERROR_BITS,
+        "accuracy_decimals": 0,
+        "device_class": DEVICE_CLASS_EMPTY,
+    },
+    CONF_MODE: {
+        "unit_of_measurement": UNIT_EMPTY,
+        "icon": ICON_MODE,
+        "accuracy_decimals": 0,
+        "device_class": DEVICE_CLASS_EMPTY,
+    },
+    CONF_TEMPERATURE: {
+        "unit_of_measurement": UNIT_CELSIUS,
+        "accuracy_decimals": 0,
+        "device_class": DEVICE_CLASS_TEMPERATURE,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_GRID_VOLTAGE_FAULT: {
+        "unit_of_measurement": UNIT_VOLT,
+        "icon": ICON_EMPTY,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_VOLTAGE,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_GRID_FREQUENCY_FAULT: {
+        "unit_of_measurement": UNIT_HERTZ,
+        "accuracy_decimals": 2,
+        "device_class": DEVICE_CLASS_FREQUENCY,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_DC_INJECTION_FAULT: {
+        "unit_of_measurement": UNIT_AMPERE,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_CURRENT,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_TEMPERATURE_FAULT: {
+        "unit_of_measurement": UNIT_CELSIUS,
+        "accuracy_decimals": 0,
+        "device_class": DEVICE_CLASS_TEMPERATURE,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_PV1_VOLTAGE_FAULT: {
+        "unit_of_measurement": UNIT_VOLT,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_VOLTAGE,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_PV2_VOLTAGE_FAULT: {
+        "unit_of_measurement": UNIT_VOLT,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_VOLTAGE,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_GFC_FAULT: {
+        "unit_of_measurement": UNIT_AMPERE,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_CURRENT,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+}
 
-# pylint: disable=too-many-function-args
+SENSORS = list(SENSOR_DEFS)
+
 CONFIG_SCHEMA = CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA.extend(
     {
-        cv.Optional(CONF_ENERGY_TODAY): sensor.sensor_schema(
-            unit_of_measurement=UNIT_KILOWATT_HOURS,
-            icon=ICON_COUNTER,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_ENERGY,
-            state_class=STATE_CLASS_TOTAL_INCREASING,
-        ),
-        cv.Optional(CONF_ENERGY_TOTAL): sensor.sensor_schema(
-            unit_of_measurement=UNIT_KILOWATT_HOURS,
-            icon=ICON_COUNTER,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_ENERGY,
-            state_class=STATE_CLASS_TOTAL_INCREASING,
-        ),
-        cv.Optional(CONF_DC1_CURRENT): sensor.sensor_schema(
-            unit_of_measurement=UNIT_AMPERE,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_CURRENT,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_DC1_VOLTAGE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_VOLT,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_VOLTAGE,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_DC2_CURRENT): sensor.sensor_schema(
-            unit_of_measurement=UNIT_AMPERE,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_CURRENT,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_DC2_VOLTAGE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_VOLT,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_VOLTAGE,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_AC_CURRENT): sensor.sensor_schema(
-            unit_of_measurement=UNIT_AMPERE,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_CURRENT,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_AC_VOLTAGE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_VOLT,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_VOLTAGE,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_AC_FREQUENCY): sensor.sensor_schema(
-            unit_of_measurement=UNIT_HERTZ,
-            accuracy_decimals=2,
-            device_class=DEVICE_CLASS_FREQUENCY,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_AC_POWER): sensor.sensor_schema(
-            unit_of_measurement=UNIT_WATT,
-            accuracy_decimals=0,
-            device_class=DEVICE_CLASS_POWER,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_RUNTIME_TOTAL): sensor.sensor_schema(
-            unit_of_measurement=UNIT_HOURS,
-            icon=ICON_TIMER,
-            accuracy_decimals=0,
-            device_class=DEVICE_CLASS_EMPTY,
-            state_class=STATE_CLASS_TOTAL_INCREASING,
-        ),
-        cv.Optional(CONF_ERROR_BITS): sensor.sensor_schema(
-            unit_of_measurement=UNIT_EMPTY,
-            icon=ICON_ERROR_BITS,
-            accuracy_decimals=0,
-            device_class=DEVICE_CLASS_EMPTY,
-        ),
-        cv.Optional(CONF_MODE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_EMPTY,
-            icon=ICON_MODE,
-            accuracy_decimals=0,
-            device_class=DEVICE_CLASS_EMPTY,
-        ),
-        cv.Optional(CONF_TEMPERATURE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_CELSIUS,
-            accuracy_decimals=0,
-            device_class=DEVICE_CLASS_TEMPERATURE,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_GRID_VOLTAGE_FAULT): sensor.sensor_schema(
-            unit_of_measurement=UNIT_VOLT,
-            icon=ICON_EMPTY,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_VOLTAGE,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_GRID_FREQUENCY_FAULT): sensor.sensor_schema(
-            unit_of_measurement=UNIT_HERTZ,
-            accuracy_decimals=2,
-            device_class=DEVICE_CLASS_FREQUENCY,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_DC_INJECTION_FAULT): sensor.sensor_schema(
-            unit_of_measurement=UNIT_AMPERE,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_CURRENT,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_TEMPERATURE_FAULT): sensor.sensor_schema(
-            unit_of_measurement=UNIT_CELSIUS,
-            accuracy_decimals=0,
-            device_class=DEVICE_CLASS_TEMPERATURE,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_PV1_VOLTAGE_FAULT): sensor.sensor_schema(
-            unit_of_measurement=UNIT_VOLT,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_VOLTAGE,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_PV2_VOLTAGE_FAULT): sensor.sensor_schema(
-            unit_of_measurement=UNIT_VOLT,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_VOLTAGE,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_GFC_FAULT): sensor.sensor_schema(
-            unit_of_measurement=UNIT_AMPERE,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_CURRENT,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
+        cv.Optional(key): sensor.sensor_schema(**kwargs)
+        for key, kwargs in SENSOR_DEFS.items()
     }
 )
 
