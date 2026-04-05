@@ -13,7 +13,7 @@ static const uint8_t FUNCTION_CONFIG_SETTINGS = 0x84;
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.2.pdf
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.8.pdf
 static const uint8_t MODES_SIZE = 7;
-static constexpr const char *MODES[MODES_SIZE] = {
+static constexpr const char *const MODES[MODES_SIZE] = {
     "Wait",             // 0
     "Check",            // 1
     "Normal",           // 2
@@ -25,7 +25,7 @@ static constexpr const char *MODES[MODES_SIZE] = {
 
 // SolaxPower Single Phase External Communication Protocol - X1 Series V1.8.pdf
 static const uint8_t ERRORS_SIZE = 32;
-static const char *const ERRORS[ERRORS_SIZE] = {
+static constexpr const char *const ERRORS[ERRORS_SIZE] = {
     "TZ Protect Fault",                          // 0000 0000 0000 0000 0000 0000 0000 0001 (1)
     "Grid Lost Fault",                           // 0000 0000 0000 0000 0000 0000 0000 0010 (2)
     "Grid Voltage Fault",                        // 0000 0000 0000 0000 0000 0000 0000 0100 (3)
