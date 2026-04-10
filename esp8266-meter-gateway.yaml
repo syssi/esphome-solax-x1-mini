@@ -8,6 +8,7 @@ substitutions:
 
 esphome:
   name: ${name}
+  friendly_name: ${name}
   comment: ${device_description}
   project:
     name: "syssi.esphome-solax-x1-mini"
@@ -65,7 +66,7 @@ sensor:
   - id: powermeter0
     internal: true
     platform: mqtt_subscribe
-    name: "${name} instantaneous power consumption"
+    name: "instantaneous power consumption"
     topic: "${instantaneous_power_topic}"
     accuracy_decimals: 2
     unit_of_measurement: W
@@ -73,23 +74,23 @@ sensor:
 
   - platform: solax_meter_gateway
     power_demand:
-      name: "${name} power demand"
+      name: "power demand"
 
 text_sensor:
   - platform: solax_meter_gateway
     operation_mode:
-      name: "${name} operation mode"
+      name: "operation mode"
 
 switch:
   - platform: solax_meter_gateway
     manual_mode:
-      name: "${name} manual mode"
+      name: "manual mode"
       restore_mode: RESTORE_DEFAULT_OFF
     emergency_power_off:
-      name: "${name} emergency power off"
+      name: "emergency power off"
       restore_mode: RESTORE_DEFAULT_OFF
 
 number:
   - platform: solax_meter_gateway
     manual_power_demand:
-      name: "${name} manual power demand"
+      name: "manual power demand"
