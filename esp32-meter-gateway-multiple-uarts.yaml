@@ -20,8 +20,8 @@ esphome:
     - id: device1
       name: "${device1}"
 
-esp8266:
-  board: d1_mini
+esp32:
+  board: wemos_d1_mini32
 
 external_components:
   - source: ${external_components_source}
@@ -49,12 +49,12 @@ mqtt:
 uart:
   - id: uart_0
     baud_rate: 9600
-    tx_pin: GPIO1
-    rx_pin: GPIO3
+    tx_pin: GPIO16
+    rx_pin: GPIO17
   - id: uart_1
     baud_rate: 9600
-    tx_pin: GPIO14
-    rx_pin: GPIO4
+    tx_pin: GPIO21
+    rx_pin: GPIO19
 
 solax_meter_modbus:
   - id: modbus0
