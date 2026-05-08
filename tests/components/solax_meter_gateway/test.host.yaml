@@ -1,0 +1,19 @@
+uart:
+  - id: uart_bus
+    baud_rate: 9600
+
+sensor:
+  - platform: template
+    id: grid_power
+    lambda: "return 0.0;"
+    update_interval: 30s
+
+solax_meter_modbus:
+  - id: modbus_bus
+    uart_id: uart_bus
+
+solax_meter_gateway:
+  id: test_gateway
+  solax_meter_modbus_id: modbus_bus
+  power_id: grid_power
+  update_interval: 30s

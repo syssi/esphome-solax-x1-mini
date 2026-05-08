@@ -1,0 +1,10 @@
+uart:
+  - id: uart_bus
+    baud_rate: 9600
+solax_modbus:
+  - id: modbus_bus
+    uart_id: uart_bus
+solax_x1_mini:
+  id: test_bms
+  solax_modbus_id: modbus_bus
+  update_interval: 30s
