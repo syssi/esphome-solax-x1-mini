@@ -1,6 +1,7 @@
 import esphome.codegen as cg
 from esphome.components import text_sensor
 import esphome.config_validation as cv
+from esphome.const import ENTITY_CATEGORY_DIAGNOSTIC
 
 from . import CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA, CONF_SOLAX_METER_GATEWAY_ID
 
@@ -20,6 +21,7 @@ CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(CONF_OPERATION_MODE): text_sensor.text_sensor_schema(
             icon=ICON_OPERATION_MODE,
+            entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
         ),
     }
 )
