@@ -349,7 +349,7 @@ void SolaxX1Mini::dump_config() {
 }
 
 std::string SolaxX1Mini::error_bits_to_string_(const uint32_t mask) {
-  std::string values = "";
+  std::string values;
   if (mask) {
     for (int i = 0; i < ERRORS_SIZE; i++) {
       if (mask & (1 << i)) {
