@@ -4,8 +4,7 @@
 
 static const uint8_t BROADCAST_ADDRESS = 0xFF;
 
-namespace esphome {
-namespace solax_modbus {
+namespace esphome::solax_modbus {
 
 static const char *const TAG = "solax_modbus";
 
@@ -247,5 +246,4 @@ void SolaxModbus::send(SolaxMessageT *tx_message) {
     this->flow_control_pin_->digital_write(false);
 }
 
-}  // namespace solax_modbus
-}  // namespace esphome
+}  // namespace esphome::solax_modbus

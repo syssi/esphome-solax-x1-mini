@@ -5,8 +5,7 @@
 
 #include <vector>
 
-namespace esphome {
-namespace solax_meter_modbus {
+namespace esphome::solax_meter_modbus {
 
 class SolaxMeterModbusDevice;
 
@@ -54,5 +53,4 @@ class SolaxMeterModbusDevice {
   uint8_t address_;
 };
 
-}  // namespace solax_meter_modbus
-}  // namespace esphome
+}  // namespace esphome::solax_meter_modbus

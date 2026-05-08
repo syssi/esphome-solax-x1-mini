@@ -1,8 +1,7 @@
 #include "solax_x1_mini.h"
 #include "esphome/core/log.h"
 
-namespace esphome {
-namespace solax_x1_mini {
+namespace esphome::solax_x1_mini {
 
 static const char *const TAG = "solax_x1_mini";
 
@@ -365,5 +364,4 @@ std::string SolaxX1Mini::error_bits_to_string_(const uint32_t mask) {
   return values;
 }
 
-}  // namespace solax_x1_mini
-}  // namespace esphome
+}  // namespace esphome::solax_x1_mini

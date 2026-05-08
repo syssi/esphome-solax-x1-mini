@@ -2,8 +2,7 @@
 #include "esphome/core/log.h"
 #include "esphome/core/helpers.h"
 
-namespace esphome {
-namespace solax_meter_modbus {
+namespace esphome::solax_meter_modbus {
 
 static const char *const TAG = "solax_meter_modbus";
 
@@ -181,5 +180,4 @@ void SolaxMeterModbus::send_raw(const std::vector<uint8_t> &payload) {
   ESP_LOGV(TAG, "SolaxMeterModbus write raw: %s", format_hex_pretty(payload).c_str());  // NOLINT
 }
 
-}  // namespace solax_meter_modbus
-}  // namespace esphome
+}  // namespace esphome::solax_meter_modbus

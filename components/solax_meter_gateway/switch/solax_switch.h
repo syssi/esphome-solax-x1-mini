@@ -4,8 +4,7 @@
 #include "esphome/core/component.h"
 #include "esphome/components/switch/switch.h"
 
-namespace esphome {
-namespace solax_meter_gateway {
+namespace esphome::solax_meter_gateway {
 
 enum SolaxSwitchRestoreMode {
   SOLAX_SWITCH_RESTORE_DEFAULT_OFF,
@@ -30,5 +29,4 @@ class SolaxSwitch : public switch_::Switch, public Component {
   SolaxSwitchRestoreMode restore_mode_{SOLAX_SWITCH_RESTORE_DEFAULT_OFF};
 };
 
-}  // namespace solax_meter_gateway
-}  // namespace esphome
+}  // namespace esphome::solax_meter_gateway

@@ -3,8 +3,7 @@
 #include "esphome/core/component.h"
 #include "esphome/components/uart/uart.h"
 
-namespace esphome {
-namespace solax_modbus {
+namespace esphome::solax_modbus {
 
 struct SolaxMessageT {
   uint8_t Header[2];
@@ -68,5 +67,4 @@ class SolaxModbusDevice {
   uint8_t *serial_number_;
 };
 
-}  // namespace solax_modbus
-}  // namespace esphome
+}  // namespace esphome::solax_modbus

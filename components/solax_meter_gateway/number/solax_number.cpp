@@ -1,8 +1,7 @@
 #include "solax_number.h"
 #include "esphome/core/log.h"
 
-namespace esphome {
-namespace solax_meter_gateway {
+namespace esphome::solax_meter_gateway {
 
 static const char *const TAG = "solax_meter_gateway.number";
 
@@ -32,5 +31,4 @@ void SolaxNumber::control(float value) {
 }
 void SolaxNumber::dump_config() { LOG_NUMBER("", "SolaxMeterGateway Number", this); }
 
-}  // namespace solax_meter_gateway
-}  // namespace esphome
+}  // namespace esphome::solax_meter_gateway

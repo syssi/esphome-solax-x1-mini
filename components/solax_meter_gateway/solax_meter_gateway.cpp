@@ -1,8 +1,7 @@
 #include "solax_meter_gateway.h"
 #include "esphome/core/log.h"
 
-namespace esphome {
-namespace solax_meter_gateway {
+namespace esphome::solax_meter_gateway {
 
 static const char *const TAG = "solax_meter_gateway";
 
@@ -148,5 +147,4 @@ void SolaxMeterGateway::publish_state_(text_sensor::TextSensor *text_sensor, con
   text_sensor->publish_state(state);
 }
 
-}  // namespace solax_meter_gateway
-}  // namespace esphome
+}  // namespace esphome::solax_meter_gateway

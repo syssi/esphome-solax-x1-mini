@@ -2,8 +2,7 @@
 #include "esphome/core/log.h"
 #include "esphome/core/application.h"
 
-namespace esphome {
-namespace solax_meter_gateway {
+namespace esphome::solax_meter_gateway {
 
 static const char *const TAG = "solax_meter_gateway.switch";
 
@@ -54,5 +53,4 @@ void SolaxSwitch::dump_config() {
 }
 void SolaxSwitch::write_state(bool state) { this->publish_state(state); }
 
-}  // namespace solax_meter_gateway
-}  // namespace esphome
+}  // namespace esphome::solax_meter_gateway

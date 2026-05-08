@@ -7,8 +7,7 @@
 #include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/components/solax_meter_modbus/solax_meter_modbus.h"
 
-namespace esphome {
-namespace solax_meter_gateway {
+namespace esphome::solax_meter_gateway {
 
 class SolaxMeterGateway : public PollingComponent, public solax_meter_modbus::SolaxMeterModbusDevice {
  public:
@@ -63,5 +62,4 @@ class SolaxMeterGateway : public PollingComponent, public solax_meter_modbus::So
   bool inactivity_timeout_();
 };
 
-}  // namespace solax_meter_gateway
-}  // namespace esphome
+}  // namespace esphome::solax_meter_gateway
