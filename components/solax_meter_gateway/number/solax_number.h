@@ -5,8 +5,7 @@
 #include "esphome/components/number/number.h"
 #include "esphome/core/preferences.h"
 
-namespace esphome {
-namespace solax_meter_gateway {
+namespace esphome::solax_meter_gateway {
 
 class SolaxMeterGateway;
 
@@ -31,5 +30,4 @@ class SolaxNumber : public number::Number, public Component {
   ESPPreferenceObject pref_;
 };
 
-}  // namespace solax_meter_gateway
-}  // namespace esphome
+}  // namespace esphome::solax_meter_gateway

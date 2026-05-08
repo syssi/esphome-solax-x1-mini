@@ -5,8 +5,7 @@
 #include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/components/solax_modbus/solax_modbus.h"
 
-namespace esphome {
-namespace solax_x1_mini {
+namespace esphome::solax_x1_mini {
 
 static const uint8_t REDISCOVERY_THRESHOLD = 5;
 
@@ -90,5 +89,4 @@ class SolaxX1Mini : public PollingComponent, public solax_modbus::SolaxModbusDev
   std::string error_bits_to_string_(uint32_t bitmask);
 };
 
-}  // namespace solax_x1_mini
-}  // namespace esphome
+}  // namespace esphome::solax_x1_mini
