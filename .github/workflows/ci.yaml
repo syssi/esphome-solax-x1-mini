@@ -567,7 +567,7 @@ jobs:
       - name: Run C++ unit tests
         run: |
           . venv/bin/activate
-          script/cpp_unit_test.py solax_x1_mini solax_meter_gateway
+          script/cpp_unit_test.py solax_x1_mini solax_meter_gateway solax_meter_modbus solax_modbus
         env:
           PLATFORMIO_LIBDEPS_DIR: ~/.platformio/libdeps
           ASAN_OPTIONS: detect_leaks=0
