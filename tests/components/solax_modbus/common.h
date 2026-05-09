@@ -15,9 +15,8 @@ static uint16_t solax_chksum(const uint8_t *data, uint8_t len) {
 
 // Frame: [0xAA,0x55,src0,src1(=address),dst0,dst1,cc,fc,data_len,data...,crc_hi,crc_lo]
 static std::vector<uint8_t> make_solax_frame(uint8_t address, uint8_t cc, uint8_t fc,
-                                              const std::vector<uint8_t> &data) {
-  std::vector<uint8_t> frame = {0xAA, 0x55, 0x00, address, 0x01, 0x00, cc, fc,
-                                 static_cast<uint8_t>(data.size())};
+                                             const std::vector<uint8_t> &data) {
+  std::vector<uint8_t> frame = {0xAA, 0x55, 0x00, address, 0x01, 0x00, cc, fc, static_cast<uint8_t>(data.size())};
   frame.insert(frame.end(), data.begin(), data.end());
   // chksum over frame[0..8+data_len-1]: length arg = 9 + data.size() - 1
   uint16_t crc = solax_chksum(frame.data(), static_cast<uint8_t>(9 + data.size() - 1));

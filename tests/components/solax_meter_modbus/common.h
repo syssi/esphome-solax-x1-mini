@@ -32,8 +32,7 @@ static const std::vector<uint8_t> HANDSHAKE_FRAME = {0x01, 0x03, 0x00, 0x0B, 0x0
 static const std::vector<uint8_t> READ_POWER_FRAME = {0x01, 0x04, 0x00, 0x0C, 0x00, 0x02, 0xB1, 0xC8};
 
 // Same payload as handshake but for address=0x02
-static const std::vector<uint8_t> HANDSHAKE_FRAME_ADDR02 =
-    make_meter_frame(0x02, {0x03, 0x00, 0x0B, 0x00, 0x01});
+static const std::vector<uint8_t> HANDSHAKE_FRAME_ADDR02 = make_meter_frame(0x02, {0x03, 0x00, 0x0B, 0x00, 0x01});
 
 class MockSolaxMeterModbusDevice : public SolaxMeterModbusDevice {
  public:
