@@ -55,8 +55,11 @@ class TestableSolaxMeterModbus : public SolaxMeterModbus {
 
   bool feed(const std::vector<uint8_t> &frame) {
     bool result = false;
-    for (uint8_t byte : frame)
+    for (uint8_t byte : frame) {
       result = parse_solax_meter_modbus_byte_(byte);
+      if (!result)
+        this->rx_buffer_.clear();
+    }
     return result;
   }
 };
