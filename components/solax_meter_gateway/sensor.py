@@ -26,7 +26,10 @@ SENSOR_DEFS = {
 }
 
 CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
-    {cv.Optional(key): sensor.sensor_schema(**kwargs) for key, kwargs in SENSOR_DEFS.items()}
+    {
+        cv.Optional(key): sensor.sensor_schema(**kwargs)
+        for key, kwargs in SENSOR_DEFS.items()
+    }
 )
 
 

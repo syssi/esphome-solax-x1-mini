@@ -8,10 +8,10 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import components.solax_meter_gateway as hub_gateway  # noqa: E402
 from components.solax_meter_gateway import (  # noqa: E402
     number as gateway_number,
-    sensor as gateway_sensor,
     switch as gateway_switch,
     text_sensor as gateway_text_sensor,
 )
+import components.solax_meter_gateway.sensor as gateway_sensor  # noqa: E402
 import components.solax_x1_mini as hub  # noqa: E402
 from components.solax_x1_mini import sensor, text_sensor  # noqa: E402
 
@@ -41,7 +41,9 @@ class TestSolaxMeterGatewaySensorDefs:
         assert len(gateway_sensor.SENSOR_DEFS) == 1
 
     def test_sensor_defs_keys_match_schema(self):
-        assert set(gateway_sensor.SENSOR_DEFS.keys()) == {gateway_sensor.CONF_POWER_DEMAND}
+        assert set(gateway_sensor.SENSOR_DEFS.keys()) == {
+            gateway_sensor.CONF_POWER_DEMAND
+        }
 
 
 class TestSolaxMeterGatewayTextSensorConstants:
