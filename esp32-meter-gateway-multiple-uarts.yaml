@@ -106,39 +106,39 @@ sensor:
   - platform: solax_meter_gateway
     solax_meter_gateway_id: solax_meter_gateway0
     power_demand:
-      name: "${device0} power demand"
+      name: "power demand"
       device_id: device0
 
   - platform: solax_meter_gateway
     solax_meter_gateway_id: solax_meter_gateway1
     power_demand:
-      name: "${device1} power demand"
+      name: "power demand"
       device_id: device1
 
 text_sensor:
   - platform: solax_meter_gateway
     solax_meter_gateway_id: solax_meter_gateway0
     operation_mode:
-      name: "${device0} operation mode"
+      name: "operation mode"
       device_id: device0
 
   - platform: solax_meter_gateway
     solax_meter_gateway_id: solax_meter_gateway1
     operation_mode:
-      name: "${device1} operation mode"
+      name: "operation mode"
       device_id: device1
 
 switch:
   - platform: solax_meter_gateway
     solax_meter_gateway_id: solax_meter_gateway0
     emergency_power_off:
-      name: "${device0} emergency power off"
+      name: "emergency power off"
       device_id: device0
       restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: solax_meter_gateway
     solax_meter_gateway_id: solax_meter_gateway1
     emergency_power_off:
-      name: "${device1} emergency power off"
+      name: "emergency power off"
       device_id: device1
       restore_mode: RESTORE_DEFAULT_OFF
