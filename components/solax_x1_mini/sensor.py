@@ -20,6 +20,7 @@ from esphome.const import (
     UNIT_CELSIUS,
     UNIT_EMPTY,
     UNIT_HERTZ,
+    UNIT_HOUR,
     UNIT_KILOWATT_HOURS,
     UNIT_VOLT,
     UNIT_WATT,
@@ -49,8 +50,6 @@ CONF_TEMPERATURE_FAULT = "temperature_fault"
 CONF_PV1_VOLTAGE_FAULT = "pv1_voltage_fault"
 CONF_PV2_VOLTAGE_FAULT = "pv2_voltage_fault"
 CONF_GFC_FAULT = "gfc_fault"
-
-UNIT_HOURS = "h"
 
 ICON_MODE = "mdi:heart-pulse"
 ICON_ERROR_BITS = "mdi:alert-circle-outline"
@@ -120,7 +119,7 @@ SENSOR_DEFS = {
         "state_class": STATE_CLASS_MEASUREMENT,
     },
     CONF_RUNTIME_TOTAL: {
-        "unit_of_measurement": UNIT_HOURS,
+        "unit_of_measurement": UNIT_HOUR,
         "icon": ICON_TIMER,
         "accuracy_decimals": 0,
         "device_class": DEVICE_CLASS_EMPTY,
