@@ -17,6 +17,12 @@ class TestableSolaxMeterGateway : public SolaxMeterGateway {
   void send_raw(const std::vector<uint8_t> &payload) override {}
 
   void set_power_demand(float value) { this->power_demand_ = value; }
+  void set_last_power_demand_received(uint32_t ts) { this->last_power_demand_received_ = ts; }
+
+  uint32_t get_last_solax_request_received() const { return this->last_solax_request_received_; }
+  uint32_t get_last_power_demand_received() const { return this->last_power_demand_received_; }
+
+  void call_update() { SolaxMeterGateway::update(); }
 };
 
 }  // namespace esphome::solax_meter_gateway::testing
