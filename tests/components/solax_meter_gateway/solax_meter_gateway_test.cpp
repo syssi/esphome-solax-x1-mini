@@ -1,8 +1,10 @@
 #include "esphome/components/solax_meter_gateway/solax_meter_gateway.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/text_sensor/text_sensor.h"
+#include "esphome/core/hal.h"
 #include "common.h"
 #include "frames.h"
+#include <cmath>
 #include <gtest/gtest.h>
 
 namespace esphome::solax_meter_gateway::testing {
@@ -75,6 +77,85 @@ TEST(SolaxMeterGatewayTest, ManualModeNoNumber) {
 
   EXPECT_EQ(op_mode.state, "Manual");
   EXPECT_FLOAT_EQ(power_demand.state, 0.0f);
+}
+
+// ── Inactivity tracking: inverter-side ───────────────────────────────────────
+//
+// last_solax_request_received_ starts at 0; millis() on the host is always
+// far above any inactivity threshold, so update() fires "Standby" immediately
+// when the timestamp has never been updated.  After on_solax_meter_modbus_data()
+// the timestamp is current, so a back-to-back update() must stay silent.
+
+TEST(SolaxMeterGatewayInactivityTest, UpdatePublishesStandbyWhenInverterNeverPolled) {
+  TestableSolaxMeterGateway gw;
+  text_sensor::TextSensor op_mode;
+  gw.set_operation_mode_text_sensor(&op_mode);
+
+  gw.call_update();
+
+  EXPECT_EQ(op_mode.state, "Standby");
+}
+
+TEST(SolaxMeterGatewayInactivityTest, UpdateSilentImmediatelyAfterInverterPoll) {
+  TestableSolaxMeterGateway gw;
+  text_sensor::TextSensor op_mode;
+  gw.set_operation_mode_text_sensor(&op_mode);
+
+  gw.on_solax_meter_modbus_data(READ_POWER_32BIT_FLOAT_REQUEST);
+  gw.call_update();
+
+  EXPECT_NE(op_mode.state, "Standby");
+}
+
+TEST(SolaxMeterGatewayInactivityTest, InverterPollSetsRequestTimestamp) {
+  TestableSolaxMeterGateway gw;
+
+  EXPECT_EQ(gw.get_last_solax_request_received(), 0u);
+  gw.on_solax_meter_modbus_data(READ_POWER_32BIT_FLOAT_REQUEST);
+  EXPECT_GT(gw.get_last_solax_request_received(), 0u);
+}
+
+// ── Inactivity tracking: power-sensor-side ────────────────────────────────────
+//
+// last_power_demand_received_ must NOT be touched by on_solax_meter_modbus_data().
+// When it stays at 0 and a non-zero timeout is configured, the first inverter
+// poll must trigger "Meter fault".  After the power sensor timestamp is current
+// the safety path must not fire.
+
+TEST(SolaxMeterGatewayInactivityTest, InverterPollDoesNotSetPowerSensorTimestamp) {
+  TestableSolaxMeterGateway gw;
+
+  gw.on_solax_meter_modbus_data(READ_POWER_32BIT_FLOAT_REQUEST);
+
+  EXPECT_EQ(gw.get_last_power_demand_received(), 0u);
+}
+
+TEST(SolaxMeterGatewayInactivityTest, MeterFaultWhenPowerSensorSilent) {
+  TestableSolaxMeterGateway gw;
+  sensor::Sensor power_demand;
+  text_sensor::TextSensor op_mode;
+  gw.set_power_demand_sensor(&power_demand);
+  gw.set_operation_mode_text_sensor(&op_mode);
+  gw.set_power_sensor_inactivity_timeout(5);
+
+  gw.on_solax_meter_modbus_data(READ_POWER_32BIT_FLOAT_REQUEST);
+
+  EXPECT_EQ(op_mode.state, "Meter fault");
+  EXPECT_TRUE(std::isnan(power_demand.state));
+}
+
+TEST(SolaxMeterGatewayInactivityTest, NoMeterFaultWhenPowerSensorRecent) {
+  TestableSolaxMeterGateway gw;
+  sensor::Sensor power_demand;
+  text_sensor::TextSensor op_mode;
+  gw.set_power_demand_sensor(&power_demand);
+  gw.set_operation_mode_text_sensor(&op_mode);
+  gw.set_power_sensor_inactivity_timeout(5);
+  gw.set_last_power_demand_received(millis());
+
+  gw.on_solax_meter_modbus_data(READ_POWER_32BIT_FLOAT_REQUEST);
+
+  EXPECT_NE(op_mode.state, "Meter fault");
 }
 
 // ── Null sensors do not crash ─────────────────────────────────────────────────
