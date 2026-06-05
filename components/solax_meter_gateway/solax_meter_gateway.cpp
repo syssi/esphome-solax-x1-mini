@@ -13,7 +13,7 @@ static const uint8_t REGISTER_READ_TOTAL_ENERGY_IMPORT_32BIT_FLOAT = 0x48;
 static const uint8_t REGISTER_READ_TOTAL_ENERGY_EXPORT_32BIT_FLOAT = 0x4A;
 
 void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &data) {
-  this->last_power_demand_received_ = millis();
+  this->last_solax_request_received_ = millis();
 
   if (this->inactivity_timeout_()) {
     this->publish_state_(this->operation_mode_text_sensor_, "Meter fault");
