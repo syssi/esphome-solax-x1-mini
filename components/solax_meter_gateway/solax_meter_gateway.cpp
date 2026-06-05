@@ -11,6 +11,7 @@ static const uint8_t REGISTER_READ_POWER_32BIT_FLOAT = 0x0C;
 static const uint8_t REGISTER_READ_TOTAL_ENERGY = 0x08;
 static const uint8_t REGISTER_READ_TOTAL_ENERGY_IMPORT_32BIT_FLOAT = 0x48;
 static const uint8_t REGISTER_READ_TOTAL_ENERGY_EXPORT_32BIT_FLOAT = 0x4A;
+static const uint8_t HANDSHAKE_ERROR_THRESHOLD = 6;
 
 void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &data) {
   this->last_solax_request_received_ = millis();
@@ -49,7 +50,7 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
     case REGISTER_HANDSHAKE:
       // Request: 0x01 0x03 0x00 0x0B 0x00 0x01 0xF5 0xC8
       //          addr func      reg       bytes*2
-      if (++this->consecutive_handshake_count_ % 5 == 0) {
+      if (++this->consecutive_handshake_count_ % HANDSHAKE_ERROR_THRESHOLD == 0) {
         ESP_LOGE(TAG,
                  "Meter type 0x%04X not accepted after %u handshakes. "
                  "Configure a different meter_type (e.g. 0x0000, 0x00A6, 0x00A8).",

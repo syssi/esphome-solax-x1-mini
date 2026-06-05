@@ -78,7 +78,7 @@ solax_meter_gateway:
     # Meter type returned during the RS485 handshake (register 0x0B).
     # Some inverters validate this value and keep repeating the handshake until
     # the smart meter responds with a supported type. Progress past the handshake
-    # is impossible with a wrong value. After every 5 consecutive unaccepted
+    # is impossible with a wrong value. After every 6 consecutive unaccepted
     # handshakes an error is logged suggesting to try a different value.
     # Known working values:
     #   0x0000 - Solax X1 mini
@@ -98,7 +98,7 @@ solax_meter_gateway:
     # Meter type returned during the RS485 handshake (register 0x0B).
     # Some inverters validate this value and keep repeating the handshake until
     # the smart meter responds with a supported type. Progress past the handshake
-    # is impossible with a wrong value. After every 5 consecutive unaccepted
+    # is impossible with a wrong value. After every 6 consecutive unaccepted
     # handshakes an error is logged suggesting to try a different value.
     # Known working values:
     #   0x0000 - Solax X1 mini
