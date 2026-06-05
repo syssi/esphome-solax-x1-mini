@@ -63,6 +63,14 @@ solax_meter_gateway:
   power_sensor_inactivity_timeout: 5s
   update_interval: 5s
 
+  # Meter type reported during the handshake (register 0x0B). Must match what
+  # the inverter expects or it will ignore all subsequent power demand reads.
+  # Known working values:
+  #   0x0000 - Solax X1 mini
+  #   0x00A6 - Solax X1 Hybrid Gen2+, SK-SU3700E (DDSU666 meter identity)
+  #   0x00A8 - Solax X3 MIC Gen1, X3 G2/MIC (SDM230 meter identity)
+  meter_type: 0x0000
+
 sensor:
   - id: powermeter0
     internal: true

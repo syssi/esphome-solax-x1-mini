@@ -41,11 +41,12 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
   }
 
   uint8_t register_address = data[2];
+
   switch (register_address) {
     case REGISTER_HANDSHAKE:
       // Request: 0x01 0x03 0x00 0x0B 0x00 0x01 0xF5 0xC8
       //          addr func      reg       bytes*2
-      this->send_raw({0x01, 0x03, 0x02, 0x00, 0x00});
+      this->send_raw({0x01, 0x03, 0x02, uint8_t(this->meter_type_ >> 8), uint8_t(this->meter_type_ & 0xFF)});
       break;
 
     case REGISTER_READ_POWER_32BIT_FLOAT:
@@ -109,6 +110,7 @@ void SolaxMeterGateway::setup() {
 void SolaxMeterGateway::dump_config() {
   ESP_LOGCONFIG(TAG, "SolaxMeterGateway:");
   ESP_LOGCONFIG(TAG, "  Address: 0x%02X", this->address_);
+  ESP_LOGCONFIG(TAG, "  Meter type: 0x%04X", this->meter_type_);
   LOG_SENSOR("  ", "Power Demand", this->power_demand_sensor_);
   LOG_TEXT_SENSOR("  ", "Operation name", this->operation_mode_text_sensor_);
 }
