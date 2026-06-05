@@ -165,6 +165,34 @@ TEST(SolaxMeterGatewayInactivityTest, NoMeterFaultWhenPowerSensorRecent) {
 // At every multiple of HANDSHAKE_ERROR_THRESHOLD (6) an error is logged;
 // we verify the counter value at that point rather than the log output.
 
+// ── Handshake response contains configured meter type ─────────────────────────
+//
+// Response format: {0x01, 0x03, 0x02, hi, lo}
+// Meter type bytes are at index 3 (high) and 4 (low).
+
+TEST(SolaxMeterGatewayHandshakeTest, DefaultMeterTypeInResponse) {
+  TestableSolaxMeterGateway gw;  // default meter_type_ = 0x0000
+
+  gw.on_solax_meter_modbus_data(HANDSHAKE_REQUEST);
+
+  const auto &payload = gw.get_last_raw_payload();
+  ASSERT_EQ(payload.size(), 5u);
+  EXPECT_EQ(payload[3], 0x00u);
+  EXPECT_EQ(payload[4], 0x00u);
+}
+
+TEST(SolaxMeterGatewayHandshakeTest, ConfiguredMeterTypeInResponse) {
+  TestableSolaxMeterGateway gw;
+  gw.set_meter_type(0x00A8);
+
+  gw.on_solax_meter_modbus_data(HANDSHAKE_REQUEST);
+
+  const auto &payload = gw.get_last_raw_payload();
+  ASSERT_EQ(payload.size(), 5u);
+  EXPECT_EQ(payload[3], 0x00u);
+  EXPECT_EQ(payload[4], 0xA8u);
+}
+
 TEST(SolaxMeterGatewayHandshakeTest, CounterIncrementsOnEachHandshake) {
   TestableSolaxMeterGateway gw;
 
