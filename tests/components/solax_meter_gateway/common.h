@@ -21,6 +21,7 @@ class TestableSolaxMeterGateway : public SolaxMeterGateway {
 
   uint32_t get_last_solax_request_received() const { return this->last_solax_request_received_; }
   uint32_t get_last_power_demand_received() const { return this->last_power_demand_received_; }
+  uint8_t get_consecutive_handshake_count() const { return this->consecutive_handshake_count_; }
 
   void call_update() { SolaxMeterGateway::update(); }
 };

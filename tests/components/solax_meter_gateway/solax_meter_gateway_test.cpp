@@ -158,6 +158,41 @@ TEST(SolaxMeterGatewayInactivityTest, NoMeterFaultWhenPowerSensorRecent) {
   EXPECT_NE(op_mode.state, "Meter fault");
 }
 
+// ── Handshake counter ─────────────────────────────────────────────────────────
+//
+// The counter increments on every REGISTER_HANDSHAKE request and resets to 0
+// as soon as any other register is received (handshake accepted).
+// At every multiple of HANDSHAKE_ERROR_THRESHOLD (6) an error is logged;
+// we verify the counter value at that point rather than the log output.
+
+TEST(SolaxMeterGatewayHandshakeTest, CounterIncrementsOnEachHandshake) {
+  TestableSolaxMeterGateway gw;
+
+  for (uint8_t i = 1; i <= 3; i++) {
+    gw.on_solax_meter_modbus_data(HANDSHAKE_REQUEST);
+    EXPECT_EQ(gw.get_consecutive_handshake_count(), i);
+  }
+}
+
+TEST(SolaxMeterGatewayHandshakeTest, CounterResetsOnNonHandshakeRegister) {
+  TestableSolaxMeterGateway gw;
+
+  gw.on_solax_meter_modbus_data(HANDSHAKE_REQUEST);
+  gw.on_solax_meter_modbus_data(HANDSHAKE_REQUEST);
+  gw.on_solax_meter_modbus_data(READ_POWER_32BIT_FLOAT_REQUEST);
+
+  EXPECT_EQ(gw.get_consecutive_handshake_count(), 0u);
+}
+
+TEST(SolaxMeterGatewayHandshakeTest, CounterAtErrorThreshold) {
+  TestableSolaxMeterGateway gw;
+
+  for (int i = 0; i < 6; i++)  // HANDSHAKE_ERROR_THRESHOLD = 6
+    gw.on_solax_meter_modbus_data(HANDSHAKE_REQUEST);
+
+  EXPECT_EQ(gw.get_consecutive_handshake_count(), 6u);
+}
+
 // ── Null sensors do not crash ─────────────────────────────────────────────────
 
 TEST(SolaxMeterGatewaySafetyTest, NullSensorsDoNotCrash) {
