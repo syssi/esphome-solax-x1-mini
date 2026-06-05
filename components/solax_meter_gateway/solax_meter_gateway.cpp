@@ -11,6 +11,7 @@ static const uint8_t REGISTER_READ_POWER_32BIT_FLOAT = 0x0C;
 static const uint8_t REGISTER_READ_TOTAL_ENERGY = 0x08;
 static const uint8_t REGISTER_READ_TOTAL_ENERGY_IMPORT_32BIT_FLOAT = 0x48;
 static const uint8_t REGISTER_READ_TOTAL_ENERGY_EXPORT_32BIT_FLOAT = 0x4A;
+static const uint8_t HANDSHAKE_ERROR_THRESHOLD = 6;
 
 void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &data) {
   this->last_solax_request_received_ = millis();
@@ -41,11 +42,21 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
   }
 
   uint8_t register_address = data[2];
+
+  if (register_address != REGISTER_HANDSHAKE)
+    this->consecutive_handshake_count_ = 0;
+
   switch (register_address) {
     case REGISTER_HANDSHAKE:
       // Request: 0x01 0x03 0x00 0x0B 0x00 0x01 0xF5 0xC8
       //          addr func      reg       bytes*2
-      this->send_raw({0x01, 0x03, 0x02, 0x00, 0x00});
+      if (++this->consecutive_handshake_count_ % HANDSHAKE_ERROR_THRESHOLD == 0) {
+        ESP_LOGE(TAG,
+                 "Meter type 0x%04X not accepted after %u handshakes. "
+                 "Configure a different meter_type (e.g. 0x0000, 0x00A6, 0x00A8).",
+                 this->meter_type_, this->consecutive_handshake_count_);
+      }
+      this->send_raw({0x01, 0x03, 0x02, uint8_t(this->meter_type_ >> 8), uint8_t(this->meter_type_ & 0xFF)});
       break;
 
     case REGISTER_READ_POWER_32BIT_FLOAT:
@@ -109,6 +120,7 @@ void SolaxMeterGateway::setup() {
 void SolaxMeterGateway::dump_config() {
   ESP_LOGCONFIG(TAG, "SolaxMeterGateway:");
   ESP_LOGCONFIG(TAG, "  Address: 0x%02X", this->address_);
+  ESP_LOGCONFIG(TAG, "  Meter type: 0x%04X", this->meter_type_);
   LOG_SENSOR("  ", "Power Demand", this->power_demand_sensor_);
   LOG_TEXT_SENSOR("  ", "Operation name", this->operation_mode_text_sensor_);
 }

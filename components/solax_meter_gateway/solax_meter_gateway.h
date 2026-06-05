@@ -30,6 +30,8 @@ class SolaxMeterGateway : public PollingComponent, public solax_meter_modbus::So
     operation_mode_text_sensor_ = operation_mode_text_sensor;
   }
 
+  void set_meter_type(uint16_t meter_type) { meter_type_ = meter_type; }
+
   void setup() override;
 
   void on_solax_meter_modbus_data(const std::vector<uint8_t> &data) override;
@@ -52,10 +54,12 @@ class SolaxMeterGateway : public PollingComponent, public solax_meter_modbus::So
   text_sensor::TextSensor *operation_mode_text_sensor_{nullptr};
 
   float power_demand_;
+  uint16_t meter_type_{0x0000};
   uint16_t power_sensor_inactivity_timeout_s_{0};
   uint16_t solax_request_inactivity_timeout_s_{10};
   uint32_t last_power_demand_received_{0};
   uint32_t last_solax_request_received_{0};
+  uint8_t consecutive_handshake_count_{0};
 
   void publish_state_(sensor::Sensor *sensor, float value);
   void publish_state_(text_sensor::TextSensor *text_sensor, const std::string &state);

@@ -13,6 +13,7 @@ CONF_SOLAX_METER_GATEWAY_ID = "solax_meter_gateway_id"
 CONF_POWER_ID = "power_id"
 CONF_POWER_SENSOR_INACTIVITY_TIMEOUT = "power_sensor_inactivity_timeout"
 CONF_OPERATION_MODE_ID = "operation_mode_id"
+CONF_METER_TYPE = "meter_type"
 
 DEFAULT_MIN_POWER_DEMAND = 0
 DEFAULT_MAX_POWER_DEMAND = 600
@@ -38,6 +39,9 @@ CONFIG_SCHEMA = cv.All(
             cv.Optional(
                 CONF_POWER_SENSOR_INACTIVITY_TIMEOUT, default="5s"
             ): cv.positive_time_period_seconds,
+            cv.Optional(CONF_METER_TYPE, default=0x0000): cv.int_range(
+                min=0, max=0xFFFF
+            ),
         }
     )
     .extend(solax_meter_modbus.solax_meter_modbus_device_schema(0x01))
@@ -58,3 +62,4 @@ async def to_code(config):
             config[CONF_POWER_SENSOR_INACTIVITY_TIMEOUT]
         )
     )
+    cg.add(var.set_meter_type(config[CONF_METER_TYPE]))

@@ -75,6 +75,17 @@ solax_meter_gateway:
     power_sensor_inactivity_timeout: 5s
     update_interval: 5s
 
+    # Meter type returned during the RS485 handshake (register 0x0B).
+    # Some inverters validate this value and keep repeating the handshake until
+    # the smart meter responds with a supported type. Progress past the handshake
+    # is impossible with a wrong value. After every 6 consecutive unaccepted
+    # handshakes an error is logged suggesting to try a different value.
+    # Known working values:
+    #   0x0000 - Solax X1 mini
+    #   0x00A6 - Solax X1 Hybrid Gen2+, SK-SU3700E (DDSU666 meter identity)
+    #   0x00A8 - Solax X3 MIC Gen1, X3 G2/MIC (SDM230 meter identity)
+    meter_type: 0x0000
+
   - id: solax_meter_gateway1
     solax_meter_modbus_id: modbus1
     address: 0x01
@@ -83,6 +94,17 @@ solax_meter_gateway:
     power_id: powermeter1
     power_sensor_inactivity_timeout: 5s
     update_interval: 5s
+
+    # Meter type returned during the RS485 handshake (register 0x0B).
+    # Some inverters validate this value and keep repeating the handshake until
+    # the smart meter responds with a supported type. Progress past the handshake
+    # is impossible with a wrong value. After every 6 consecutive unaccepted
+    # handshakes an error is logged suggesting to try a different value.
+    # Known working values:
+    #   0x0000 - Solax X1 mini
+    #   0x00A6 - Solax X1 Hybrid Gen2+, SK-SU3700E (DDSU666 meter identity)
+    #   0x00A8 - Solax X3 MIC Gen1, X3 G2/MIC (SDM230 meter identity)
+    meter_type: 0x0000
 
 sensor:
   - id: powermeter0
