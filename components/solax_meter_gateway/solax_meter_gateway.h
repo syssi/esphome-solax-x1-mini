@@ -59,6 +59,7 @@ class SolaxMeterGateway : public PollingComponent, public solax_meter_modbus::So
   uint16_t solax_request_inactivity_timeout_s_{10};
   uint32_t last_power_demand_received_{0};
   uint32_t last_solax_request_received_{0};
+  uint8_t consecutive_handshake_count_{0};
 
   void publish_state_(sensor::Sensor *sensor, float value);
   void publish_state_(text_sensor::TextSensor *text_sensor, const std::string &state);
