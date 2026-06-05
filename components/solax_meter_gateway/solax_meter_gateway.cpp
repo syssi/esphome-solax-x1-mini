@@ -50,8 +50,9 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
       // Request: 0x01 0x03 0x00 0x0B 0x00 0x01 0xF5 0xC8
       //          addr func      reg       bytes*2
       if (++this->consecutive_handshake_count_ % 5 == 0) {
-        ESP_LOGE(TAG, "Meter type 0x%04X not accepted after %u handshakes. "
-                      "Configure a different meter_type (e.g. 0x0000, 0x00A6, 0x00A8).",
+        ESP_LOGE(TAG,
+                 "Meter type 0x%04X not accepted after %u handshakes. "
+                 "Configure a different meter_type (e.g. 0x0000, 0x00A6, 0x00A8).",
                  this->meter_type_, this->consecutive_handshake_count_);
       }
       this->send_raw({0x01, 0x03, 0x02, uint8_t(this->meter_type_ >> 8), uint8_t(this->meter_type_ & 0xFF)});
