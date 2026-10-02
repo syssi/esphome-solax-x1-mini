@@ -28,6 +28,16 @@ CONFIG_SCHEMA = (
     .extend(uart.UART_DEVICE_SCHEMA)
 )
 
+FINAL_VALIDATE_SCHEMA = uart.final_validate_device_schema(
+    "solax_meter_modbus",
+    baud_rate=9600,
+    data_bits=8,
+    parity="NONE",
+    stop_bits=1,
+    require_tx=True,
+    require_rx=True,
+)
+
 
 async def to_code(config):
     cg.add_global(solax_meter_modbus_ns.using)
