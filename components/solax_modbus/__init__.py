@@ -55,6 +55,17 @@ def as_hex_array(value):
     return cg.RawExpression(f"(uint8_t*)(const uint8_t[16]){{{','.join(cpp_array)}}}")
 
 
+FINAL_VALIDATE_SCHEMA = uart.final_validate_device_schema(
+    "solax_modbus",
+    baud_rate=9600,
+    data_bits=8,
+    parity="NONE",
+    stop_bits=1,
+    require_tx=True,
+    require_rx=True,
+)
+
+
 async def to_code(config):
     cg.add_global(solax_modbus_ns.using)
     var = cg.new_Pvariable(config[CONF_ID])
