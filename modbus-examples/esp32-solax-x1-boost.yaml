@@ -249,7 +249,7 @@ sensor:
     name: "energy total"
     address: 0x423
     register_type: read
-    value_type: U_WORD
+    value_type: U_DWORD_R
     unit_of_measurement: kWh
     device_class: energy
     state_class: total_increasing
@@ -262,7 +262,7 @@ sensor:
     name: "energy today"
     address: 0x425
     register_type: read
-    value_type: U_WORD
+    value_type: U_DWORD_R
     unit_of_measurement: kWh
     device_class: energy
     state_class: total_increasing
