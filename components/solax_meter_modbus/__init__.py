@@ -30,7 +30,7 @@ CONFIG_SCHEMA = (
 )
 
 FINAL_VALIDATE_SCHEMA = uart.final_validate_device_schema(
-    "solax_meter_modbus",
+    DOMAIN,
     baud_rate=9600,
     data_bits=8,
     parity="NONE",

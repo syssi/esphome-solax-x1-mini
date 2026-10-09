@@ -57,7 +57,7 @@ def as_hex_array(value):
 
 
 FINAL_VALIDATE_SCHEMA = uart.final_validate_device_schema(
-    "solax_modbus",
+    DOMAIN,
     baud_rate=9600,
     data_bits=8,
     parity="NONE",
