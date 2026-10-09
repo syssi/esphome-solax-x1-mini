@@ -5,6 +5,7 @@ from esphome.const import CONF_ID
 
 AUTO_LOAD = ["solax_modbus", "sensor", "text_sensor"]
 CODEOWNERS = ["@syssi"]
+DOMAIN = "solax_x1_mini"
 MULTI_CONF = True
 
 CONF_SOLAX_X1_MINI_ID = "solax_x1_mini_id"
