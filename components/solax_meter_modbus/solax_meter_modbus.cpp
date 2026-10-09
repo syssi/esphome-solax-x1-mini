@@ -2,9 +2,14 @@
 #include "esphome/core/log.h"
 #include "esphome/core/helpers.h"
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::solax_meter_modbus {
 
-static const char *const TAG = "solax_meter_modbus";
+ESPHOME_LOG_TAG(TAG, "solax_meter_modbus");
 
 void SolaxMeterModbus::setup() {
   if (this->flow_control_pin_ != nullptr) {

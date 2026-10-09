@@ -1,9 +1,14 @@
 #include "solax_meter_gateway.h"
 #include "esphome/core/log.h"
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::solax_meter_gateway {
 
-static const char *const TAG = "solax_meter_gateway";
+ESPHOME_LOG_TAG(TAG, "solax_meter_gateway");
 
 static const uint8_t REGISTER_HANDSHAKE = 0x0B;
 static const uint8_t REGISTER_READ_POWER_16BIT_SINT = 0x0E;

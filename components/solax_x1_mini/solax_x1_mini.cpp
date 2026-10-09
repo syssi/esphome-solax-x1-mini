@@ -1,9 +1,14 @@
 #include "solax_x1_mini.h"
 #include "esphome/core/log.h"
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::solax_x1_mini {
 
-static const char *const TAG = "solax_x1_mini";
+ESPHOME_LOG_TAG(TAG, "solax_x1_mini");
 
 static const uint8_t FUNCTION_STATUS_REPORT = 0x82;
 static const uint8_t FUNCTION_DEVICE_INFO = 0x83;

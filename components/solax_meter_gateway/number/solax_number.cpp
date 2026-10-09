@@ -1,9 +1,14 @@
 #include "solax_number.h"
 #include "esphome/core/log.h"
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::solax_meter_gateway {
 
-static const char *const TAG = "solax_meter_gateway.number";
+ESPHOME_LOG_TAG(TAG, "solax_meter_gateway.number");
 
 void SolaxNumber::setup() {
   float value;
