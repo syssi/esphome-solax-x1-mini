@@ -6,6 +6,7 @@ from esphome.const import CONF_ADDRESS, CONF_FLOW_CONTROL_PIN, CONF_ID
 from esphome.cpp_helpers import gpio_pin_expression
 
 CODEOWNERS = ["@syssi"]
+DOMAIN = "solax_modbus"
 
 DEPENDENCIES = ["uart"]
 MULTI_CONF = True

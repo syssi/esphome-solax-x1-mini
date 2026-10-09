@@ -7,6 +7,7 @@ from esphome.cpp_helpers import gpio_pin_expression
 
 DEPENDENCIES = ["uart"]
 CODEOWNERS = ["@syssi"]
+DOMAIN = "solax_meter_modbus"
 MULTI_CONF = True
 
 CONF_SOLAX_METER_MODBUS_ID = "solax_meter_modbus_id"
