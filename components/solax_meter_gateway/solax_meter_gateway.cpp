@@ -1,5 +1,6 @@
 #include "solax_meter_gateway.h"
 #include "esphome/core/log.h"
+#include "esphome/core/helpers.h"
 
 // Fallback for ESPHome < 2026.10.0
 #ifndef ESPHOME_LOG_TAG
@@ -94,11 +95,13 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
       this->send_raw({0x01, 0x03, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
       break;
 
-    default:
+    default: {
       ESP_LOGW(TAG, "Unhandled register address (0x%02X) with length (%d) requested.", register_address, data[4]);
       ESP_LOGW(TAG, "Your device is probably not supported. Please create an issue here: "
                     "https://github.com/syssi/esphome-solax-x1-mini/issues");
-      ESP_LOGW(TAG, "Please provide the following request data: %s", solax_meter_modbus::format_hex_dump(data).c_str());
+      char hex_buf[format_hex_pretty_size(solax_meter_modbus::MAX_HEX_DUMP_BYTES)];
+      ESP_LOGW(TAG, "Please provide the following request data: %s", format_hex_pretty_to(hex_buf, data, '.'));
+    }
   }
 }
 

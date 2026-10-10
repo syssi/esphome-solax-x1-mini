@@ -1,5 +1,6 @@
 #include "solax_x1_mini.h"
 #include "esphome/core/log.h"
+#include "esphome/core/helpers.h"
 
 // Fallback for ESPHome < 2026.10.0
 #ifndef ESPHOME_LOG_TAG
@@ -75,8 +76,10 @@ void SolaxX1Mini::on_solax_modbus_data(const uint8_t &function, const std::vecto
     case FUNCTION_CONFIG_SETTINGS:
       this->decode_config_settings_(data);
       break;
-    default:
-      ESP_LOGW(TAG, "Unhandled solax frame: %s", solax_modbus::format_hex_dump(data).c_str());
+    default: {
+      char hex_buf[format_hex_pretty_size(solax_modbus::MAX_HEX_DUMP_BYTES)];
+      ESP_LOGW(TAG, "Unhandled solax frame: %s", format_hex_pretty_to(hex_buf, data, '.'));
+    }
   }
 }
 
@@ -210,7 +213,8 @@ void SolaxX1Mini::decode_status_report_(const std::vector<uint8_t> &data) {
     ESP_LOGW(TAG, "Invalid response size: %zu", data.size());
     ESP_LOGW(TAG, "Your device is probably not supported. Please create an issue here: "
                   "https://github.com/syssi/esphome-solax-x1-mini/issues");
-    ESP_LOGW(TAG, "Please provide the following status response data: %s", solax_modbus::format_hex_dump(data).c_str());
+    char hex_buf[format_hex_pretty_size(solax_modbus::MAX_HEX_DUMP_BYTES)];
+    ESP_LOGW(TAG, "Please provide the following status response data: %s", format_hex_pretty_to(hex_buf, data, '.'));
     return;
   }
 
