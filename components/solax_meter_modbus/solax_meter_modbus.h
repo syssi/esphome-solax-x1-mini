@@ -1,11 +1,28 @@
 #pragma once
 
 #include "esphome/core/component.h"
+#include "esphome/core/helpers.h"
 #include "esphome/components/uart/uart.h"
 
 #include <vector>
 
 namespace esphome::solax_meter_modbus {
+
+static constexpr size_t MAX_HEX_DUMP_BYTES = 32;
+
+/// Stack buffer for hex dumps in log statements. Use the temporary returned by format_hex_dump()
+/// directly as log argument: format_hex_dump(data).c_str()
+struct HexDump {
+  char str[format_hex_pretty_size(MAX_HEX_DUMP_BYTES)];
+  const char *c_str() const { return this->str; }
+};
+
+inline HexDump format_hex_dump(const uint8_t *data, size_t length) {
+  HexDump dump;
+  format_hex_pretty_to(dump.str, data, length, '.');
+  return dump;
+}
+inline HexDump format_hex_dump(const std::vector<uint8_t> &data) { return format_hex_dump(data.data(), data.size()); }
 
 class SolaxMeterModbusDevice;
 

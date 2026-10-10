@@ -98,8 +98,7 @@ void SolaxMeterGateway::on_solax_meter_modbus_data(const std::vector<uint8_t> &d
       ESP_LOGW(TAG, "Unhandled register address (0x%02X) with length (%d) requested.", register_address, data[4]);
       ESP_LOGW(TAG, "Your device is probably not supported. Please create an issue here: "
                     "https://github.com/syssi/esphome-solax-x1-mini/issues");
-      ESP_LOGW(TAG, "Please provide the following request data: %s",
-               format_hex_pretty(&data.front(), data.size()).c_str());  // NOLINT
+      ESP_LOGW(TAG, "Please provide the following request data: %s", solax_meter_modbus::format_hex_dump(data).c_str());
   }
 }
 

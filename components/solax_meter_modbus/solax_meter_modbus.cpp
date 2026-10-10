@@ -70,7 +70,7 @@ bool SolaxMeterModbus::parse_solax_meter_modbus_byte_(uint8_t byte) {
   if (at == data_offset + data_len)
     return true;
 
-  ESP_LOGVV(TAG, "RX <- %s", format_hex_pretty(raw, at + 1).c_str());  // NOLINT
+  ESP_LOGVV(TAG, "RX <- %s", format_hex_dump(raw, at + 1).c_str());
 
   uint16_t computed_crc = crc16(raw, data_offset + data_len);
   uint16_t remote_crc = uint16_t(raw[data_offset + data_len]) | (uint16_t(raw[data_offset + data_len + 1]) << 8);
@@ -126,7 +126,7 @@ void SolaxMeterModbus::send(uint8_t address, int16_t power) {
   if (this->flow_control_pin_ != nullptr)
     this->flow_control_pin_->digital_write(false);
 
-  ESP_LOGV(TAG, "SolaxMeterModbus write: %s", format_hex_pretty(data).c_str());  // NOLINT
+  ESP_LOGV(TAG, "SolaxMeterModbus write: %s", format_hex_dump(data).c_str());
 }
 
 void SolaxMeterModbus::send(uint8_t address, float power) {
@@ -159,7 +159,7 @@ void SolaxMeterModbus::send(uint8_t address, float power) {
   if (this->flow_control_pin_ != nullptr)
     this->flow_control_pin_->digital_write(false);
 
-  ESP_LOGV(TAG, "SolaxMeterModbus write: %s", format_hex_pretty(data).c_str());  // NOLINT
+  ESP_LOGV(TAG, "SolaxMeterModbus write: %s", format_hex_dump(data).c_str());
 }
 
 // Helper function for lambdas
@@ -180,7 +180,7 @@ void SolaxMeterModbus::send_raw(const std::vector<uint8_t> &payload) {
   if (this->flow_control_pin_ != nullptr)
     this->flow_control_pin_->digital_write(false);
 
-  ESP_LOGV(TAG, "SolaxMeterModbus write raw: %s", format_hex_pretty(payload).c_str());  // NOLINT
+  ESP_LOGV(TAG, "SolaxMeterModbus write raw: %s", format_hex_dump(payload).c_str());
 }
 
 }  // namespace esphome::solax_meter_modbus
