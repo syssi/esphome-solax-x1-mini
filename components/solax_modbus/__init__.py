@@ -19,7 +19,7 @@ SolaxModbus = solax_modbus_ns.class_("SolaxModbus", cg.Component, uart.UARTDevic
 SolaxModbusDevice = solax_modbus_ns.class_("SolaxModbusDevice")
 
 CONFIG_SCHEMA = cv.All(
-    cv.require_esphome_version(2024, 6, 0),
+    cv.require_esphome_version(2026, 1, 0),
     cv.Schema(
         {
             cv.GenerateID(): cv.declare_id(SolaxModbus),
