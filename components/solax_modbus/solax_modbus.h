@@ -15,6 +15,8 @@ struct SolaxMessageT {
   uint8_t Data[100];
 };
 
+static constexpr size_t MAX_HEX_DUMP_BYTES = sizeof(SolaxMessageT);
+
 class SolaxModbusDevice;
 
 class SolaxModbus : public uart::UARTDevice, public Component {

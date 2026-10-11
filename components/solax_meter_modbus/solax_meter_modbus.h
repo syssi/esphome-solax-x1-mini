@@ -7,6 +7,8 @@
 
 namespace esphome::solax_meter_modbus {
 
+static constexpr size_t MAX_HEX_DUMP_BYTES = 32;
+
 class SolaxMeterModbusDevice;
 
 class SolaxMeterModbus : public uart::UARTDevice, public Component {
