@@ -5,6 +5,11 @@ import esphome.config_validation as cv
 from esphome.const import CONF_ADDRESS, CONF_FLOW_CONTROL_PIN, CONF_ID
 from esphome.cpp_helpers import gpio_pin_expression
 
+try:
+    from esphome.components.const import CONF_SERIAL_NUMBER
+except ImportError:  # ESPHome < 2026.11.0
+    CONF_SERIAL_NUMBER = "serial_number"
+
 CODEOWNERS = ["@syssi"]
 DOMAIN = "solax_modbus"
 
@@ -12,7 +17,6 @@ DEPENDENCIES = ["uart"]
 MULTI_CONF = True
 
 CONF_SOLAX_MODBUS_ID = "solax_modbus_id"
-CONF_SERIAL_NUMBER = "serial_number"
 
 solax_modbus_ns = cg.esphome_ns.namespace("solax_modbus")
 SolaxModbus = solax_modbus_ns.class_("SolaxModbus", cg.Component, uart.UARTDevice)
