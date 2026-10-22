@@ -17,8 +17,10 @@ esphome:
   devices:
     - id: device0
       name: "${device0}"
+      relation: via
     - id: device1
       name: "${device1}"
+      relation: via
 
 esp32:
   board: wemos_d1_mini32
