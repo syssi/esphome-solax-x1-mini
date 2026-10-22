@@ -46,9 +46,8 @@ def validate_serial_number(value):
     for part in parts:
         try:
             parts_int.append(int(part, 16))
-        except ValueError:
-            # pylint: disable=raise-missing-from
-            raise cv.Invalid("Serial number must be hex values from 00 to FF")
+        except ValueError as err:
+            raise cv.Invalid("Serial number must be hex values from 00 to FF") from err
 
     return "".join(f"{part:02X}" for part in parts_int)
 
