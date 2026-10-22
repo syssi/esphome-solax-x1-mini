@@ -10,6 +10,7 @@ esphome:
   name: ${name}
   friendly_name: ${name}
   comment: ${device_description}
+  min_version: "2026.11.0"
   project:
     name: "syssi.esphome-solax-x1-mini"
     version: 2.7.0
