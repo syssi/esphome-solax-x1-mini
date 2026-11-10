@@ -26,7 +26,7 @@ SolaxMeterGateway = solax_meter_gateway_ns.class_(
     solax_meter_modbus.SolaxMeterModbusDevice,
 )
 
-CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA = cv.Schema(
+SOLAX_METER_GATEWAY_COMPONENT_SCHEMA = cv.Schema(
     {
         cv.GenerateID(CONF_SOLAX_METER_GATEWAY_ID): cv.use_id(SolaxMeterGateway),
     }
