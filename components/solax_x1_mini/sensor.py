@@ -26,7 +26,7 @@ from esphome.const import (
     UNIT_WATT,
 )
 
-from . import CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA, CONF_SOLAX_X1_MINI_ID
+from . import CONF_SOLAX_X1_MINI_ID, SOLAX_X1_MINI_COMPONENT_SCHEMA
 
 DEPENDENCIES = ["solax_x1_mini"]
 CODEOWNERS = ["@syssi"]
@@ -188,7 +188,7 @@ SENSOR_DEFS = {
     },
 }
 
-CONFIG_SCHEMA = CONF_SOLAX_X1_MINI_COMPONENT_SCHEMA.extend(
+CONFIG_SCHEMA = SOLAX_X1_MINI_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(key): sensor.sensor_schema(**kwargs)
         for key, kwargs in SENSOR_DEFS.items()

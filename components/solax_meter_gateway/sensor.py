@@ -8,7 +8,7 @@ from esphome.const import (
     UNIT_WATT,
 )
 
-from . import CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA, CONF_SOLAX_METER_GATEWAY_ID
+from . import CONF_SOLAX_METER_GATEWAY_ID, SOLAX_METER_GATEWAY_COMPONENT_SCHEMA
 
 DEPENDENCIES = ["solax_meter_gateway"]
 CODEOWNERS = ["@syssi"]
@@ -25,7 +25,7 @@ SENSOR_DEFS = {
     },
 }
 
-CONFIG_SCHEMA = CONF_SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
+CONFIG_SCHEMA = SOLAX_METER_GATEWAY_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(key): sensor.sensor_schema(**kwargs)
         for key, kwargs in SENSOR_DEFS.items()
