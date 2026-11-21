@@ -13,7 +13,7 @@ esphome:
   min_version: "2026.11.0"
   project:
     name: "syssi.esphome-solax-x1-mini"
-    version: 2.7.0
+    version: 2.8.0
   devices:
     - id: device0
       name: "${device0}"
